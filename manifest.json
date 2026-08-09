@@ -1,0 +1,420 @@
+﻿{
+    "generated":  "2026-08-09",
+    "imageFolder":  "all_images",
+    "format":  "webp",
+    "totalImages":  297,
+    "categories":  {
+                       "anniversary":  {
+                                           "count":  27,
+                                           "images":  [
+                                                          "anniversary_1.webp",
+                                                          "anniversary_2.webp",
+                                                          "anniversary_3.webp",
+                                                          "anniversary_4.webp",
+                                                          "anniversary_5.webp",
+                                                          "anniversary_6.webp",
+                                                          "anniversary_7.webp",
+                                                          "anniversary_8.webp",
+                                                          "anniversary_9.webp",
+                                                          "anniversary_10.webp",
+                                                          "anniversary_11.webp",
+                                                          "anniversary_12.webp",
+                                                          "anniversary_13.webp",
+                                                          "anniversary_14.webp",
+                                                          "anniversary_15.webp",
+                                                          "anniversary_16.webp",
+                                                          "anniversary_17.webp",
+                                                          "anniversary_18.webp",
+                                                          "anniversary_19.webp",
+                                                          "anniversary_20.webp",
+                                                          "anniversary_21.webp",
+                                                          "anniversary_22.webp",
+                                                          "anniversary_23.webp",
+                                                          "anniversary_24.webp",
+                                                          "anniversary_25.webp",
+                                                          "anniversary_26.webp",
+                                                          "anniversary_27.webp"
+                                                      ]
+                                       },
+                       "birthday":  {
+                                        "count":  28,
+                                        "images":  [
+                                                       "birthday_1.webp",
+                                                       "birthday_2.webp",
+                                                       "birthday_3.webp",
+                                                       "birthday_4.webp",
+                                                       "birthday_5.webp",
+                                                       "birthday_6.webp",
+                                                       "birthday_7.webp",
+                                                       "birthday_8.webp",
+                                                       "birthday_9.webp",
+                                                       "birthday_10.webp",
+                                                       "birthday_11.webp",
+                                                       "birthday_12.webp",
+                                                       "birthday_13.webp",
+                                                       "birthday_14.webp",
+                                                       "birthday_15.webp",
+                                                       "birthday_16.webp",
+                                                       "birthday_17.webp",
+                                                       "birthday_18.webp",
+                                                       "birthday_19.webp",
+                                                       "birthday_20.webp",
+                                                       "birthday_21.webp",
+                                                       "birthday_22.webp",
+                                                       "birthday_23.webp",
+                                                       "birthday_24.webp",
+                                                       "birthday_25.webp",
+                                                       "birthday_26.webp",
+                                                       "birthday_27.webp",
+                                                       "birthday_28.webp"
+                                                   ]
+                                    },
+                       "christmas":  {
+                                         "count":  19,
+                                         "images":  [
+                                                        "christmas_1.webp",
+                                                        "christmas_2.webp",
+                                                        "christmas_3.webp",
+                                                        "christmas_4.webp",
+                                                        "christmas_5.webp",
+                                                        "christmas_6.webp",
+                                                        "christmas_7.webp",
+                                                        "christmas_8.webp",
+                                                        "christmas_9.webp",
+                                                        "christmas_10.webp",
+                                                        "christmas_11.webp",
+                                                        "christmas_12.webp",
+                                                        "christmas_13.webp",
+                                                        "christmas_14.webp",
+                                                        "christmas_15.webp",
+                                                        "christmas_16.webp",
+                                                        "christmas_17.webp",
+                                                        "christmas_18.webp",
+                                                        "christmas_19.webp"
+                                                    ]
+                                     },
+                       "diwali":  {
+                                      "count":  21,
+                                      "images":  [
+                                                     "diwali_1.webp",
+                                                     "diwali_2.webp",
+                                                     "diwali_3.webp",
+                                                     "diwali_4.webp",
+                                                     "diwali_5.webp",
+                                                     "diwali_6.webp",
+                                                     "diwali_7.webp",
+                                                     "diwali_8.webp",
+                                                     "diwali_9.webp",
+                                                     "diwali_10.webp",
+                                                     "diwali_11.webp",
+                                                     "diwali_12.webp",
+                                                     "diwali_13.webp",
+                                                     "diwali_14.webp",
+                                                     "diwali_15.webp",
+                                                     "diwali_16.webp",
+                                                     "diwali_17.webp",
+                                                     "diwali_18.webp",
+                                                     "diwali_19.webp",
+                                                     "diwali_20.webp",
+                                                     "diwali_21.webp"
+                                                 ]
+                                  },
+                       "good_wishes":  {
+                                           "count":  18,
+                                           "images":  [
+                                                          "good_wishes_1.webp",
+                                                          "good_wishes_2.webp",
+                                                          "good_wishes_3.webp",
+                                                          "good_wishes_4.webp",
+                                                          "good_wishes_5.webp",
+                                                          "good_wishes_6.webp",
+                                                          "good_wishes_7.webp",
+                                                          "good_wishes_8.webp",
+                                                          "good_wishes_9.webp",
+                                                          "good_wishes_10.webp",
+                                                          "good_wishes_11.webp",
+                                                          "good_wishes_12.webp",
+                                                          "good_wishes_13.webp",
+                                                          "good_wishes_14.webp",
+                                                          "good_wishes_15.webp",
+                                                          "good_wishes_16.webp",
+                                                          "good_wishes_17.webp",
+                                                          "good_wishes_18.webp"
+                                                      ]
+                                       },
+                       "independence_day":  {
+                                                "count":  16,
+                                                "images":  [
+                                                               "independence_day_1.webp",
+                                                               "independence_day_2.webp",
+                                                               "independence_day_3.webp",
+                                                               "independence_day_4.webp",
+                                                               "independence_day_5.webp",
+                                                               "independence_day_6.webp",
+                                                               "independence_day_7.webp",
+                                                               "independence_day_8.webp",
+                                                               "independence_day_9.webp",
+                                                               "independence_day_10.webp",
+                                                               "independence_day_11.webp",
+                                                               "independence_day_12.webp",
+                                                               "independence_day_13.webp",
+                                                               "independence_day_14.webp",
+                                                               "independence_day_15.webp",
+                                                               "independence_day_16.webp"
+                                                           ]
+                                            },
+                       "jokes":  {
+                                     "count":  35,
+                                     "images":  [
+                                                    "jokes_1.webp",
+                                                    "jokes_2.webp",
+                                                    "jokes_3.webp",
+                                                    "jokes_4.webp",
+                                                    "jokes_5.webp",
+                                                    "jokes_6.webp",
+                                                    "jokes_7.webp",
+                                                    "jokes_8.webp",
+                                                    "jokes_9.webp",
+                                                    "jokes_10.webp",
+                                                    "jokes_11.webp",
+                                                    "jokes_12.webp",
+                                                    "jokes_13.webp",
+                                                    "jokes_14.webp",
+                                                    "jokes_15.webp",
+                                                    "jokes_16.webp",
+                                                    "jokes_17.webp",
+                                                    "jokes_18.webp",
+                                                    "jokes_19.webp",
+                                                    "jokes_20.webp",
+                                                    "jokes_21.webp",
+                                                    "jokes_22.webp",
+                                                    "jokes_23.webp",
+                                                    "jokes_24.webp",
+                                                    "jokes_25.webp",
+                                                    "jokes_26.webp",
+                                                    "jokes_27.webp",
+                                                    "jokes_28.webp",
+                                                    "jokes_29.webp",
+                                                    "jokes_30.webp",
+                                                    "jokes_31.webp",
+                                                    "jokes_32.webp",
+                                                    "jokes_33.webp",
+                                                    "jokes_34.webp",
+                                                    "jokes_35.webp"
+                                                ]
+                                 },
+                       "mantras":  {
+                                       "count":  16,
+                                       "images":  [
+                                                      "mantras_1.webp",
+                                                      "mantras_2.webp",
+                                                      "mantras_3.webp",
+                                                      "mantras_4.webp",
+                                                      "mantras_5.webp",
+                                                      "mantras_6.webp",
+                                                      "mantras_7.webp",
+                                                      "mantras_8.webp",
+                                                      "mantras_9.webp",
+                                                      "mantras_10.webp",
+                                                      "mantras_11.webp",
+                                                      "mantras_12.webp",
+                                                      "mantras_13.webp",
+                                                      "mantras_14.webp",
+                                                      "mantras_15.webp",
+                                                      "mantras_16.webp"
+                                                  ]
+                                   },
+                       "poems":  {
+                                     "count":  30,
+                                     "images":  [
+                                                    "poems_1.webp",
+                                                    "poems_2.webp",
+                                                    "poems_3.webp",
+                                                    "poems_4.webp",
+                                                    "poems_5.webp",
+                                                    "poems_6.webp",
+                                                    "poems_7.webp",
+                                                    "poems_8.webp",
+                                                    "poems_9.webp",
+                                                    "poems_10.webp",
+                                                    "poems_11.webp",
+                                                    "poems_12.webp",
+                                                    "poems_13.webp",
+                                                    "poems_14.webp",
+                                                    "poems_15.webp",
+                                                    "poems_16.webp",
+                                                    "poems_17.webp",
+                                                    "poems_18.webp",
+                                                    "poems_19.webp",
+                                                    "poems_20.webp",
+                                                    "poems_21.webp",
+                                                    "poems_22.webp",
+                                                    "poems_23.webp",
+                                                    "poems_24.webp",
+                                                    "poems_25.webp",
+                                                    "poems_26.webp",
+                                                    "poems_27.webp",
+                                                    "poems_28.webp",
+                                                    "poems_29.webp",
+                                                    "poems_30.webp"
+                                                ]
+                                 },
+                       "quotes_attitude":  {
+                                               "count":  3,
+                                               "images":  [
+                                                              "quotes_attitude_1.webp",
+                                                              "quotes_attitude_2.webp",
+                                                              "quotes_attitude_3.webp"
+                                                          ]
+                                           },
+                       "quotes_good_morning_night":  {
+                                                         "count":  3,
+                                                         "images":  [
+                                                                        "quotes_good_morning_night_1.webp",
+                                                                        "quotes_good_morning_night_2.webp",
+                                                                        "quotes_good_morning_night_3.webp"
+                                                                    ]
+                                                     },
+                       "quotes_krishna_gita":  {
+                                                   "count":  3,
+                                                   "images":  [
+                                                                  "quotes_krishna_gita_1.webp",
+                                                                  "quotes_krishna_gita_2.webp",
+                                                                  "quotes_krishna_gita_3.webp"
+                                                              ]
+                                               },
+                       "quotes_love":  {
+                                           "count":  4,
+                                           "images":  [
+                                                          "quotes_love_1.webp",
+                                                          "quotes_love_2.webp",
+                                                          "quotes_love_3.webp",
+                                                          "quotes_love_4.webp"
+                                                      ]
+                                       },
+                       "quotes_money":  {
+                                            "count":  3,
+                                            "images":  [
+                                                           "quotes_money_1.webp",
+                                                           "quotes_money_2.webp",
+                                                           "quotes_money_3.webp"
+                                                       ]
+                                        },
+                       "quotes_motivational":  {
+                                                   "count":  3,
+                                                   "images":  [
+                                                                  "quotes_motivational_1.webp",
+                                                                  "quotes_motivational_2.webp",
+                                                                  "quotes_motivational_3.webp"
+                                                              ]
+                                               },
+                       "quotes_sad":  {
+                                          "count":  3,
+                                          "images":  [
+                                                         "quotes_sad_1.webp",
+                                                         "quotes_sad_2.webp",
+                                                         "quotes_sad_3.webp"
+                                                     ]
+                                      },
+                       "quotes_self_love":  {
+                                                "count":  3,
+                                                "images":  [
+                                                               "quotes_self_love_1.webp",
+                                                               "quotes_self_love_2.webp",
+                                                               "quotes_self_love_3.webp"
+                                                           ]
+                                            },
+                       "quotes_shayari":  {
+                                              "count":  3,
+                                              "images":  [
+                                                             "quotes_shayari_1.webp",
+                                                             "quotes_shayari_2.webp",
+                                                             "quotes_shayari_3.webp"
+                                                         ]
+                                          },
+                       "quotes_sigma":  {
+                                            "count":  3,
+                                            "images":  [
+                                                           "quotes_sigma_1.webp",
+                                                           "quotes_sigma_2.webp",
+                                                           "quotes_sigma_3.webp"
+                                                       ]
+                                        },
+                       "rakhi":  {
+                                     "count":  5,
+                                     "images":  [
+                                                    "rakhi_1.webp",
+                                                    "rakhi_2.webp",
+                                                    "rakhi_3.webp",
+                                                    "rakhi_4.webp",
+                                                    "rakhi_5.webp"
+                                                ]
+                                 },
+                       "rakhi_d":  {
+                                       "count":  22,
+                                       "images":  [
+                                                      "rakhi_d_1.webp",
+                                                      "rakhi_d_2.webp",
+                                                      "rakhi_d_3.webp",
+                                                      "rakhi_d_4.webp",
+                                                      "rakhi_d_5.webp",
+                                                      "rakhi_d_6.webp",
+                                                      "rakhi_d_7.webp",
+                                                      "rakhi_d_8.webp",
+                                                      "rakhi_d_9.webp",
+                                                      "rakhi_d_10.webp",
+                                                      "rakhi_d_11.webp",
+                                                      "rakhi_d_12.webp",
+                                                      "rakhi_d_13.webp",
+                                                      "rakhi_d_14.webp",
+                                                      "rakhi_d_15.webp",
+                                                      "rakhi_d_16.webp",
+                                                      "rakhi_d_17.webp",
+                                                      "rakhi_d_18.webp",
+                                                      "rakhi_d_19.webp",
+                                                      "rakhi_d_20.webp",
+                                                      "rakhi_d_21.webp",
+                                                      "rakhi_d_22.webp"
+                                                  ]
+                                   },
+                       "rakhi_hindi":  {
+                                           "count":  6,
+                                           "images":  [
+                                                          "rakhi_hindi_1.webp",
+                                                          "rakhi_hindi_2.webp",
+                                                          "rakhi_hindi_3.webp",
+                                                          "rakhi_hindi_4.webp",
+                                                          "rakhi_hindi_5.webp",
+                                                          "rakhi_hindi_6.webp"
+                                                      ]
+                                       },
+                       "shayari":  {
+                                       "count":  23,
+                                       "images":  [
+                                                      "shayari_1.webp",
+                                                      "shayari_2.webp",
+                                                      "shayari_3.webp",
+                                                      "shayari_4.webp",
+                                                      "shayari_5.webp",
+                                                      "shayari_6.webp",
+                                                      "shayari_7.webp",
+                                                      "shayari_8.webp",
+                                                      "shayari_9.webp",
+                                                      "shayari_10.webp",
+                                                      "shayari_11.webp",
+                                                      "shayari_12.webp",
+                                                      "shayari_13.webp",
+                                                      "shayari_14.webp",
+                                                      "shayari_15.webp",
+                                                      "shayari_16.webp",
+                                                      "shayari_17.webp",
+                                                      "shayari_18.webp",
+                                                      "shayari_19.webp",
+                                                      "shayari_20.webp",
+                                                      "shayari_21.webp",
+                                                      "shayari_22.webp",
+                                                      "shayari_23.webp"
+                                                  ]
+                                   }
+                   }
+}
