@@ -5,6 +5,8 @@
   "totalImages": 217,
   "categories": {
     "anniversary": {
+      "kind": "template",
+      "group": 1,
       "count": 25,
       "images": [
         "anniversary_1.webp",
@@ -35,6 +37,8 @@
       ]
     },
     "birthday": {
+      "kind": "template",
+      "group": 1,
       "count": 17,
       "images": [
         "birthday_1.webp",
@@ -57,6 +61,8 @@
       ]
     },
     "christmas": {
+      "kind": "template",
+      "group": 3,
       "count": 13,
       "images": [
         "christmas_2.webp",
@@ -75,6 +81,8 @@
       ]
     },
     "diwali": {
+      "kind": "template",
+      "group": 3,
       "count": 4,
       "images": [
         "diwali_1.webp",
@@ -84,6 +92,8 @@
       ]
     },
     "good_wishes": {
+      "kind": "image",
+      "group": 3,
       "count": 15,
       "images": [
         "good_wishes_1.webp",
@@ -104,6 +114,8 @@
       ]
     },
     "independence_day": {
+      "kind": "template",
+      "group": 2,
       "count": 15,
       "images": [
         "independence_day_1.webp",
@@ -124,6 +136,8 @@
       ]
     },
     "jokes": {
+      "kind": "image",
+      "group": 2,
       "count": 18,
       "images": [
         "jokes_2.webp",
@@ -147,6 +161,8 @@
       ]
     },
     "mantras": {
+      "kind": "image",
+      "group": 3,
       "count": 12,
       "images": [
         "mantras_2.webp",
@@ -164,6 +180,8 @@
       ]
     },
     "poems": {
+      "kind": "image",
+      "group": 2,
       "count": 27,
       "images": [
         "poems_2.webp",
@@ -196,6 +214,8 @@
       ]
     },
     "quotes_attitude": {
+      "kind": "image",
+      "group": 1,
       "count": 3,
       "images": [
         "quotes_attitude_1.webp",
@@ -204,6 +224,8 @@
       ]
     },
     "quotes_good_morning_night": {
+      "kind": "image",
+      "group": 1,
       "count": 3,
       "images": [
         "quotes_good_morning_night_1.webp",
@@ -212,6 +234,8 @@
       ]
     },
     "quotes_krishna_gita": {
+      "kind": "image",
+      "group": 1,
       "count": 3,
       "images": [
         "quotes_krishna_gita_1.webp",
@@ -220,6 +244,8 @@
       ]
     },
     "quotes_love": {
+      "kind": "image",
+      "group": 1,
       "count": 4,
       "images": [
         "quotes_love_1.webp",
@@ -229,6 +255,8 @@
       ]
     },
     "quotes_money": {
+      "kind": "image",
+      "group": 1,
       "count": 2,
       "images": [
         "quotes_money_2.webp",
@@ -236,6 +264,8 @@
       ]
     },
     "quotes_motivational": {
+      "kind": "image",
+      "group": 1,
       "count": 3,
       "images": [
         "quotes_motivational_1.webp",
@@ -244,6 +274,8 @@
       ]
     },
     "quotes_sad": {
+      "kind": "image",
+      "group": 1,
       "count": 3,
       "images": [
         "quotes_sad_1.webp",
@@ -252,6 +284,8 @@
       ]
     },
     "quotes_self_love": {
+      "kind": "image",
+      "group": 1,
       "count": 2,
       "images": [
         "quotes_self_love_2.webp",
@@ -259,6 +293,8 @@
       ]
     },
     "quotes_shayari": {
+      "kind": "image",
+      "group": 1,
       "count": 2,
       "images": [
         "quotes_shayari_2.webp",
@@ -266,6 +302,8 @@
       ]
     },
     "quotes_sigma": {
+      "kind": "image",
+      "group": 1,
       "count": 3,
       "images": [
         "quotes_sigma_1.webp",
@@ -274,6 +312,8 @@
       ]
     },
     "rakhi": {
+      "kind": "template",
+      "group": 2,
       "count": 3,
       "images": [
         "rakhi_3.webp",
@@ -282,6 +322,8 @@
       ]
     },
     "rakhi_d": {
+      "kind": "template",
+      "group": 2,
       "count": 13,
       "images": [
         "rakhi_d_1.webp",
@@ -300,6 +342,8 @@
       ]
     },
     "rakhi_hindi": {
+      "kind": "template",
+      "group": 2,
       "count": 5,
       "images": [
         "rakhi_hindi_1.webp",
@@ -310,6 +354,8 @@
       ]
     },
     "shayari": {
+      "kind": "image",
+      "group": 1,
       "count": 22,
       "images": [
         "shayari_1.webp",
@@ -336,5 +382,9 @@
         "shayari_23.webp"
       ]
     }
+  },
+  "counts": {
+    "templates": 95,
+    "images": 122
   }
 }
