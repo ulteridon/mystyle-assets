@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyStyle Content Admin</title>
+<style>
+  :root {
+    --bg: #0f172a; --panel: #1e293b; --panel2: #0b1220; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #06b6d4; --green: #22c55e; --red: #f43f5e;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 14px; padding: 14px 20px; background: var(--panel); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; flex-wrap: wrap; }
+  header h1 { font-size: 17px; margin: 0; }
+  .pill { font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--panel2); border: 1px solid var(--border); color: var(--muted); }
+  .pill.dirty { color: #fbbf24; border-color: #fbbf24; }
+  button { background: var(--panel2); color: var(--text); border: 1px solid var(--border); border-radius: 9px; padding: 8px 14px; cursor: pointer; font-size: 14px; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #06222a; border-color: var(--accent); font-weight: 700; }
+  button.danger { color: var(--red); }
+  button:disabled { opacity: .45; cursor: default; }
+  input, select, textarea { background: var(--panel2); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 14px; }
+  input:focus, textarea:focus { outline: 1px solid var(--accent); }
+  nav { display: flex; gap: 4px; padding: 10px 20px 0; }
+  nav button { border-radius: 9px 9px 0 0; border-bottom: none; color: var(--muted); }
+  nav button.active { background: var(--panel); color: var(--accent); font-weight: 700; }
+  main { padding: 18px 20px 60px; max-width: 1200px; margin: 0 auto; }
+  section.tab { display: none; }
+  section.tab.active { display: block; }
+  .cat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; }
+  .cat-head { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; flex-wrap: wrap; }
+  .cat-head b { font-size: 15px; }
+  .cat-head .kind { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .hidden-flag { color: var(--red); font-size: 12px; font-weight: 700; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 0 14px 14px; }
+  .thumb { position: relative; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #000; }
+  .thumb img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+  .thumb.off img { opacity: .25; }
+  .thumb .bar { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: rgba(2,6,23,.75); font-size: 11px; }
+  .thumb .bar span { max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+  .thumb .bar button { padding: 2px 8px; font-size: 11px; }
+  .tpl-badge { position: absolute; top: 6px; left: 6px; background: rgba(2,6,23,.75); font-size: 10px; padding: 2px 7px; border-radius: 999px; color: var(--muted); }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .modal-back { position: fixed; inset: 0; background: rgba(2,6,23,.8); display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow: auto; padding: 30px 10px; }
+  .modal-back.open { display: flex; }
+  .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; width: min(980px, 96vw); }
+  .editor-wrap { display: flex; gap: 18px; flex-wrap: wrap; }
+  #tplStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 10px; flex: 0 0 auto; }
+  #tplStage img.bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #photoBox { position: absolute; border: 2px dashed var(--accent); background: rgba(6,182,212,.18); cursor: move; }
+  #photoBox .handle { position: absolute; right: -8px; bottom: -8px; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; cursor: nwse-resize; }
+  #textBox { position: absolute; cursor: move; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+  .fields { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 9px; }
+  .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
+  .caption-img { display: flex; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--border); }
+  .caption-img img { width: 84px; height: 110px; object-fit: cover; border-radius: 8px; }
+  .caption-list { flex: 1; }
+  .caption-list .row { margin: 4px 0; }
+  .caption-list input { flex: 1; }
+  #log { background: var(--panel2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font: 12px/1.6 ui-monospace, monospace; white-space: pre-wrap; max-height: 320px; overflow: auto; }
+  .filelist { margin: 8px 0; }
+  .filelist li { margin: 3px 0; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎨 MyStyle Content Admin</h1>
+  <span class="pill" id="repoPill">…</span>
+  <span class="pill" id="dirtyPill">no changes</span>
+  <span style="flex:1"></span>
+  <input id="tokenInput" type="password" placeholder="GitHub token (repo scope)" style="width:230px">
+  <button id="loadBtn" class="primary">Load</button>
+</header>
+
+<nav>
+  <button data-tab="images" class="active">Images &amp; Categories</button>
+  <button data-tab="templates">Templates</button>
+  <button data-tab="captions">Captions</button>
+  <button data-tab="publish">Publish</button>
+</nav>
+
+<main>
+  <!-- ── IMAGES ─────────────────────────────────────────────────────────── -->
+  <section class="tab active" id="tab-images">
+    <p class="muted">Everything here controls what the app shows. Hide a category or a single image and it disappears from the phone after the next app launch (once published). Add images to a category — or create a new category — and they appear in the app.</p>
+    <div class="row">
+      <input id="newCatName" placeholder="new_category_name">
+      <select id="newCatKind"><option value="image">Images tab (share-as-is)</option><option value="template">Templates (photo posters)</option></select>
+      <input id="newCatGroup" type="number" value="2" min="1" max="9" style="width:64px" title="display group">
+      <button id="newCatBtn">＋ Create category</button>
+    </div>
+    <div id="catList"></div>
+  </section>
+
+  <!-- ── TEMPLATES ──────────────────────────────────────────────────────── -->
+  <section class="tab" id="tab-templates">
+    <p class="muted">Photo-poster templates (templates_db.json). Hide, edit layout, or create new ones. The layout editor sets where the user's photo and name go.</p>
+    <div class="row">
+      <button id="newTplBtn" class="primary">＋ New template</button>
+      <span class="muted" id="tplCount"></span>
+      <span style="flex:1"></span>
+      <label class="muted">Seed from app project: <input type="file" id="seedTplFile" accept=".json"></label>
+    </div>
+    <div class="grid" id="tplGrid" style="padding:0"></div>
+  </section>
+
+  <!-- ── CAPTIONS ───────────────────────────────────────────────────────── -->
+  <section class="tab" id="tab-captions">
+    <p class="muted">Caption variations overlaid on Images-tab cards (imageTexts.json). Each line becomes its own shareable card in the app.</p>
+    <div class="row">
+      <label class="muted">Seed from app project: <input type="file" id="seedTextsFile" accept=".json"></label>
+    </div>
+    <div id="capList"></div>
+  </section>
+
+  <!-- ── PUBLISH ────────────────────────────────────────────────────────── -->
+  <section class="tab" id="tab-publish">
+    <p class="muted">Commits the changed files to <b id="repoLabel"></b>. The app picks them up on next launch (raw.githubusercontent caches for ~5 minutes).</p>
+    <ul class="filelist" id="dirtyList"></ul>
+    <div class="row">
+      <button id="publishBtn" class="primary">Publish changes</button>
+    </div>
+    <div id="log"></div>
+  </section>
+</main>
+
+<!-- ── TEMPLATE EDITOR MODAL ────────────────────────────────────────────── -->
+<div class="modal-back" id="tplModalBack">
+  <div class="modal">
+    <h3 style="margin-top:0" id="tplModalTitle">Template layout</h3>
+    <div class="editor-wrap">
+      <div>
+        <div id="tplStage">
+          <img class="bg" id="tplBg" alt="">
+          <div id="photoBox"><div class="handle" id="photoHandle"></div></div>
+          <div id="textBox">Your Name</div>
+        </div>
+        <p class="muted" style="max-width:340px">Drag the dashed box where the user's photo goes (corner dot resizes). Drag the text to place the name.</p>
+      </div>
+      <div class="fields">
+        <div><label>Background image (from all_images/)</label>
+          <select id="tplBgSelect"></select></div>
+        <div><label>…or upload a new background</label>
+          <input type="file" id="tplBgUpload" accept="image/*"></div>
+        <div><label>Category</label><input id="tplCategory" placeholder="Birthday"></div>
+        <div><label>Tags (comma separated)</label><input id="tplTags" placeholder="birthday, cake, wishes"></div>
+        <div class="row" style="margin:0">
+          <div><label>Font size (px)</label><input id="tplFontSize" type="number" value="56" style="width:80px"></div>
+          <div><label>Text colour</label><input id="tplColor" type="color" value="#ffffff"></div>
+          <div><label>Align</label><select id="tplAlign"><option>center</option><option>left</option><option>right</option></select></div>
+          <div><label>Round photo</label><input id="tplRound" type="checkbox" checked></div>
+        </div>
+        <div class="row" style="margin-top:auto">
+          <button id="tplSaveBtn" class="primary">Save template</button>
+          <button id="tplCancelBtn">Cancel</button>
+          <button id="tplDeleteBtn" class="danger" style="margin-left:auto">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+// ─────────────────────────────────────────────────────────────────────────────
+// The single source of truth for the app is the mystyle-assets repo:
+//   manifest.json      → image/template categories + files (Images tab)
+//   app_config.json    → hiddenCategories / hiddenTemplates / hiddenImages
+//   templates_db.json  → photo-poster templates
+//   imageTexts.json    → captions on Images-tab cards
+// This page edits them in memory and commits via the GitHub contents API.
+// ─────────────────────────────────────────────────────────────────────────────
+const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
+const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+
+document.getElementById('repoPill').textContent = `${OWNER}/${REPO}@${BRANCH}`;
+document.getElementById('repoLabel').textContent = `${OWNER}/${REPO}`;
+
+const $ = (id) => document.getElementById(id);
+const state = {
+  manifest: null, config: null, templates: null, texts: null,
+  shas: {},                    // path → blob sha (needed to update)
+  dirty: new Set(),            // paths with unsaved changes
+  pendingUploads: [],          // {path, base64, label} — new image binaries
+};
+
+// localStorage throws in sandboxed contexts (e.g. data: previews) — degrade to
+// session-only token storage instead of killing the whole script.
+function storageGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function storageSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
+
+const tokenInput = $('tokenInput');
+tokenInput.value = storageGet('gh_token') || '';
+tokenInput.addEventListener('change', () => storageSet('gh_token', tokenInput.value.trim()));
+
+function headers() {
+  const t = tokenInput.value.trim();
+  return t ? { Authorization: `Bearer ${t}`, Accept: 'application/vnd.github+json' }
+           : { Accept: 'application/vnd.github+json' };
+}
+
+function markDirty(path) {
+  state.dirty.add(path);
+  refreshDirtyUI();
+}
+function refreshDirtyUI() {
+  const n = state.dirty.size + state.pendingUploads.length;
+  const pill = $('dirtyPill');
+  pill.textContent = n ? `${n} unpublished change${n > 1 ? 's' : ''}` : 'no changes';
+  pill.classList.toggle('dirty', n > 0);
+  const ul = $('dirtyList');
+  ul.innerHTML = '';
+  for (const p of state.dirty) ul.insertAdjacentHTML('beforeend', `<li>📝 ${p}</li>`);
+  for (const u of state.pendingUploads) ul.insertAdjacentHTML('beforeend', `<li>🖼️ ${u.path}</li>`);
+  if (!n) ul.innerHTML = '<li class="muted">Nothing to publish.</li>';
+}
+
+// ── UTF-8-safe base64 ────────────────────────────────────────────────────────
+function b64encode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000)
+    bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+function b64decode(b64) {
+  const bin = atob(b64.replace(/\n/g, ''));
+  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+function bufToB64(buf) {
+  const bytes = new Uint8Array(buf);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000)
+    bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+
+// ── GitHub fetch / commit ────────────────────────────────────────────────────
+async function ghGetJson(path, fallback) {
+  const res = await fetch(`${API}/${path}?ref=${BRANCH}`, { headers: headers() });
+  if (res.status === 404) return { data: fallback, sha: null, missing: true };
+  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+  const body = await res.json();
+  const text = b64decode(body.content).replace(/^﻿/, '');
+  return { data: JSON.parse(text), sha: body.sha, missing: false };
+}
+
+async function ghPut(path, base64, message) {
+  // Fetch current sha right before writing so repeated publishes don't 409.
+  let sha = state.shas[path];
+  if (sha === undefined) {
+    const head = await fetch(`${API}/${path}?ref=${BRANCH}`, { headers: headers() });
+    sha = head.ok ? (await head.json()).sha : null;
+  }
+  const res = await fetch(`${API}/${path}`, {
+    method: 'PUT',
+    headers: { ...headers(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, content: base64, branch: BRANCH, ...(sha ? { sha } : {}) }),
+  });
+  if (!res.ok) throw new Error(`${path}: HTTP ${res.status} — ${(await res.text()).slice(0, 200)}`);
+  const body = await res.json();
+  state.shas[path] = body.content.sha;
+}
+
+// ── Load everything ──────────────────────────────────────────────────────────
+async function loadAll() {
+  const btn = $('loadBtn');
+  btn.disabled = true; btn.textContent = 'Loading…';
+  try {
+    const [man, cfg, tpl, txt] = await Promise.all([
+      ghGetJson('manifest.json', null),
+      ghGetJson('app_config.json', { hiddenCategories: [], hiddenTemplates: [], hiddenImages: [] }),
+      ghGetJson('templates_db.json', null),
+      ghGetJson('imageTexts.json', {}),
+    ]);
+    if (!man.data) throw new Error('manifest.json not found in the repo');
+    state.manifest = man.data;  state.shas['manifest.json'] = man.sha;
+    state.config = { hiddenCategories: [], hiddenTemplates: [], hiddenImages: [], ...cfg.data };
+    state.shas['app_config.json'] = cfg.sha;
+    state.templates = tpl.data;  state.shas['templates_db.json'] = tpl.sha;
+    state.texts = txt.data;      state.shas['imageTexts.json'] = txt.sha;
+    if (!state.templates) {
+      state.templates = [];
+      alert('templates_db.json is not in the assets repo yet.\nUse "Seed from app project" on the Templates tab to load assets/templates_db.json, then Publish.');
+    }
+    renderAll();
+  } catch (e) {
+    alert('Load failed: ' + e.message + '\n\nCheck the token (needs repo scope for ' + OWNER + '/' + REPO + ').');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Load';
+  }
+}
+$('loadBtn').addEventListener('click', loadAll);
+
+// ── Tabs ─────────────────────────────────────────────────────────────────────
+document.querySelectorAll('nav button').forEach((b) =>
+  b.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach((x) => x.classList.remove('active'));
+    document.querySelectorAll('section.tab').forEach((x) => x.classList.remove('active'));
+    b.classList.add('active');
+    $('tab-' + b.dataset.tab).classList.add('active');
+  }));
+
+function renderAll() { renderCats(); renderTemplates(); renderCaptions(); refreshDirtyUI(); }
+
+// ── Images & categories tab ──────────────────────────────────────────────────
+function renderCats() {
+  const root = $('catList');
+  root.innerHTML = '';
+  if (!state.manifest) { root.innerHTML = '<p class="muted">Press Load first.</p>'; return; }
+  const cfg = state.config;
+  const entries = Object.entries(state.manifest.categories)
+    .sort(([a, ca], [b, cb]) => (ca.kind !== cb.kind ? (ca.kind === 'image' ? -1 : 1) : (ca.group - cb.group) || a.localeCompare(b)));
+
+  for (const [name, cat] of entries) {
+    const catHidden = cfg.hiddenCategories.includes(name);
+    const div = document.createElement('div');
+    div.className = 'cat';
+    div.innerHTML = `
+      <div class="cat-head">
+        <b>${name}</b>
+        <span class="kind">${cat.kind} · group ${cat.group} · ${cat.images.length} files</span>
+        ${catHidden ? '<span class="hidden-flag">HIDDEN IN APP</span>' : ''}
+        <span style="flex:1"></span>
+        <label class="muted" style="cursor:pointer">＋ add images<input type="file" multiple accept="image/*" hidden></label>
+        <button class="toggleCat">${catHidden ? 'Show in app' : 'Hide from app'}</button>
+        <button class="expand">▾</button>
+      </div>
+      <div class="grid" style="display:none"></div>`;
+    const grid = div.querySelector('.grid');
+
+    div.querySelector('.toggleCat').addEventListener('click', () => {
+      const i = cfg.hiddenCategories.indexOf(name);
+      if (i >= 0) cfg.hiddenCategories.splice(i, 1); else cfg.hiddenCategories.push(name);
+      markDirty('app_config.json'); renderCats();
+    });
+    div.querySelector('.expand').addEventListener('click', (e) => {
+      const open = grid.style.display !== 'none';
+      grid.style.display = open ? 'none' : 'grid';
+      e.target.textContent = open ? '▾' : '▴';
+      if (!open && !grid.childElementCount) fillGrid(grid, name, cat);
+    });
+    div.querySelector('input[type=file]').addEventListener('change', (e) => addImages(name, cat, e.target.files));
+    root.appendChild(div);
+  }
+}
+
+function fillGrid(grid, catName, cat) {
+  for (const img of cat.images) {
+    const off = state.config.hiddenImages.includes(img);
+    const cell = document.createElement('div');
+    cell.className = 'thumb' + (off ? ' off' : '');
+    cell.innerHTML = `
+      <img loading="lazy" src="${RAW}/all_images/${img}">
+      <div class="bar"><span title="${img}">${img}</span>
+      <button>${off ? 'Show' : 'Hide'}</button></div>`;
+    cell.querySelector('button').addEventListener('click', () => {
+      const list = state.config.hiddenImages;
+      const i = list.indexOf(img);
+      if (i >= 0) list.splice(i, 1); else list.push(img);
+      markDirty('app_config.json');
+      cell.classList.toggle('off');
+      cell.querySelector('button').textContent = list.includes(img) ? 'Show' : 'Hide';
+    });
+    grid.appendChild(cell);
+  }
+}
+
+function allFilenames() {
+  const set = new Set();
+  for (const c of Object.values(state.manifest.categories)) c.images.forEach((f) => set.add(f));
+  state.pendingUploads.forEach((u) => set.add(u.path.replace('all_images/', '')));
+  return set;
+}
+
+async function addImages(catName, cat, files) {
+  if (!files.length) return;
+  const taken = allFilenames();
+  for (const file of files) {
+    const ext = (file.name.split('.').pop() || 'webp').toLowerCase();
+    let n = cat.images.length + 1, name;
+    do { name = `${catName}_${n}.${ext}`; n++; } while (taken.has(name));
+    taken.add(name);
+    const b64 = bufToB64(await file.arrayBuffer());
+    state.pendingUploads.push({ path: `all_images/${name}`, base64: b64, label: file.name });
+    cat.images.push(name);
+    cat.count = cat.images.length;
+  }
+  recount();
+  markDirty('manifest.json');
+  renderCats();
+}
+
+function recount() {
+  const m = state.manifest;
+  let t = 0, i = 0;
+  for (const c of Object.values(m.categories)) {
+    c.count = c.images.length;
+    if (c.kind === 'template') t += c.count; else i += c.count;
+  }
+  m.counts = { templates: t, images: i };
+  m.totalImages = t + i;
+  m.generated = new Date().toISOString();
+}
+
+$('newCatBtn').addEventListener('click', () => {
+  const name = $('newCatName').value.trim().toLowerCase().replace(/\s+/g, '_');
+  if (!name) return alert('Give the category a name');
+  if (state.manifest.categories[name]) return alert('Category already exists');
+  state.manifest.categories[name] = {
+    kind: $('newCatKind').value, group: parseInt($('newCatGroup').value || '2', 10), count: 0, images: [],
+  };
+  $('newCatName').value = '';
+  markDirty('manifest.json');
+  renderCats();
+});
+
+// ── Templates tab ────────────────────────────────────────────────────────────
+function renderTemplates() {
+  const grid = $('tplGrid');
+  grid.innerHTML = '';
+  const list = state.templates || [];
+  $('tplCount').textContent = `${list.length} templates`;
+  list.forEach((t, idx) => {
+    const off = state.config.hiddenTemplates.includes(t.id) ||
+                state.config.hiddenCategories.includes(t.category || t.title || 'Other');
+    const cell = document.createElement('div');
+    cell.className = 'thumb' + (off ? ' off' : '');
+    const src = t.remoteFile ? `${RAW}/all_images/${t.remoteFile}` : (t.templateUri || '');
+    cell.innerHTML = `
+      <img loading="lazy" src="${src}">
+      <span class="tpl-badge">${t.category || ''}</span>
+      <div class="bar"><span title="${t.id}">${t.id}</span>
+        <span style="display:flex;gap:4px">
+          <button class="edit">Edit</button>
+          <button class="tog">${state.config.hiddenTemplates.includes(t.id) ? 'Show' : 'Hide'}</button>
+        </span></div>`;
+    cell.querySelector('.tog').addEventListener('click', () => {
+      const list2 = state.config.hiddenTemplates;
+      const i = list2.indexOf(t.id);
+      if (i >= 0) list2.splice(i, 1); else list2.push(t.id);
+      markDirty('app_config.json'); renderTemplates();
+    });
+    cell.querySelector('.edit').addEventListener('click', () => openTplEditor(idx));
+    grid.appendChild(cell);
+  });
+}
+
+$('seedTplFile').addEventListener('change', async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  state.templates = JSON.parse(await f.text());
+  markDirty('templates_db.json');
+  renderTemplates();
+});
+$('seedTextsFile').addEventListener('change', async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  state.texts = JSON.parse(await f.text());
+  markDirty('imageTexts.json');
+  renderCaptions();
+});
+
+// ── Template layout editor ───────────────────────────────────────────────────
+const STAGE_H = 460;
+let ed = null; // { index (-1 = new), tplW, tplH, scale, photo {x,y,w,h}, text {x,y} }
+
+function openTplEditor(index) {
+  const isNew = index < 0;
+  const t = isNew ? null : state.templates[index];
+  ed = {
+    index,
+    tplW: t?.templateWidth || 1024, tplH: t?.templateHeight || 1024,
+    photo: t ? { ...t.photoPosition } : { x: 262, y: 300, w: 500, h: 500 },
+    text: { x: t?.textConfig?.y != null ? (typeof t.textConfig.x === 'number' ? t.textConfig.x : 0) : 0, y: t?.textConfig?.y ?? 900 },
+    file: t?.remoteFile || null, uploadB64: null, uploadName: null,
+  };
+  if (t && t.photoPosition) ed.photo = { x: t.photoPosition.x, y: t.photoPosition.y, w: t.photoPosition.width, h: t.photoPosition.height };
+
+  // background chooser: all files from template-kind categories + any file
+  const sel = $('tplBgSelect');
+  sel.innerHTML = '<option value="">— choose —</option>';
+  for (const [cn, c] of Object.entries(state.manifest.categories))
+    for (const img of c.images)
+      sel.insertAdjacentHTML('beforeend', `<option value="${img}" ${img === ed.file ? 'selected' : ''}>${cn} / ${img}</option>`);
+
+  $('tplModalTitle').textContent = isNew ? 'New template' : `Edit ${t.id}`;
+  $('tplCategory').value = t?.category || '';
+  $('tplTags').value = (t?.tags || []).join(', ');
+  $('tplFontSize').value = t?.textConfig?.fontSize && t.textConfig.fontSize > 24 ? t.textConfig.fontSize : 56;
+  $('tplColor').value = t?.textConfig?.color || '#ffffff';
+  $('tplAlign').value = t?.textConfig?.textAlign || 'center';
+  $('tplRound').checked = t ? (t.photoPosition?.borderRadius || 0) > 0 : true;
+  $('tplDeleteBtn').style.display = isNew ? 'none' : '';
+  $('tplModalBack').classList.add('open');
+  loadStageImage();
+}
+
+function loadStageImage() {
+  const img = $('tplBg');
+  const url = ed.uploadB64
+    ? `data:image/*;base64,${ed.uploadB64}`
+    : ed.file ? `${RAW}/all_images/${ed.file}` : '';
+  img.src = url;
+  img.onload = () => {
+    if (img.naturalWidth > 0) { ed.tplW = img.naturalWidth; ed.tplH = img.naturalHeight; }
+    layoutStage();
+  };
+  if (!url) layoutStage();
+}
+
+function layoutStage() {
+  ed.scale = STAGE_H / ed.tplH;
+  const stage = $('tplStage');
+  stage.style.width = Math.round(ed.tplW * ed.scale) + 'px';
+  stage.style.height = STAGE_H + 'px';
+  positionOverlays();
+}
+
+function positionOverlays() {
+  const s = ed.scale, p = ed.photo;
+  const pb = $('photoBox');
+  pb.style.left = p.x * s + 'px';  pb.style.top = p.y * s + 'px';
+  pb.style.width = p.w * s + 'px'; pb.style.height = p.h * s + 'px';
+  pb.style.borderRadius = $('tplRound').checked ? '50%' : '8px';
+  const tb = $('textBox');
+  tb.style.fontSize = Math.max(10, parseFloat($('tplFontSize').value || '56') * s) + 'px';
+  tb.style.color = $('tplColor').value;
+  tb.style.top = ed.text.y * s + 'px';
+  const align = $('tplAlign').value;
+  if (align === 'center') { tb.style.left = '50%'; tb.style.transform = 'translateX(-50%)'; }
+  else { tb.style.transform = ''; tb.style.left = ed.text.x * s + 'px'; }
+}
+['tplFontSize', 'tplColor', 'tplAlign', 'tplRound'].forEach((id) =>
+  $(id).addEventListener('input', positionOverlays));
+
+$('tplBgSelect').addEventListener('change', (e) => {
+  ed.file = e.target.value || null; ed.uploadB64 = null; ed.uploadName = null;
+  loadStageImage();
+});
+$('tplBgUpload').addEventListener('change', async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  ed.uploadB64 = bufToB64(await f.arrayBuffer());
+  ed.uploadName = f.name;
+  ed.file = null;
+  loadStageImage();
+});
+
+// drag / resize in stage space → template pixel space
+function dragify(el, onMove) {
+  el.addEventListener('pointerdown', (e) => {
+    if (e.target.id === 'photoHandle' && el.id === 'photoBox') return;
+    e.preventDefault();
+    el.setPointerCapture(e.pointerId);
+    let last = { x: e.clientX, y: e.clientY };
+    const move = (ev) => {
+      onMove((ev.clientX - last.x) / ed.scale, (ev.clientY - last.y) / ed.scale);
+      last = { x: ev.clientX, y: ev.clientY };
+      positionOverlays();
+    };
+    const up = () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up); };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', up);
+  });
+}
+dragify($('photoBox'), (dx, dy) => {
+  ed.photo.x = Math.max(0, Math.min(ed.tplW - ed.photo.w, ed.photo.x + dx));
+  ed.photo.y = Math.max(0, Math.min(ed.tplH - ed.photo.h, ed.photo.y + dy));
+});
+dragify($('textBox'), (dx, dy) => {
+  ed.text.y = Math.max(0, Math.min(ed.tplH - 40, ed.text.y + dy));
+  if ($('tplAlign').value !== 'center') ed.text.x = Math.max(0, ed.text.x + dx);
+});
+$('photoHandle').addEventListener('pointerdown', (e) => {
+  e.preventDefault(); e.stopPropagation();
+  const h = $('photoHandle');
+  h.setPointerCapture(e.pointerId);
+  let last = { x: e.clientX, y: e.clientY };
+  const move = (ev) => {
+    ed.photo.w = Math.max(60, ed.photo.w + (ev.clientX - last.x) / ed.scale);
+    ed.photo.h = Math.max(60, ed.photo.h + (ev.clientY - last.y) / ed.scale);
+    last = { x: ev.clientX, y: ev.clientY };
+    positionOverlays();
+  };
+  const up = () => { h.removeEventListener('pointermove', move); h.removeEventListener('pointerup', up); };
+  h.addEventListener('pointermove', move);
+  h.addEventListener('pointerup', up);
+});
+
+$('newTplBtn').addEventListener('click', () => {
+  if (!state.manifest) return alert('Press Load first');
+  openTplEditor(-1);
+});
+$('tplCancelBtn').addEventListener('click', () => $('tplModalBack').classList.remove('open'));
+$('tplDeleteBtn').addEventListener('click', () => {
+  if (ed.index < 0) return;
+  if (!confirm('Remove this template from templates_db.json?')) return;
+  state.templates.splice(ed.index, 1);
+  markDirty('templates_db.json');
+  $('tplModalBack').classList.remove('open');
+  renderTemplates();
+});
+
+$('tplSaveBtn').addEventListener('click', () => {
+  const category = $('tplCategory').value.trim() || 'Other';
+  let remoteFile = ed.file;
+
+  // A freshly uploaded background gets queued like Images-tab uploads.
+  if (ed.uploadB64) {
+    const ext = (ed.uploadName.split('.').pop() || 'webp').toLowerCase();
+    const taken = allFilenames();
+    let n = 1, name;
+    do { name = `${category.toLowerCase()}_tpl_${n}.${ext}`; n++; } while (taken.has(name));
+    state.pendingUploads.push({ path: `all_images/${name}`, base64: ed.uploadB64, label: ed.uploadName });
+    remoteFile = name;
+    // register in a template-kind manifest category so it's tracked
+    const catKey = category.toLowerCase();
+    if (!state.manifest.categories[catKey]) {
+      state.manifest.categories[catKey] = { kind: 'template', group: 2, count: 0, images: [] };
+    }
+    state.manifest.categories[catKey].images.push(name);
+    recount();
+    markDirty('manifest.json');
+  }
+  if (!remoteFile) return alert('Choose or upload a background image first');
+
+  const align = $('tplAlign').value;
+  const round = $('tplRound').checked;
+  const tpl = {
+    id: ed.index >= 0 ? state.templates[ed.index].id
+        : `${category.toLowerCase()}_${remoteFile.replace(/\.[^.]+$/, '')}_${Date.now().toString(36)}`,
+    title: category,
+    category,
+    templateUri: `${RAW}/all_images/${remoteFile}`,
+    thumbnailUri: `${RAW}/all_images/${remoteFile}`,
+    templateWidth: Math.round(ed.tplW),
+    templateHeight: Math.round(ed.tplH),
+    photoPosition: {
+      x: Math.round(ed.photo.x), y: Math.round(ed.photo.y),
+      width: Math.round(ed.photo.w), height: Math.round(ed.photo.h),
+      borderRadius: round ? Math.round(Math.min(ed.photo.w, ed.photo.h) / 2) : 0,
+    },
+    textConfig: {
+      defaultText: 'Your Name',
+      x: align === 'center' ? 0 : Math.round(ed.text.x),
+      y: Math.round(ed.text.y),
+      width: '100%',
+      fontSize: parseInt($('tplFontSize').value || '56', 10),
+      color: $('tplColor').value,
+      fontFamily: 'Inter-Medium',
+      textAlign: align,
+    },
+    remoteFile,
+    tags: $('tplTags').value.split(',').map((s) => s.trim()).filter(Boolean),
+  };
+  if (ed.index >= 0) state.templates[ed.index] = tpl;
+  else state.templates.push(tpl);
+  markDirty('templates_db.json');
+  $('tplModalBack').classList.remove('open');
+  renderTemplates();
+});
+
+// ── Captions tab ─────────────────────────────────────────────────────────────
+function renderCaptions() {
+  const root = $('capList');
+  root.innerHTML = '';
+  if (!state.manifest) { root.innerHTML = '<p class="muted">Press Load first.</p>'; return; }
+  for (const [cn, cat] of Object.entries(state.manifest.categories)) {
+    if (cat.kind !== 'image') continue;
+    const div = document.createElement('div');
+    div.className = 'cat';
+    div.innerHTML = `<div class="cat-head"><b>${cn}</b>
+      <span class="kind">${cat.images.length} images</span>
+      <span style="flex:1"></span><button class="expand">▾</button></div>
+      <div class="body" style="display:none"></div>`;
+    const body = div.querySelector('.body');
+    div.querySelector('.expand').addEventListener('click', (e) => {
+      const open = body.style.display !== 'none';
+      body.style.display = open ? 'none' : 'block';
+      e.target.textContent = open ? '▾' : '▴';
+      if (!open && !body.childElementCount) fillCaptions(body, cat);
+    });
+    root.appendChild(div);
+  }
+}
+
+function fillCaptions(body, cat) {
+  for (const img of cat.images) {
+    const row = document.createElement('div');
+    row.className = 'caption-img';
+    row.innerHTML = `<img loading="lazy" src="${RAW}/all_images/${img}">
+      <div class="caption-list"><div class="muted" style="margin-bottom:4px">${img}</div></div>`;
+    const list = row.querySelector('.caption-list');
+    const redraw = () => {
+      list.querySelectorAll('.row').forEach((r) => r.remove());
+      const arr = state.texts[img] ?? [];
+      arr.forEach((txt, i) => {
+        const r = document.createElement('div');
+        r.className = 'row';
+        r.innerHTML = `<input value=""><button class="danger">✕</button>`;
+        r.querySelector('input').value = txt;
+        r.querySelector('input').addEventListener('change', (e) => {
+          state.texts[img][i] = e.target.value;
+          markDirty('imageTexts.json');
+        });
+        r.querySelector('button').addEventListener('click', () => {
+          state.texts[img].splice(i, 1);
+          markDirty('imageTexts.json'); redraw();
+        });
+        list.appendChild(r);
+      });
+      const add = document.createElement('div');
+      add.className = 'row';
+      add.innerHTML = `<button>＋ add caption</button>`;
+      add.querySelector('button').addEventListener('click', () => {
+        (state.texts[img] = state.texts[img] || []).push('New caption');
+        markDirty('imageTexts.json'); redraw();
+      });
+      list.appendChild(add);
+    };
+    redraw();
+    body.appendChild(row);
+  }
+}
+
+// ── Publish ──────────────────────────────────────────────────────────────────
+function log(msg) {
+  const el = $('log');
+  el.textContent += msg + '\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+$('publishBtn').addEventListener('click', async () => {
+  if (!tokenInput.value.trim()) return alert('Paste your GitHub token first (repo scope).');
+  const btn = $('publishBtn');
+  btn.disabled = true;
+  $('log').textContent = '';
+  try {
+    // Image binaries first, so JSON that references them lands after.
+    for (const up of [...state.pendingUploads]) {
+      log(`Uploading ${up.path} …`);
+      await ghPut(up.path, up.base64, `admin: add ${up.path}`);
+      state.pendingUploads.splice(state.pendingUploads.indexOf(up), 1);
+      refreshDirtyUI();
+    }
+    const files = {
+      'manifest.json': () => state.manifest,
+      'app_config.json': () => state.config,
+      'templates_db.json': () => state.templates,
+      'imageTexts.json': () => state.texts,
+    };
+    for (const [path, get] of Object.entries(files)) {
+      if (!state.dirty.has(path)) continue;
+      log(`Committing ${path} …`);
+      await ghPut(path, b64encode(JSON.stringify(get(), null, 2)), `admin: update ${path}`);
+      state.dirty.delete(path);
+      refreshDirtyUI();
+    }
+    log('✅ Published. The app will see it on next launch (allow ~5 min for the CDN).');
+  } catch (e) {
+    log('❌ ' + e.message);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+refreshDirtyUI();
+if (tokenInput.value) loadAll();
+</script>
+</body>
+</html>
