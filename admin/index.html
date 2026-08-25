@@ -177,6 +177,10 @@
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+// Thumbnails: when hosted on the repo's own GitHub Pages site, images are
+// same-origin on the Pages CDN — fast and unthrottled. raw.githubusercontent
+// throttles pages requesting hundreds of images, so thumbs stall or never load.
+const IMG = location.hostname.endsWith('.github.io') ? `/${REPO}` : RAW;
 
 document.getElementById('repoPill').textContent = `${OWNER}/${REPO}@${BRANCH}`;
 document.getElementById('repoLabel').textContent = `${OWNER}/${REPO}`;
@@ -357,7 +361,7 @@ function fillGrid(grid, catName, cat) {
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
     cell.innerHTML = `
-      <img loading="lazy" src="${RAW}/all_images/${img}">
+      <img loading="lazy" src="${IMG}/all_images/${img}">
       <div class="bar"><span title="${img}">${img}</span>
       <button>${off ? 'Show' : 'Hide'}</button></div>`;
     cell.querySelector('button').addEventListener('click', () => {
@@ -432,7 +436,7 @@ function renderTemplates() {
                 state.config.hiddenCategories.includes(t.category || t.title || 'Other');
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
-    const src = t.remoteFile ? `${RAW}/all_images/${t.remoteFile}` : (t.templateUri || '');
+    const src = t.remoteFile ? `${IMG}/all_images/${t.remoteFile}` : (t.templateUri || '');
     cell.innerHTML = `
       <img loading="lazy" src="${src}">
       <span class="tpl-badge">${t.category || ''}</span>
@@ -504,7 +508,7 @@ function loadStageImage() {
   const img = $('tplBg');
   const url = ed.uploadB64
     ? `data:image/*;base64,${ed.uploadB64}`
-    : ed.file ? `${RAW}/all_images/${ed.file}` : '';
+    : ed.file ? `${IMG}/all_images/${ed.file}` : '';
   img.src = url;
   img.onload = () => {
     if (img.naturalWidth > 0) { ed.tplW = img.naturalWidth; ed.tplH = img.naturalHeight; }
@@ -692,7 +696,7 @@ function fillCaptions(body, cat) {
   for (const img of cat.images) {
     const row = document.createElement('div');
     row.className = 'caption-img';
-    row.innerHTML = `<img loading="lazy" src="${RAW}/all_images/${img}">
+    row.innerHTML = `<img loading="lazy" src="${IMG}/all_images/${img}">
       <div class="caption-list"><div class="muted" style="margin-bottom:4px">${img}</div></div>`;
     const list = row.querySelector('.caption-list');
     const redraw = () => {
