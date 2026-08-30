@@ -92,6 +92,8 @@
       <select id="newCatKind"><option value="image">Images tab (share-as-is)</option><option value="template">Templates (photo posters)</option></select>
       <input id="newCatGroup" type="number" value="2" min="1" max="9" style="width:64px" title="display group">
       <button id="newCatBtn">＋ Create category</button>
+      <span style="flex:1"></span>
+      <label class="muted" style="cursor:pointer" title="Pick a folder — each subfolder becomes a category (or the folder itself if it has no subfolders), using the kind/group selected on the left">📁 Load folder<input type="file" id="folderUpload" webkitdirectory hidden></label>
     </div>
     <div id="catList"></div>
   </section>
@@ -333,6 +335,7 @@ function renderCats() {
         ${catHidden ? '<span class="hidden-flag">HIDDEN IN APP</span>' : ''}
         <span style="flex:1"></span>
         <label class="muted" style="cursor:pointer">＋ add images<input type="file" multiple accept="image/*" hidden></label>
+        <label class="muted" style="cursor:pointer">＋ add folder<input type="file" webkitdirectory hidden></label>
         <button class="toggleCat">${catHidden ? 'Show in app' : 'Hide from app'}</button>
         <button class="expand">▾</button>
       </div>
@@ -350,7 +353,9 @@ function renderCats() {
       e.target.textContent = open ? '▾' : '▴';
       if (!open && !grid.childElementCount) fillGrid(grid, name, cat);
     });
-    div.querySelector('input[type=file]').addEventListener('change', (e) => addImages(name, cat, e.target.files));
+    const [picker, folderPicker] = div.querySelectorAll('input[type=file]');
+    picker.addEventListener('change', (e) => addImages(name, cat, e.target.files));
+    folderPicker.addEventListener('change', (e) => addImages(name, cat, e.target.files));
     root.appendChild(div);
   }
 }
@@ -383,7 +388,12 @@ function allFilenames() {
   return set;
 }
 
+function imageFilesOnly(files) {
+  return [...files].filter((f) => f.type.startsWith('image/'));
+}
+
 async function addImages(catName, cat, files) {
+  files = imageFilesOnly(files);
   if (!files.length) return;
   const taken = allFilenames();
   for (const file of files) {
@@ -423,6 +433,35 @@ $('newCatBtn').addEventListener('click', () => {
   $('newCatName').value = '';
   markDirty('manifest.json');
   renderCats();
+});
+
+// Folder upload: each top-level subfolder becomes a category (or the picked
+// folder itself when it holds images directly). Non-image files are skipped.
+$('folderUpload').addEventListener('change', async (e) => {
+  if (!state.manifest) return alert('Press Load first');
+  const files = imageFilesOnly(e.target.files);
+  e.target.value = '';
+  if (!files.length) return alert('No image files found in that folder');
+
+  const groups = new Map(); // category name -> files
+  for (const f of files) {
+    const parts = (f.webkitRelativePath || f.name).split('/');
+    // "root/file.webp" → root; "root/sub/file.webp" → sub; deeper nesting → first subfolder
+    const raw = parts.length >= 3 ? parts[1] : parts[0];
+    const name = raw.trim().toLowerCase().replace(/\s+/g, '_');
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push(f);
+  }
+
+  for (const [name, catFiles] of groups) {
+    if (!state.manifest.categories[name]) {
+      state.manifest.categories[name] = {
+        kind: $('newCatKind').value, group: parseInt($('newCatGroup').value || '2', 10), count: 0, images: [],
+      };
+      markDirty('manifest.json');
+    }
+    await addImages(name, state.manifest.categories[name], catFiles);
+  }
 });
 
 // ── Templates tab ────────────────────────────────────────────────────────────
