@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyStyle Content Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Great+Vibes&family=Lobster&family=Noto+Sans+Devanagari:wght@600;700&family=Pacifico&family=Playfair+Display:wght@600;700&family=Poppins:wght@600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0f172a; --panel: #1e293b; --panel2: #0b1220; --border: #334155;
@@ -46,13 +49,42 @@
   .modal-back { position: fixed; inset: 0; background: rgba(2,6,23,.8); display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow: auto; padding: 30px 10px; }
   .modal-back.open { display: flex; }
   .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; width: min(980px, 96vw); }
-  .editor-wrap { display: flex; gap: 18px; flex-wrap: wrap; }
-  #tplStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 10px; flex: 0 0 auto; }
+  /* ── Canva-style template editor ── */
+  #tplModalBack.open { padding: 0; align-items: stretch; overflow: hidden; }
+  .editor { display: flex; flex-direction: column; width: 100vw; height: 100vh; background: var(--bg); }
+  .ed-top { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .zoombar { display: flex; align-items: center; gap: 6px; margin-right: 8px; }
+  .zoombar button { padding: 4px 10px; }
+  .ed-body { flex: 1; display: flex; min-height: 0; }
+  .ed-canvas { flex: 1; overflow: auto; display: grid; place-items: center; padding: 24px;
+    background: #0a0f1e; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 22px 22px; }
+  .ed-side { width: 300px; flex: 0 0 300px; overflow-y: auto; background: var(--panel); border-left: 1px solid var(--border); padding: 14px; display: flex; flex-direction: column; gap: 14px; }
+  .ed-sec { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--panel2); }
+  .ed-sec.sel { border-color: var(--accent); }
+  .ed-sec h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .ed-sec label { font-size: 12px; color: var(--muted); display: block; margin: 7px 0 2px; }
+  .ed-sec input[type=number] { width: 62px; }
+  .ed-sec select, .ed-sec input[type=text], .ed-sec input:not([type]) { width: 100%; }
+  .seg { display: flex; gap: 4px; }
+  .seg button { flex: 1; padding: 5px 6px; font-size: 12px; }
+  .seg button.on { background: var(--accent); color: #06222a; border-color: var(--accent); font-weight: 700; }
+  .xywh { display: flex; gap: 6px; flex-wrap: wrap; }
+  .xywh label { margin: 0; }
+  #tplStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 6px; flex: 0 0 auto; box-shadow: 0 8px 40px rgba(0,0,0,.55); }
   #tplStage img.bg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  #photoBox { position: absolute; border: 2px dashed var(--accent); background: rgba(6,182,212,.18); cursor: move; }
-  #photoBox .handle { position: absolute; right: -8px; bottom: -8px; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; cursor: nwse-resize; }
-  #textBox { position: absolute; cursor: move; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
-  .fields { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 9px; }
+  .guide { position: absolute; background: #f0abfc; display: none; z-index: 6; pointer-events: none; }
+  .guide.v { width: 1px; top: 0; bottom: 0; }
+  .guide.h { height: 1px; left: 0; right: 0; }
+  #photoBox { position: absolute; border: 1.5px dashed rgba(6,182,212,.9); background: rgba(6,182,212,.14); cursor: move; display: grid; place-items: center; }
+  #photoBox.sel { border-style: solid; border-width: 2px; box-shadow: 0 0 0 1px rgba(6,182,212,.35); }
+  #photoBox .ph { font-size: 34px; opacity: .5; pointer-events: none; }
+  #photoBox .handle { position: absolute; width: 12px; height: 12px; background: #fff; border: 2px solid var(--accent); border-radius: 50%; display: none; z-index: 7; }
+  #photoBox.sel .handle { display: block; }
+  .handle.nw { left: -7px; top: -7px; cursor: nwse-resize; } .handle.se { right: -7px; bottom: -7px; cursor: nwse-resize; }
+  .handle.ne { right: -7px; top: -7px; cursor: nesw-resize; } .handle.sw { left: -7px; bottom: -7px; cursor: nesw-resize; }
+  #textBox { position: absolute; cursor: move; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.6); border: 1.5px dashed transparent; padding: 2px 6px; z-index: 4; }
+  #textBox:hover { border-color: rgba(6,182,212,.5); }
+  #textBox.sel { border-color: var(--accent); border-style: solid; }
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
   .caption-img { display: flex; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--border); }
   .caption-img img { width: 84px; height: 110px; object-fit: cover; border-radius: 8px; }
@@ -130,36 +162,83 @@
   </section>
 </main>
 
-<!-- ── TEMPLATE EDITOR MODAL ────────────────────────────────────────────── -->
+<!-- ── TEMPLATE EDITOR (full-screen, Canva-style) ───────────────────────── -->
 <div class="modal-back" id="tplModalBack">
-  <div class="modal">
-    <h3 style="margin-top:0" id="tplModalTitle">Template layout</h3>
-    <div class="editor-wrap">
-      <div>
+  <div class="editor">
+    <div class="ed-top">
+      <b id="tplModalTitle">Template layout</b>
+      <span class="muted">click an element to select · drag to move · arrows nudge</span>
+      <span style="flex:1"></span>
+      <div class="zoombar">
+        <button id="zoomOut" title="Zoom out">−</button>
+        <span class="muted" id="zoomPct" style="min-width:44px;text-align:center">100%</span>
+        <button id="zoomIn" title="Zoom in">＋</button>
+        <button id="zoomFit" title="Fit to screen">Fit</button>
+      </div>
+      <button id="tplDeleteBtn" class="danger">Delete</button>
+      <button id="tplCancelBtn">Cancel</button>
+      <button id="tplSaveBtn" class="primary">Save template</button>
+    </div>
+    <div class="ed-body">
+      <div class="ed-canvas" id="edCanvas">
         <div id="tplStage">
           <img class="bg" id="tplBg" alt="">
-          <div id="photoBox"><div class="handle" id="photoHandle"></div></div>
+          <div class="guide v" id="guideV"></div>
+          <div class="guide h" id="guideH"></div>
+          <div id="photoBox">
+            <span class="ph">👤</span>
+            <div class="handle nw" data-corner="nw"></div>
+            <div class="handle ne" data-corner="ne"></div>
+            <div class="handle sw" data-corner="sw"></div>
+            <div class="handle se" data-corner="se"></div>
+          </div>
           <div id="textBox">Your Name</div>
         </div>
-        <p class="muted" style="max-width:340px">Drag the dashed box where the user's photo goes (corner dot resizes). Drag the text to place the name.</p>
       </div>
-      <div class="fields">
-        <div><label>Background image (from all_images/)</label>
-          <select id="tplBgSelect"></select></div>
-        <div><label>…or upload a new background</label>
-          <input type="file" id="tplBgUpload" accept="image/*"></div>
-        <div><label>Category</label><input id="tplCategory" placeholder="Birthday"></div>
-        <div><label>Tags (comma separated)</label><input id="tplTags" placeholder="birthday, cake, wishes"></div>
-        <div class="row" style="margin:0">
-          <div><label>Font size (px)</label><input id="tplFontSize" type="number" value="56" style="width:80px"></div>
-          <div><label>Text colour</label><input id="tplColor" type="color" value="#ffffff"></div>
-          <div><label>Align</label><select id="tplAlign"><option>center</option><option>left</option><option>right</option></select></div>
-          <div><label>Round photo</label><input id="tplRound" type="checkbox" checked></div>
+      <div class="ed-side">
+        <div class="ed-sec">
+          <h4>Background</h4>
+          <label>From all_images/</label>
+          <select id="tplBgSelect"></select>
+          <label>…or upload new</label>
+          <input type="file" id="tplBgUpload" accept="image/*">
         </div>
-        <div class="row" style="margin-top:auto">
-          <button id="tplSaveBtn" class="primary">Save template</button>
-          <button id="tplCancelBtn">Cancel</button>
-          <button id="tplDeleteBtn" class="danger" style="margin-left:auto">Delete</button>
+        <div class="ed-sec" id="secPhoto">
+          <h4>Photo frame</h4>
+          <div class="seg" id="shapeSeg">
+            <button data-shape="circle">● Circle</button>
+            <button data-shape="rounded">▢ Rounded</button>
+            <button data-shape="square">■ Square</button>
+          </div>
+          <label style="margin-top:8px">Position &amp; size (template px)</label>
+          <div class="xywh">
+            <label>X <input id="phX" type="number"></label>
+            <label>Y <input id="phY" type="number"></label>
+            <label>W <input id="phW" type="number"></label>
+            <label>H <input id="phH" type="number"></label>
+          </div>
+        </div>
+        <div class="ed-sec" id="secText">
+          <h4>Name text</h4>
+          <label>Default text</label>
+          <input id="tplDefaultText" value="Your Name">
+          <label>Font</label>
+          <select id="tplFont"></select>
+          <div class="row" style="margin:8px 0 0">
+            <label style="margin:0">Size <input id="tplFontSize" type="number" value="56" style="width:64px"></label>
+            <label style="margin:0">Colour <input id="tplColor" type="color" value="#ffffff"></label>
+          </div>
+          <label>Align</label>
+          <div class="seg" id="alignSeg">
+            <button data-align="left">⟸ Left</button>
+            <button data-align="center">≡ Center</button>
+            <button data-align="right">⟹ Right</button>
+          </div>
+        </div>
+        <div class="ed-sec">
+          <h4>Details</h4>
+          <label>Category</label><input id="tplCategory" placeholder="Birthday">
+          <label>Tags (comma separated)</label><input id="tplTags" placeholder="birthday, cake, wishes">
         </div>
       </div>
     </div>
@@ -508,23 +587,50 @@ $('seedTextsFile').addEventListener('change', async (e) => {
   renderCaptions();
 });
 
-// ── Template layout editor ───────────────────────────────────────────────────
-const STAGE_H = 460;
-let ed = null; // { index (-1 = new), tplW, tplH, scale, photo {x,y,w,h}, text {x,y} }
+// ── Template layout editor (Canva-style) ─────────────────────────────────────
+// Fonts must match the app's registry in lib/fonts.ts: [appFamily, label, cssFamily, weight]
+const FONTS = [
+  ['Poppins_700Bold', 'Poppins', "'Poppins', sans-serif", 700],
+  ['Poppins_600SemiBold', 'Poppins Semi', "'Poppins', sans-serif", 600],
+  ['PlayfairDisplay_700Bold', 'Playfair', "'Playfair Display', serif", 700],
+  ['PlayfairDisplay_600SemiBold', 'Playfair Semi', "'Playfair Display', serif", 600],
+  ['Anton_400Regular', 'Anton', "'Anton', sans-serif", 400],
+  ['Pacifico_400Regular', 'Pacifico', "'Pacifico', cursive", 400],
+  ['GreatVibes_400Regular', 'Great Vibes', "'Great Vibes', cursive", 400],
+  ['DancingScript_700Bold', 'Dancing Script', "'Dancing Script', cursive", 700],
+  ['Lobster_400Regular', 'Lobster', "'Lobster', cursive", 400],
+  ['Rajdhani_700Bold', 'Rajdhani', "'Rajdhani', sans-serif", 700],
+  ['Rajdhani_600SemiBold', 'Rajdhani Semi', "'Rajdhani', sans-serif", 600],
+  ['NotoSansDevanagari_700Bold', 'हिंदी Devanagari', "'Noto Sans Devanagari', sans-serif", 700],
+];
+{
+  const sel = $('tplFont');
+  for (const [fam, label, css, w] of FONTS)
+    sel.insertAdjacentHTML('beforeend', `<option value="${fam}" style="font-family:${css};font-weight:${w}">${label}</option>`);
+}
+const fontCss = (fam) => FONTS.find((f) => f[0] === fam) || FONTS[0];
+
+const SNAP = 10; // snap distance in template px (scaled by zoom below)
+let ed = null;   // { index (-1 = new), tplW, tplH, fit, zoom, scale, photo, text, shape, align, sel }
 
 function openTplEditor(index) {
   const isNew = index < 0;
   const t = isNew ? null : state.templates[index];
+  const br = t?.photoPosition?.borderRadius || 0;
+  const pw = t?.photoPosition?.width || 500, phh = t?.photoPosition?.height || 500;
   ed = {
     index,
     tplW: t?.templateWidth || 1024, tplH: t?.templateHeight || 1024,
-    photo: t ? { ...t.photoPosition } : { x: 262, y: 300, w: 500, h: 500 },
-    text: { x: t?.textConfig?.y != null ? (typeof t.textConfig.x === 'number' ? t.textConfig.x : 0) : 0, y: t?.textConfig?.y ?? 900 },
+    photo: t?.photoPosition
+      ? { x: t.photoPosition.x, y: t.photoPosition.y, w: pw, h: phh }
+      : { x: 262, y: 300, w: 500, h: 500 },
+    text: { x: typeof t?.textConfig?.x === 'number' ? t.textConfig.x : 0, y: t?.textConfig?.y ?? 900 },
+    shape: !t ? 'circle' : br >= Math.min(pw, phh) / 2 ? 'circle' : br > 0 ? 'rounded' : 'square',
+    align: t?.textConfig?.textAlign || 'center',
     file: t?.remoteFile || null, uploadB64: null, uploadName: null,
+    zoom: 1, fit: 1, scale: 1, sel: null,
   };
-  if (t && t.photoPosition) ed.photo = { x: t.photoPosition.x, y: t.photoPosition.y, w: t.photoPosition.width, h: t.photoPosition.height };
 
-  // background chooser: all files from template-kind categories + any file
   const sel = $('tplBgSelect');
   sel.innerHTML = '<option value="">— choose —</option>';
   for (const [cn, c] of Object.entries(state.manifest.categories))
@@ -534,12 +640,14 @@ function openTplEditor(index) {
   $('tplModalTitle').textContent = isNew ? 'New template' : `Edit ${t.id}`;
   $('tplCategory').value = t?.category || '';
   $('tplTags').value = (t?.tags || []).join(', ');
+  $('tplDefaultText').value = t?.textConfig?.defaultText || 'Your Name';
   $('tplFontSize').value = t?.textConfig?.fontSize && t.textConfig.fontSize > 24 ? t.textConfig.fontSize : 56;
   $('tplColor').value = t?.textConfig?.color || '#ffffff';
-  $('tplAlign').value = t?.textConfig?.textAlign || 'center';
-  $('tplRound').checked = t ? (t.photoPosition?.borderRadius || 0) > 0 : true;
+  $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
   $('tplModalBack').classList.add('open');
+  selectEl(null);
+  syncSegs();
   loadStageImage();
 }
 
@@ -551,35 +659,91 @@ function loadStageImage() {
   img.src = url;
   img.onload = () => {
     if (img.naturalWidth > 0) { ed.tplW = img.naturalWidth; ed.tplH = img.naturalHeight; }
-    layoutStage();
+    fitStage();
   };
-  if (!url) layoutStage();
+  if (!url) fitStage();
+}
+
+function fitStage() {
+  const c = $('edCanvas');
+  ed.fit = Math.min((c.clientWidth - 60) / ed.tplW, (c.clientHeight - 60) / ed.tplH, 1.5);
+  ed.zoom = 1;
+  layoutStage();
 }
 
 function layoutStage() {
-  ed.scale = STAGE_H / ed.tplH;
+  ed.scale = ed.fit * ed.zoom;
   const stage = $('tplStage');
   stage.style.width = Math.round(ed.tplW * ed.scale) + 'px';
-  stage.style.height = STAGE_H + 'px';
+  stage.style.height = Math.round(ed.tplH * ed.scale) + 'px';
+  $('zoomPct').textContent = Math.round(ed.scale * 100) + '%';
   positionOverlays();
 }
+$('zoomIn').addEventListener('click', () => { ed.zoom = Math.min(ed.zoom * 1.25, 8); layoutStage(); });
+$('zoomOut').addEventListener('click', () => { ed.zoom = Math.max(ed.zoom / 1.25, 0.15); layoutStage(); });
+$('zoomFit').addEventListener('click', fitStage);
+window.addEventListener('resize', () => { if (ed && $('tplModalBack').classList.contains('open')) fitStage(); });
 
 function positionOverlays() {
   const s = ed.scale, p = ed.photo;
   const pb = $('photoBox');
   pb.style.left = p.x * s + 'px';  pb.style.top = p.y * s + 'px';
   pb.style.width = p.w * s + 'px'; pb.style.height = p.h * s + 'px';
-  pb.style.borderRadius = $('tplRound').checked ? '50%' : '8px';
+  pb.style.borderRadius = ed.shape === 'circle' ? '50%' : ed.shape === 'rounded' ? Math.min(p.w, p.h) * 0.12 * s + 'px' : '0';
+  pb.querySelector('.ph').style.fontSize = Math.min(p.w, p.h) * 0.4 * s + 'px';
+
   const tb = $('textBox');
-  tb.style.fontSize = Math.max(10, parseFloat($('tplFontSize').value || '56') * s) + 'px';
+  const [, , css, weight] = fontCss($('tplFont').value);
+  tb.textContent = $('tplDefaultText').value || 'Your Name';
+  tb.style.fontFamily = css;
+  tb.style.fontWeight = weight;
+  tb.style.fontSize = Math.max(6, parseFloat($('tplFontSize').value || '56') * s) + 'px';
   tb.style.color = $('tplColor').value;
   tb.style.top = ed.text.y * s + 'px';
-  const align = $('tplAlign').value;
-  if (align === 'center') { tb.style.left = '50%'; tb.style.transform = 'translateX(-50%)'; }
-  else { tb.style.transform = ''; tb.style.left = ed.text.x * s + 'px'; }
+  if (ed.align === 'center') { tb.style.left = '50%'; tb.style.transform = 'translateX(-50%)'; }
+  else if (ed.align === 'right') { tb.style.transform = ''; tb.style.left = ''; tb.style.right = (ed.tplW - ed.text.x) * s + 'px'; }
+  else { tb.style.transform = ''; tb.style.right = ''; tb.style.left = ed.text.x * s + 'px'; }
+  if (ed.align !== 'right') tb.style.right = '';
+
+  // sync numeric inputs
+  $('phX').value = Math.round(p.x); $('phY').value = Math.round(p.y);
+  $('phW').value = Math.round(p.w); $('phH').value = Math.round(p.h);
 }
-['tplFontSize', 'tplColor', 'tplAlign', 'tplRound'].forEach((id) =>
-  $(id).addEventListener('input', positionOverlays));
+['tplFontSize', 'tplColor', 'tplDefaultText', 'tplFont'].forEach((id) =>
+  $(id).addEventListener('input', () => positionOverlays()));
+
+// numeric X/Y/W/H edits
+[['phX', 'x'], ['phY', 'y'], ['phW', 'w'], ['phH', 'h']].forEach(([id, k]) =>
+  $(id).addEventListener('change', (e) => {
+    const v = parseFloat(e.target.value);
+    if (Number.isFinite(v)) ed.photo[k] = Math.max(k === 'w' || k === 'h' ? 60 : 0, v);
+    positionOverlays();
+  }));
+
+// segmented controls
+function syncSegs() {
+  document.querySelectorAll('#shapeSeg button').forEach((b) => b.classList.toggle('on', b.dataset.shape === ed.shape));
+  document.querySelectorAll('#alignSeg button').forEach((b) => b.classList.toggle('on', b.dataset.align === ed.align));
+}
+document.querySelectorAll('#shapeSeg button').forEach((b) =>
+  b.addEventListener('click', () => { ed.shape = b.dataset.shape; syncSegs(); positionOverlays(); }));
+document.querySelectorAll('#alignSeg button').forEach((b) =>
+  b.addEventListener('click', () => {
+    ed.align = b.dataset.align;
+    if (ed.align === 'left') ed.text.x = Math.max(0, Math.min(ed.text.x, ed.tplW - 100)) || 60;
+    if (ed.align === 'right') ed.text.x = ed.text.x > 100 ? ed.text.x : ed.tplW - 60;
+    syncSegs(); positionOverlays();
+  }));
+
+// selection
+function selectEl(which) {
+  ed.sel = which;
+  $('photoBox').classList.toggle('sel', which === 'photo');
+  $('textBox').classList.toggle('sel', which === 'text');
+  $('secPhoto').classList.toggle('sel', which === 'photo');
+  $('secText').classList.toggle('sel', which === 'text');
+}
+$('edCanvas').addEventListener('pointerdown', (e) => { if (e.target === $('edCanvas') || e.target === $('tplBg') || e.target === $('tplStage')) selectEl(null); });
 
 $('tplBgSelect').addEventListener('change', (e) => {
   ed.file = e.target.value || null; ed.uploadB64 = null; ed.uploadName = null;
@@ -593,11 +757,20 @@ $('tplBgUpload').addEventListener('change', async (e) => {
   loadStageImage();
 });
 
+// center snap guides
+function snapGuides(showV, showH) {
+  $('guideV').style.display = showV ? 'block' : 'none';
+  $('guideV').style.left = ed.tplW / 2 * ed.scale + 'px';
+  $('guideH').style.display = showH ? 'block' : 'none';
+  $('guideH').style.top = ed.tplH / 2 * ed.scale + 'px';
+}
+
 // drag / resize in stage space → template pixel space
-function dragify(el, onMove) {
+function dragify(el, which, onMove) {
   el.addEventListener('pointerdown', (e) => {
-    if (e.target.id === 'photoHandle' && el.id === 'photoBox') return;
+    if (e.target.classList.contains('handle')) return;
     e.preventDefault();
+    selectEl(which);
     el.setPointerCapture(e.pointerId);
     let last = { x: e.clientX, y: e.clientY };
     const move = (ev) => {
@@ -605,33 +778,74 @@ function dragify(el, onMove) {
       last = { x: ev.clientX, y: ev.clientY };
       positionOverlays();
     };
-    const up = () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up); };
+    const up = () => {
+      el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up);
+      snapGuides(false, false);
+    };
     el.addEventListener('pointermove', move);
     el.addEventListener('pointerup', up);
   });
 }
-dragify($('photoBox'), (dx, dy) => {
-  ed.photo.x = Math.max(0, Math.min(ed.tplW - ed.photo.w, ed.photo.x + dx));
-  ed.photo.y = Math.max(0, Math.min(ed.tplH - ed.photo.h, ed.photo.y + dy));
+dragify($('photoBox'), 'photo', (dx, dy) => {
+  const p = ed.photo;
+  p.x = Math.max(0, Math.min(ed.tplW - p.w, p.x + dx));
+  p.y = Math.max(0, Math.min(ed.tplH - p.h, p.y + dy));
+  const snap = SNAP / ed.zoom;
+  const cx = p.x + p.w / 2, cy = p.y + p.h / 2;
+  const nearV = Math.abs(cx - ed.tplW / 2) < snap, nearH = Math.abs(cy - ed.tplH / 2) < snap;
+  if (nearV) p.x = ed.tplW / 2 - p.w / 2;
+  if (nearH) p.y = ed.tplH / 2 - p.h / 2;
+  snapGuides(nearV, nearH);
 });
-dragify($('textBox'), (dx, dy) => {
+dragify($('textBox'), 'text', (dx, dy) => {
   ed.text.y = Math.max(0, Math.min(ed.tplH - 40, ed.text.y + dy));
-  if ($('tplAlign').value !== 'center') ed.text.x = Math.max(0, ed.text.x + dx);
+  if (ed.align !== 'center') ed.text.x = Math.max(0, Math.min(ed.tplW, ed.text.x + dx));
+  const snap = SNAP / ed.zoom;
+  const nearH = Math.abs(ed.text.y - ed.tplH / 2) < snap;
+  if (nearH) ed.text.y = ed.tplH / 2;
+  snapGuides(false, nearH);
 });
-$('photoHandle').addEventListener('pointerdown', (e) => {
-  e.preventDefault(); e.stopPropagation();
-  const h = $('photoHandle');
-  h.setPointerCapture(e.pointerId);
-  let last = { x: e.clientX, y: e.clientY };
-  const move = (ev) => {
-    ed.photo.w = Math.max(60, ed.photo.w + (ev.clientX - last.x) / ed.scale);
-    ed.photo.h = Math.max(60, ed.photo.h + (ev.clientY - last.y) / ed.scale);
-    last = { x: ev.clientX, y: ev.clientY };
-    positionOverlays();
-  };
-  const up = () => { h.removeEventListener('pointermove', move); h.removeEventListener('pointerup', up); };
-  h.addEventListener('pointermove', move);
-  h.addEventListener('pointerup', up);
+
+// corner resize handles
+document.querySelectorAll('#photoBox .handle').forEach((h) =>
+  h.addEventListener('pointerdown', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    selectEl('photo');
+    const corner = h.dataset.corner;
+    h.setPointerCapture(e.pointerId);
+    let last = { x: e.clientX, y: e.clientY };
+    const move = (ev) => {
+      const dx = (ev.clientX - last.x) / ed.scale, dy = (ev.clientY - last.y) / ed.scale;
+      last = { x: ev.clientX, y: ev.clientY };
+      const p = ed.photo, right = p.x + p.w, bottom = p.y + p.h;
+      if (corner.includes('w')) { p.x = Math.max(0, Math.min(right - 60, p.x + dx)); p.w = right - p.x; }
+      else { p.w = Math.max(60, Math.min(ed.tplW - p.x, p.w + dx)); }
+      if (corner.includes('n')) { p.y = Math.max(0, Math.min(bottom - 60, p.y + dy)); p.h = bottom - p.y; }
+      else { p.h = Math.max(60, Math.min(ed.tplH - p.y, p.h + dy)); }
+      positionOverlays();
+    };
+    const up = () => { h.removeEventListener('pointermove', move); h.removeEventListener('pointerup', up); };
+    h.addEventListener('pointermove', move);
+    h.addEventListener('pointerup', up);
+  }));
+
+// keyboard nudging for the selected element
+document.addEventListener('keydown', (e) => {
+  if (!ed || !$('tplModalBack').classList.contains('open') || !ed.sel) return;
+  if (/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement?.tagName || '')) return;
+  const step = (e.shiftKey ? 10 : 1);
+  const map = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
+  const d = map[e.key];
+  if (!d) return;
+  e.preventDefault();
+  if (ed.sel === 'photo') {
+    ed.photo.x = Math.max(0, Math.min(ed.tplW - ed.photo.w, ed.photo.x + d[0]));
+    ed.photo.y = Math.max(0, Math.min(ed.tplH - ed.photo.h, ed.photo.y + d[1]));
+  } else {
+    if (ed.align !== 'center') ed.text.x = Math.max(0, ed.text.x + d[0]);
+    ed.text.y = Math.max(0, Math.min(ed.tplH - 40, ed.text.y + d[1]));
+  }
+  positionOverlays();
 });
 
 $('newTplBtn').addEventListener('click', () => {
@@ -671,8 +885,9 @@ $('tplSaveBtn').addEventListener('click', () => {
   }
   if (!remoteFile) return alert('Choose or upload a background image first');
 
-  const align = $('tplAlign').value;
-  const round = $('tplRound').checked;
+  const align = ed.align;
+  const radius = ed.shape === 'circle' ? Math.round(Math.min(ed.photo.w, ed.photo.h) / 2)
+    : ed.shape === 'rounded' ? Math.round(Math.min(ed.photo.w, ed.photo.h) * 0.12) : 0;
   const tpl = {
     id: ed.index >= 0 ? state.templates[ed.index].id
         : `${category.toLowerCase()}_${remoteFile.replace(/\.[^.]+$/, '')}_${Date.now().toString(36)}`,
@@ -685,16 +900,16 @@ $('tplSaveBtn').addEventListener('click', () => {
     photoPosition: {
       x: Math.round(ed.photo.x), y: Math.round(ed.photo.y),
       width: Math.round(ed.photo.w), height: Math.round(ed.photo.h),
-      borderRadius: round ? Math.round(Math.min(ed.photo.w, ed.photo.h) / 2) : 0,
+      borderRadius: radius,
     },
     textConfig: {
-      defaultText: 'Your Name',
+      defaultText: $('tplDefaultText').value.trim() || 'Your Name',
       x: align === 'center' ? 0 : Math.round(ed.text.x),
       y: Math.round(ed.text.y),
       width: '100%',
       fontSize: parseInt($('tplFontSize').value || '56', 10),
       color: $('tplColor').value,
-      fontFamily: 'Inter-Medium',
+      fontFamily: $('tplFont').value,
       textAlign: align,
     },
     remoteFile,
