@@ -661,6 +661,8 @@ function loadStageImage() {
     if (img.naturalWidth > 0) { ed.tplW = img.naturalWidth; ed.tplH = img.naturalHeight; }
     fitStage();
   };
+  // CDN may briefly 404 fresh uploads — lay out anyway with the stored size.
+  img.onerror = () => fitStage();
   if (!url) fitStage();
 }
 
