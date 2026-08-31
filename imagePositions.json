@@ -1,0 +1,612 @@
+{
+  "good_wishes_1.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "good_wishes_2.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "good_wishes_3.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "good_wishes_4.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "good_wishes_6.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "good_wishes_7.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "good_wishes_8.webp": {
+    "x": 0.5,
+    "y": 0.88,
+    "theme": "light"
+  },
+  "good_wishes_10.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "good_wishes_11.webp": {
+    "x": 0.5,
+    "y": 0.72,
+    "theme": "dark"
+  },
+  "good_wishes_12.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "good_wishes_13.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "good_wishes_14.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "good_wishes_15.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "good_wishes_17.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "good_wishes_18.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "dark"
+  },
+  "jokes_2.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_3.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_4.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_5.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_6.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_7.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_8.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_9.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_10.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_11.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_12.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_13.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_14.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_15.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_16.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_17.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_18.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "jokes_19.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "mantras_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "mantras_3.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "mantras_4.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "mantras_6.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "mantras_7.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "mantras_8.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "mantras_11.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "mantras_12.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "mantras_13.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "mantras_14.webp": {
+    "x": 0.5,
+    "y": 0.72,
+    "theme": "light"
+  },
+  "mantras_15.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "mantras_16.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "poems_2.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_3.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_4.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_6.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_8.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_9.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_10.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_11.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_12.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_13.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_14.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_15.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_16.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_17.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_18.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_19.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_20.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_21.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_22.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_23.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_24.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_25.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_26.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_27.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "poems_28.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "poems_29.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "poems_30.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "dark"
+  },
+  "quotes_attitude_1.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_attitude_2.webp": {
+    "x": 0.5,
+    "y": 0.88,
+    "theme": "light"
+  },
+  "quotes_attitude_3.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_good_morning_night_1.webp": {
+    "x": 0.5,
+    "y": 0.5,
+    "theme": "light"
+  },
+  "quotes_good_morning_night_2.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "dark"
+  },
+  "quotes_good_morning_night_3.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "dark"
+  },
+  "quotes_krishna_gita_1.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_krishna_gita_2.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_krishna_gita_3.webp": {
+    "x": 0.5,
+    "y": 0.72,
+    "theme": "dark"
+  },
+  "quotes_love_1.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_love_2.webp": {
+    "x": 0.5,
+    "y": 0.72,
+    "theme": "dark"
+  },
+  "quotes_love_3.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "dark"
+  },
+  "quotes_love_4.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "quotes_money_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "quotes_money_3.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_motivational_1.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_motivational_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_motivational_3.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_sad_1.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_sad_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_sad_3.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_self_love_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "quotes_self_love_3.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "dark"
+  },
+  "quotes_shayari_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_shayari_3.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_sigma_1.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "quotes_sigma_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "quotes_sigma_3.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "shayari_1.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_2.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_3.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "shayari_4.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_5.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_6.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "shayari_7.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_8.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "dark"
+  },
+  "shayari_9.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_10.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_11.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "shayari_12.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_13.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_15.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_16.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_17.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_18.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_19.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  },
+  "shayari_20.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_21.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "light"
+  },
+  "shayari_22.webp": {
+    "x": 0.5,
+    "y": 0.28,
+    "theme": "light"
+  },
+  "shayari_23.webp": {
+    "x": 0.5,
+    "y": 0.12,
+    "theme": "dark"
+  }
+}
