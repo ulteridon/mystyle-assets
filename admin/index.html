@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyStyle Studio</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:wght@500;600;700&family=Dancing+Script:wght@700&family=Great+Vibes&family=Lobster&family=Noto+Sans+Devanagari:wght@600;700&family=Pacifico&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
@@ -24,7 +25,7 @@
   .app { display: flex; min-height: 100vh; }
   .side { width: 236px; flex: 0 0 236px; background: var(--panel); border-right: 1px solid var(--border); padding: 22px 14px; display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; height: 100vh; }
   .logo { display: flex; align-items: center; gap: 11px; padding: 2px 6px 20px; }
-  .logo-mark { width: 38px; height: 38px; border-radius: 12px; background: var(--grad); display: grid; place-items: center; box-shadow: 0 6px 16px rgba(124,92,252,.35); flex: 0 0 auto; }
+  .logo-mark { width: 40px; height: 40px; display: block; flex: 0 0 auto; filter: drop-shadow(0 5px 12px rgba(124,92,252,.35)); }
   .logo-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.1; }
   .logo-sub { font-size: 11px; color: var(--muted); }
   .nav-item { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; user-select: none; }
@@ -141,9 +142,7 @@
 <div class="app">
 <aside class="side">
   <div class="logo">
-    <div class="logo-mark">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg>
-    </div>
+    <img class="logo-mark" src="logo.png" alt="MyStyle Studio">
     <div>
       <div class="logo-name">MyStyle Studio</div>
       <div class="logo-sub">content admin</div>
@@ -193,7 +192,7 @@
       <input id="newCatGroup" type="number" value="2" min="1" max="9" style="width:64px" title="display group">
       <button id="newCatBtn">＋ Create category</button>
       <span style="flex:1"></span>
-      <label class="muted" style="cursor:pointer" title="Pick a folder — each subfolder becomes a category (or the folder itself if it has no subfolders), using the kind/group selected on the left">📁 Load folder<input type="file" id="folderUpload" webkitdirectory hidden></label>
+      <label class="muted" style="cursor:pointer; display:inline-flex; align-items:center; gap:7px" title="Pick a folder — each subfolder becomes a category (or the folder itself if it has no subfolders), using the kind/group selected on the left"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Load folder<input type="file" id="folderUpload" webkitdirectory hidden></label>
     </div>
     <div id="catList"></div>
   </section>
