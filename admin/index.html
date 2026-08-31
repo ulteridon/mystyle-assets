@@ -83,6 +83,15 @@
   .handle.nw { left: -7px; top: -7px; cursor: nwse-resize; } .handle.se { right: -7px; bottom: -7px; cursor: nwse-resize; }
   .handle.ne { right: -7px; top: -7px; cursor: nesw-resize; } .handle.sw { left: -7px; bottom: -7px; cursor: nesw-resize; }
   #textBox { position: absolute; cursor: move; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.6); border: 1.5px dashed transparent; padding: 2px 6px; z-index: 4; }
+  /* card designer */
+  #cdStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 6px; box-shadow: 0 8px 40px rgba(0,0,0,.55); }
+  #cdStage img.bg { display: block; width: 100%; height: 100%; }
+  #cdText { position: absolute; cursor: move; text-align: center; line-height: 1.32; z-index: 4; box-sizing: border-box; }
+  #cdText:hover { outline: 1.5px dashed rgba(6,182,212,.6); }
+  .cap-row { display: flex; gap: 5px; margin: 4px 0; align-items: center; }
+  .cap-row input { flex: 1; min-width: 0; }
+  .cap-row.on input { outline: 1px solid var(--accent); }
+  .cap-row button { padding: 4px 8px; font-size: 12px; }
   #textBox:hover { border-color: rgba(6,182,212,.5); }
   #textBox.sel { border-color: var(--accent); border-style: solid; }
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
@@ -245,6 +254,49 @@
   </div>
 </div>
 
+<!-- ── CARD DESIGNER (Images-tab cards: shared background + caption styles) ── -->
+<div class="modal-back" id="cardModalBack">
+  <div class="editor">
+    <div class="ed-top">
+      <b id="cardTitle">Card designer</b>
+      <span class="muted">drag the caption on the image · every caption becomes its own card in the app</span>
+      <span style="flex:1"></span>
+      <button id="cardCancelBtn">Cancel</button>
+      <button id="cardSaveBtn" class="primary">Save cards</button>
+    </div>
+    <div class="ed-body">
+      <div class="ed-canvas" id="cdCanvas">
+        <div id="cdStage">
+          <img class="bg" id="cdBg" alt="">
+          <div id="cdText">caption</div>
+        </div>
+      </div>
+      <div class="ed-side">
+        <div class="ed-sec">
+          <h4>Captions — one card each</h4>
+          <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it.</p>
+          <div id="cdCapList"></div>
+          <button id="cdAddCap" style="margin-top:6px">＋ add caption</button>
+        </div>
+        <div class="ed-sec">
+          <h4>Text style — shared by all captions</h4>
+          <label>Theme</label>
+          <div class="seg" id="cdThemeSeg">
+            <button data-theme="light">◐ White text</button>
+            <button data-theme="dark">◑ Dark text</button>
+          </div>
+          <label>Font</label>
+          <select id="cdFont"><option value="">Category default</option></select>
+          <label>Size — <span id="cdSizeVal"></span>% of image width</label>
+          <input id="cdSize" type="range" min="3" max="12" step="0.2" style="width:100%">
+          <label>Position (fractions of image)</label>
+          <div class="muted" style="font-size:12px" id="cdPos"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 'use strict';
 // ─────────────────────────────────────────────────────────────────────────────
@@ -268,7 +320,7 @@ document.getElementById('repoLabel').textContent = `${OWNER}/${REPO}`;
 
 const $ = (id) => document.getElementById(id);
 const state = {
-  manifest: null, config: null, templates: null, texts: null,
+  manifest: null, config: null, templates: null, texts: null, positions: {},
   shas: {},                    // path → blob sha (needed to update)
   dirty: new Set(),            // paths with unsaved changes
   pendingUploads: [],          // {path, base64, label} — new image binaries
@@ -358,11 +410,12 @@ async function loadAll() {
   const btn = $('loadBtn');
   btn.disabled = true; btn.textContent = 'Loading…';
   try {
-    const [man, cfg, tpl, txt] = await Promise.all([
+    const [man, cfg, tpl, txt, pos] = await Promise.all([
       ghGetJson('manifest.json', null),
       ghGetJson('app_config.json', { hiddenCategories: [], hiddenTemplates: [], hiddenImages: [] }),
       ghGetJson('templates_db.json', null),
       ghGetJson('imageTexts.json', {}),
+      ghGetJson('imagePositions.json', {}),
     ]);
     if (!man.data) throw new Error('manifest.json not found in the repo');
     state.manifest = man.data;  state.shas['manifest.json'] = man.sha;
@@ -370,6 +423,7 @@ async function loadAll() {
     state.shas['app_config.json'] = cfg.sha;
     state.templates = tpl.data;  state.shas['templates_db.json'] = tpl.sha;
     state.texts = txt.data;      state.shas['imageTexts.json'] = txt.sha;
+    state.positions = pos.data;  state.shas['imagePositions.json'] = pos.sha;
     if (!state.templates) {
       state.templates = [];
       alert('templates_db.json is not in the assets repo yet.\nUse "Seed from app project" on the Templates tab to load assets/templates_db.json, then Publish.');
@@ -447,15 +501,17 @@ function fillGrid(grid, catName, cat) {
     cell.innerHTML = `
       <img loading="lazy" src="${IMG}/all_images/${img}">
       <div class="bar"><span title="${img}">${img}</span>
-      <button>${off ? 'Show' : 'Hide'}</button></div>`;
-    cell.querySelector('button').addEventListener('click', () => {
+      <button class="design" title="Design caption cards">✎</button>
+      <button class="vis">${off ? 'Show' : 'Hide'}</button></div>`;
+    cell.querySelector('.vis').addEventListener('click', () => {
       const list = state.config.hiddenImages;
       const i = list.indexOf(img);
       if (i >= 0) list.splice(i, 1); else list.push(img);
       markDirty('app_config.json');
       cell.classList.toggle('off');
-      cell.querySelector('button').textContent = list.includes(img) ? 'Show' : 'Hide';
+      cell.querySelector('.vis').textContent = list.includes(img) ? 'Show' : 'Hide';
     });
+    cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img));
     grid.appendChild(cell);
   }
 }
@@ -924,6 +980,161 @@ $('tplSaveBtn').addEventListener('click', () => {
   renderTemplates();
 });
 
+// ── Card designer (Images tab) ───────────────────────────────────────────────
+// One background + N captions = N cards in the app. Placement/theme/font/size
+// are stored per background in imagePositions.json — mirrors the app's
+// ImageComposite renderer so the preview matches the phone.
+let cd = null; // { file, imgW, imgH, stageW, pos {x,y,theme,fontFamily?,fontSize?}, caps [], capIdx }
+
+{
+  const sel = $('cdFont');
+  for (const [fam, label, css, w] of FONTS)
+    sel.insertAdjacentHTML('beforeend', `<option value="${fam}" style="font-family:${css};font-weight:${w}">${label}</option>`);
+}
+
+function openCardDesigner(file) {
+  const p = state.positions[file] || {};
+  cd = {
+    file,
+    imgW: 1080, imgH: 1080, stageW: 400,
+    pos: {
+      x: typeof p.x === 'number' ? p.x : 0.5,
+      y: typeof p.y === 'number' ? p.y : 0.5,
+      theme: p.theme === 'dark' ? 'dark' : 'light',
+      fontFamily: p.fontFamily || '',
+      fontSize: typeof p.fontSize === 'number' ? p.fontSize : 0.058,
+    },
+    caps: [...(state.texts[file] || [])],
+    capIdx: 0,
+  };
+  if (!cd.caps.length) cd.caps = ['Your caption here'];
+
+  $('cardTitle').textContent = `Design cards — ${file}`;
+  $('cdFont').value = cd.pos.fontFamily;
+  $('cdSize').value = (cd.pos.fontSize * 100).toFixed(1);
+  $('cardModalBack').classList.add('open');
+  syncCdTheme();
+  renderCapList();
+
+  const img = $('cdBg');
+  img.src = `${IMG}/all_images/${file}`;
+  img.onload = () => {
+    if (img.naturalWidth > 0) { cd.imgW = img.naturalWidth; cd.imgH = img.naturalHeight; }
+    layoutCdStage();
+  };
+  img.onerror = () => layoutCdStage();
+  layoutCdStage();
+}
+
+function layoutCdStage() {
+  const c = $('cdCanvas');
+  const ratio = cd.imgH / cd.imgW;
+  cd.stageW = Math.min(c.clientWidth - 60, (c.clientHeight - 60) / ratio, cd.imgW);
+  const stage = $('cdStage');
+  stage.style.width = Math.round(cd.stageW) + 'px';
+  stage.style.height = Math.round(cd.stageW * ratio) + 'px';
+  renderCdText();
+}
+
+// Mirrors the app's ImageComposite: block centred on (x,y), clamped inside.
+function renderCdText() {
+  const el = $('cdText');
+  const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
+  const fontSize = Math.max(8, W * cd.pos.fontSize);
+  const dark = cd.pos.theme === 'dark';
+  const [, , css, weight] = fontCss(cd.pos.fontFamily || 'Poppins_700Bold');
+  el.textContent = cd.caps[cd.capIdx] ?? '';
+  Object.assign(el.style, {
+    color: dark ? '#141414' : '#ffffff',
+    background: dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
+    fontSize: fontSize + 'px',
+    fontFamily: css,
+    fontWeight: weight,
+    borderRadius: fontSize * 0.7 + 'px',
+    padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
+    maxWidth: W * 0.86 + 'px',
+    whiteSpace: 'normal',
+  });
+  // measure, then centre on the anchor, clamped like the app does
+  const bw = el.offsetWidth, bh = el.offsetHeight;
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  el.style.left = clamp(cd.pos.x * W - bw / 2, 0, Math.max(0, W - bw)) + 'px';
+  el.style.top = clamp(cd.pos.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
+  $('cdPos').textContent = `x ${cd.pos.x.toFixed(3)} · y ${cd.pos.y.toFixed(3)}`;
+  $('cdSizeVal').textContent = (cd.pos.fontSize * 100).toFixed(1);
+}
+
+function syncCdTheme() {
+  document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
+    b.classList.toggle('on', b.dataset.theme === cd.pos.theme));
+}
+
+function renderCapList() {
+  const root = $('cdCapList');
+  root.innerHTML = '';
+  cd.caps.forEach((txt, i) => {
+    const row = document.createElement('div');
+    row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '');
+    row.innerHTML = `<input value=""><button class="danger" title="remove">✕</button>`;
+    const inp = row.querySelector('input');
+    inp.value = txt;
+    inp.addEventListener('focus', () => { cd.capIdx = i; renderCapList(); renderCdText(); });
+    inp.addEventListener('input', (e) => { cd.caps[i] = e.target.value; if (cd.capIdx === i) renderCdText(); });
+    row.querySelector('button').addEventListener('click', () => {
+      cd.caps.splice(i, 1);
+      if (!cd.caps.length) cd.caps = [''];
+      cd.capIdx = Math.min(cd.capIdx, cd.caps.length - 1);
+      renderCapList(); renderCdText();
+    });
+    root.appendChild(row);
+  });
+}
+$('cdAddCap').addEventListener('click', () => {
+  cd.caps.push('');
+  cd.capIdx = cd.caps.length - 1;
+  renderCapList(); renderCdText();
+  const inputs = $('cdCapList').querySelectorAll('input');
+  inputs[inputs.length - 1]?.focus();
+});
+
+document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
+  b.addEventListener('click', () => { cd.pos.theme = b.dataset.theme; syncCdTheme(); renderCdText(); }));
+$('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
+$('cdSize').addEventListener('input', (e) => { cd.pos.fontSize = parseFloat(e.target.value) / 100; renderCdText(); });
+
+$('cdText').addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  const el = $('cdText');
+  el.setPointerCapture(e.pointerId);
+  const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
+  let last = { x: e.clientX, y: e.clientY };
+  const move = (ev) => {
+    cd.pos.x = Math.min(1, Math.max(0, cd.pos.x + (ev.clientX - last.x) / W));
+    cd.pos.y = Math.min(1, Math.max(0, cd.pos.y + (ev.clientY - last.y) / H));
+    last = { x: ev.clientX, y: ev.clientY };
+    renderCdText();
+  };
+  const up = () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up); };
+  el.addEventListener('pointermove', move);
+  el.addEventListener('pointerup', up);
+});
+
+$('cardCancelBtn').addEventListener('click', () => $('cardModalBack').classList.remove('open'));
+$('cardSaveBtn').addEventListener('click', () => {
+  const caps = cd.caps.map((s) => s.trim()).filter(Boolean);
+  state.texts[cd.file] = caps;
+  if (!caps.length) delete state.texts[cd.file];
+  const pos = { x: +cd.pos.x.toFixed(4), y: +cd.pos.y.toFixed(4), theme: cd.pos.theme };
+  if (cd.pos.fontFamily) pos.fontFamily = cd.pos.fontFamily;
+  if (Math.abs(cd.pos.fontSize - 0.058) > 0.0005) pos.fontSize = +cd.pos.fontSize.toFixed(4);
+  state.positions[cd.file] = pos;
+  markDirty('imageTexts.json');
+  markDirty('imagePositions.json');
+  $('cardModalBack').classList.remove('open');
+  renderCaptions();
+});
+window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
+
 // ── Captions tab ─────────────────────────────────────────────────────────────
 function renderCaptions() {
   const root = $('capList');
@@ -1012,6 +1223,7 @@ $('publishBtn').addEventListener('click', async () => {
       'app_config.json': () => state.config,
       'templates_db.json': () => state.templates,
       'imageTexts.json': () => state.texts,
+      'imagePositions.json': () => state.positions,
     };
     for (const [path, get] of Object.entries(files)) {
       if (!state.dirty.has(path)) continue;
