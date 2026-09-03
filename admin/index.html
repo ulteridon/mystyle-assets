@@ -348,6 +348,11 @@
             <button data-theme="light">◐ White text</button>
             <button data-theme="dark">◑ Dark text</button>
           </div>
+          <label>Text background</label>
+          <div class="seg" id="cdBgSeg">
+            <button data-bg="on">▣ Scrim</button>
+            <button data-bg="off">□ None</button>
+          </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
           <label>Size — <span id="cdSizeVal"></span>% of image width</label>
@@ -1066,6 +1071,7 @@ function openCardDesigner(file) {
       x: typeof p.x === 'number' ? p.x : 0.5,
       y: typeof p.y === 'number' ? p.y : 0.5,
       theme: p.theme === 'dark' ? 'dark' : 'light',
+      noBg: p.noBg === true,
       fontFamily: p.fontFamily || '',
       fontSize: typeof p.fontSize === 'number' ? p.fontSize : 0.058,
     },
@@ -1111,7 +1117,10 @@ function renderCdText() {
   el.textContent = cd.caps[cd.capIdx] ?? '';
   Object.assign(el.style, {
     color: dark ? '#141414' : '#ffffff',
-    background: dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
+    background: cd.pos.noBg ? 'transparent' : (dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)'),
+    textShadow: cd.pos.noBg
+      ? (dark ? `0 1px ${fontSize * 0.18}px rgba(255,255,255,.75)` : `0 1px ${fontSize * 0.18}px rgba(0,0,0,.75)`)
+      : 'none',
     fontSize: fontSize + 'px',
     fontFamily: css,
     fontWeight: weight,
@@ -1132,6 +1141,8 @@ function renderCdText() {
 function syncCdTheme() {
   document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
     b.classList.toggle('on', b.dataset.theme === cd.pos.theme));
+  document.querySelectorAll('#cdBgSeg button').forEach((b) =>
+    b.classList.toggle('on', (b.dataset.bg === 'off') === cd.pos.noBg));
 }
 
 function renderCapList() {
@@ -1164,6 +1175,8 @@ $('cdAddCap').addEventListener('click', () => {
 
 document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
   b.addEventListener('click', () => { cd.pos.theme = b.dataset.theme; syncCdTheme(); renderCdText(); }));
+document.querySelectorAll('#cdBgSeg button').forEach((b) =>
+  b.addEventListener('click', () => { cd.pos.noBg = b.dataset.bg === 'off'; syncCdTheme(); renderCdText(); }));
 $('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
 $('cdSize').addEventListener('input', (e) => { cd.pos.fontSize = parseFloat(e.target.value) / 100; renderCdText(); });
 
@@ -1190,6 +1203,7 @@ $('cardSaveBtn').addEventListener('click', () => {
   state.texts[cd.file] = caps;
   if (!caps.length) delete state.texts[cd.file];
   const pos = { x: +cd.pos.x.toFixed(4), y: +cd.pos.y.toFixed(4), theme: cd.pos.theme };
+  if (cd.pos.noBg) pos.noBg = true;
   if (cd.pos.fontFamily) pos.fontFamily = cd.pos.fontFamily;
   if (Math.abs(cd.pos.fontSize - 0.058) > 0.0005) pos.fontSize = +cd.pos.fontSize.toFixed(4);
   state.positions[cd.file] = pos;
