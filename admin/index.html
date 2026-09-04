@@ -71,6 +71,20 @@
   .thumb .bar span { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; opacity: .85; }
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
   .tpl-badge { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,.92); font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; color: var(--text); }
+  .thumb .ph-ov { position: absolute; object-fit: cover; }
+  /* auth gate */
+  .auth-back { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; background: var(--bg); }
+  .auth-card { background: var(--panel); border: 1px solid var(--border); border-radius: 22px; box-shadow: var(--shadow); padding: 36px 34px; width: min(400px, 92vw); display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; }
+  .auth-card img { width: 64px; height: 64px; filter: drop-shadow(0 8px 18px rgba(124,92,252,.35)); }
+  .auth-card h2 { margin: 4px 0 0; font-size: 22px; }
+  .auth-card p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .auth-card input { width: 100%; text-align: center; }
+  .auth-card button { width: 100%; }
+  .auth-err { color: var(--red); font-size: 12.5px; font-weight: 600; min-height: 16px; }
+  /* test photo inside the editor frame */
+  #photoBox .phimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; pointer-events: none; display: none; }
+  #photoBox.hasphoto .phimg { display: block; }
+  #photoBox.hasphoto .ph { display: none; }
   .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
   .muted { color: var(--muted); font-size: 13px; }
   .modal-back { position: fixed; inset: 0; background: rgba(36,30,46,.55); display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow: auto; padding: 30px 10px; }
@@ -139,6 +153,18 @@
 </head>
 <body>
 
+<!-- ── AUTH GATE — only collaborators with push access get in ─────────────── -->
+<div class="auth-back" id="authGate">
+  <div class="auth-card">
+    <img src="logo.png" alt="">
+    <h2 class="page-title" style="font-size:22px">MyStyle Studio</h2>
+    <p>Sign in with a GitHub token that has <b>repo</b> access to the assets repository. Only collaborators with write access can enter.</p>
+    <input id="authToken" type="password" placeholder="GitHub token">
+    <div class="auth-err" id="authErr"></div>
+    <button id="authBtn" class="primary">Sign in</button>
+  </div>
+</div>
+
 <div class="app">
 <aside class="side">
   <div class="logo">
@@ -179,6 +205,7 @@
   <span style="flex:1"></span>
   <input id="tokenInput" type="password" placeholder="GitHub token (repo scope)" style="width:240px">
   <button id="loadBtn" class="primary">Load</button>
+  <button id="signOutBtn" title="Sign out">Sign out</button>
 </div>
 
 <main>
@@ -204,6 +231,8 @@
     <div class="row">
       <button id="newTplBtn" class="primary">＋ New template</button>
       <span class="muted" id="tplCount"></span>
+      <label class="muted" style="cursor:pointer; display:inline-flex; align-items:center; gap:7px" title="Preview every template with a photo of your choice — preview only, never published"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"></path></svg>Preview with a photo<input type="file" id="gridTestPhoto" accept="image/*" hidden></label>
+      <button id="clearTestPhoto" style="display:none">✕ remove photo</button>
       <span style="flex:1"></span>
       <label class="muted">Seed from app project: <input type="file" id="seedTplFile" accept=".json"></label>
     </div>
@@ -258,6 +287,7 @@
           <div class="guide v" id="guideV"></div>
           <div class="guide h" id="guideH"></div>
           <div id="photoBox">
+            <img class="phimg" id="phImg" alt="">
             <span class="ph">👤</span>
             <div class="handle nw" data-corner="nw"></div>
             <div class="handle ne" data-corner="ne"></div>
@@ -289,6 +319,8 @@
             <label>W <input id="phW" type="number"></label>
             <label>H <input id="phH" type="number"></label>
           </div>
+          <label style="margin-top:8px">Test photo (preview only — never published)</label>
+          <input type="file" id="tplTestPhoto" accept="image/*">
         </div>
         <div class="ed-sec" id="secText">
           <h4>Name text</h4>
@@ -347,11 +379,6 @@
           <div class="seg" id="cdThemeSeg">
             <button data-theme="light">◐ White text</button>
             <button data-theme="dark">◑ Dark text</button>
-          </div>
-          <label>Text background</label>
-          <div class="seg" id="cdBgSeg">
-            <button data-bg="on">▣ Scrim</button>
-            <button data-bg="off">□ None</button>
           </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
@@ -669,6 +696,52 @@ $('folderUpload').addEventListener('change', async (e) => {
   }
 });
 
+// ── Test photo (preview only — lives in memory, never published) ────────────
+let testPhotoUrl = null;
+
+function fileToPreviewUrl(file) {
+  // Downscale to keep 58 grid overlays cheap.
+  return new Promise((resolve) => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 600;
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => resolve(fr.result);
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+function applyTestPhoto() {
+  const pb = $('photoBox');
+  if (testPhotoUrl) { $('phImg').src = testPhotoUrl; pb.classList.add('hasphoto'); }
+  else pb.classList.remove('hasphoto');
+}
+
+function setTestPhoto(url) {
+  testPhotoUrl = url;
+  $('clearTestPhoto').style.display = url ? '' : 'none';
+  if (state.templates) renderTemplates();
+  applyTestPhoto();
+}
+
+async function onTestPhotoPick(e) {
+  const f = e.target.files[0];
+  e.target.value = '';
+  if (f) setTestPhoto(await fileToPreviewUrl(f));
+}
+$('gridTestPhoto').addEventListener('change', onTestPhotoPick);
+$('tplTestPhoto').addEventListener('change', onTestPhotoPick);
+$('clearTestPhoto').addEventListener('click', () => setTestPhoto(null));
+
 // ── Templates tab ────────────────────────────────────────────────────────────
 function renderTemplates() {
   const grid = $('tplGrid');
@@ -681,8 +754,19 @@ function renderTemplates() {
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
     const src = t.remoteFile ? `${IMG}/all_images/${t.remoteFile}` : (t.templateUri || '');
+    const W = t.templateWidth || 1024, H = t.templateHeight || 1024;
+    // With the true aspect ratio, object-fit:cover never crops — so the test
+    // photo overlay lands exactly where the app renders the user's photo.
+    let overlay = '';
+    if (testPhotoUrl && t.photoPosition) {
+      const p = t.photoPosition;
+      const radius = !p.borderRadius ? '0'
+        : p.borderRadius >= Math.min(p.width, p.height) / 2 - 1 ? '50%' : '12%';
+      overlay = `<img class="ph-ov" src="${testPhotoUrl}" style="left:${(p.x / W * 100).toFixed(2)}%;top:${(p.y / H * 100).toFixed(2)}%;width:${(p.width / W * 100).toFixed(2)}%;height:${(p.height / H * 100).toFixed(2)}%;border-radius:${radius}">`;
+    }
     cell.innerHTML = `
-      <img loading="lazy" src="${src}">
+      <img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}">
+      ${overlay}
       <span class="tpl-badge">${t.category || ''}</span>
       <div class="bar"><span title="${t.id}">${t.id}</span>
         <span style="display:flex;gap:4px">
@@ -772,6 +856,7 @@ function openTplEditor(index) {
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
   $('tplModalBack').classList.add('open');
+  applyTestPhoto();
   selectEl(null);
   syncSegs();
   loadStageImage();
@@ -1071,7 +1156,6 @@ function openCardDesigner(file) {
       x: typeof p.x === 'number' ? p.x : 0.5,
       y: typeof p.y === 'number' ? p.y : 0.5,
       theme: p.theme === 'dark' ? 'dark' : 'light',
-      noBg: p.noBg === true,
       fontFamily: p.fontFamily || '',
       fontSize: typeof p.fontSize === 'number' ? p.fontSize : 0.058,
     },
@@ -1117,10 +1201,7 @@ function renderCdText() {
   el.textContent = cd.caps[cd.capIdx] ?? '';
   Object.assign(el.style, {
     color: dark ? '#141414' : '#ffffff',
-    background: cd.pos.noBg ? 'transparent' : (dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)'),
-    textShadow: cd.pos.noBg
-      ? (dark ? `0 1px ${fontSize * 0.18}px rgba(255,255,255,.75)` : `0 1px ${fontSize * 0.18}px rgba(0,0,0,.75)`)
-      : 'none',
+    background: dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
     fontSize: fontSize + 'px',
     fontFamily: css,
     fontWeight: weight,
@@ -1141,8 +1222,6 @@ function renderCdText() {
 function syncCdTheme() {
   document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
     b.classList.toggle('on', b.dataset.theme === cd.pos.theme));
-  document.querySelectorAll('#cdBgSeg button').forEach((b) =>
-    b.classList.toggle('on', (b.dataset.bg === 'off') === cd.pos.noBg));
 }
 
 function renderCapList() {
@@ -1175,8 +1254,6 @@ $('cdAddCap').addEventListener('click', () => {
 
 document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
   b.addEventListener('click', () => { cd.pos.theme = b.dataset.theme; syncCdTheme(); renderCdText(); }));
-document.querySelectorAll('#cdBgSeg button').forEach((b) =>
-  b.addEventListener('click', () => { cd.pos.noBg = b.dataset.bg === 'off'; syncCdTheme(); renderCdText(); }));
 $('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
 $('cdSize').addEventListener('input', (e) => { cd.pos.fontSize = parseFloat(e.target.value) / 100; renderCdText(); });
 
@@ -1203,7 +1280,6 @@ $('cardSaveBtn').addEventListener('click', () => {
   state.texts[cd.file] = caps;
   if (!caps.length) delete state.texts[cd.file];
   const pos = { x: +cd.pos.x.toFixed(4), y: +cd.pos.y.toFixed(4), theme: cd.pos.theme };
-  if (cd.pos.noBg) pos.noBg = true;
   if (cd.pos.fontFamily) pos.fontFamily = cd.pos.fontFamily;
   if (Math.abs(cd.pos.fontSize - 0.058) > 0.0005) pos.fontSize = +cd.pos.fontSize.toFixed(4);
   state.positions[cd.file] = pos;
@@ -1320,7 +1396,59 @@ $('publishBtn').addEventListener('click', async () => {
 });
 
 refreshDirtyUI();
-if (tokenInput.value) loadAll();
+
+// ── Auth gate ────────────────────────────────────────────────────────────────
+// The site is public HTML, but entry requires a GitHub token with push access
+// to the assets repo — verified against the GitHub API before the UI unlocks.
+async function verifyToken(t) {
+  if (!t) return false;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}`, {
+      headers: { Authorization: `Bearer ${t}`, Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) return false;
+    const repo = await res.json();
+    return !!(repo.permissions && (repo.permissions.push || repo.permissions.maintain || repo.permissions.admin));
+  } catch { return false; }
+}
+
+function showGate(msg) {
+  $('authGate').style.display = 'flex';
+  $('authErr').textContent = msg || '';
+  $('authToken').focus();
+}
+function hideGate() { $('authGate').style.display = 'none'; }
+
+async function doSignIn() {
+  const t = $('authToken').value.trim();
+  const btn = $('authBtn');
+  btn.disabled = true; btn.textContent = 'Checking…';
+  const ok = await verifyToken(t);
+  btn.disabled = false; btn.textContent = 'Sign in';
+  if (!ok) {
+    $('authErr').textContent = 'That token has no write access to ' + OWNER + '/' + REPO + '.';
+    return;
+  }
+  tokenInput.value = t;
+  storageSet('gh_token', t);
+  $('authToken').value = '';
+  hideGate();
+  loadAll();
+}
+$('authBtn').addEventListener('click', doSignIn);
+$('authToken').addEventListener('keydown', (e) => { if (e.key === 'Enter') doSignIn(); });
+
+$('signOutBtn').addEventListener('click', () => {
+  storageSet('gh_token', '');
+  tokenInput.value = '';
+  location.reload();
+});
+
+(async () => {
+  const t = tokenInput.value.trim();
+  if (t && await verifyToken(t)) { hideGate(); loadAll(); }
+  else showGate(t ? 'Saved token is no longer valid — sign in again.' : '');
+})();
 </script>
 </body>
 </html>
