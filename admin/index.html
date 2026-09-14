@@ -1323,8 +1323,17 @@ function renderCapList() {
     row.innerHTML = `<input value=""><button class="danger" title="remove">✕</button>`;
     const inp = row.querySelector('input');
     inp.value = txt;
-    inp.addEventListener('focus', () => { cd.capIdx = i; renderCapList(); renderCdText(); });
+    // Selecting a caption must not rebuild the list — that would destroy the
+    // input mid-click and drop focus, making the field impossible to type in.
+    inp.addEventListener('focus', () => {
+      cd.capIdx = i;
+      root.querySelectorAll('.cap-row').forEach((r, j) => r.classList.toggle('on', j === i));
+      renderCdText();
+    });
     inp.addEventListener('input', (e) => { cd.caps[i] = e.target.value; if (cd.capIdx === i) renderCdText(); });
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); $('cdAddCap').click(); }
+    });
     row.querySelector('button').addEventListener('click', () => {
       cd.caps.splice(i, 1);
       if (!cd.caps.length) cd.caps = [''];
