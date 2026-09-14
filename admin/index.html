@@ -72,6 +72,17 @@
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
   .tpl-badge { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,.92); font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; color: var(--text); }
   .thumb .ph-ov { position: absolute; object-fit: cover; }
+  .thumb .bar .caps { display: inline-flex; align-items: center; gap: 3px; }
+  /* rotate handle: a stem above the frame with a grab circle */
+  #photoBox .handle.rot { left: 50%; top: -30px; margin-left: -6px; cursor: grab; }
+  #photoBox .handle.rot::after { content: ''; position: absolute; left: 5px; top: 12px; width: 2px; height: 16px; background: var(--accent); }
+  #photoBox .handle.rot:active { cursor: grabbing; }
+  .rot-badge { position: absolute; top: -52px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; display: none; white-space: nowrap; }
+  #photoBox.rotating .rot-badge { display: block; }
+  .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 22px 24px; box-shadow: 0 24px 60px rgba(36,30,46,.28); margin-top: 6vh; }
+  .modal.sm { width: min(560px, 96vw); }
+  .cap-thumb { display: flex; gap: 14px; align-items: flex-start; }
+  .cap-thumb img { width: 96px; height: 128px; object-fit: cover; border-radius: 12px; flex: 0 0 auto; }
   /* auth gate */
   .auth-back { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; background: var(--bg); }
   .auth-card { background: var(--panel); border: 1px solid var(--border); border-radius: 22px; box-shadow: var(--shadow); padding: 36px 34px; width: min(400px, 92vw); display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; }
@@ -293,6 +304,8 @@
             <div class="handle ne" data-corner="ne"></div>
             <div class="handle sw" data-corner="sw"></div>
             <div class="handle se" data-corner="se"></div>
+            <div class="handle rot" id="rotHandle" title="Drag to rotate (hold Shift for 15° steps)"></div>
+            <span class="rot-badge" id="rotBadge">0°</span>
           </div>
           <div id="textBox">Your Name</div>
         </div>
@@ -318,6 +331,12 @@
             <label>Y <input id="phY" type="number"></label>
             <label>W <input id="phW" type="number"></label>
             <label>H <input id="phH" type="number"></label>
+          </div>
+          <label style="margin-top:8px">Rotation — for tilted frames</label>
+          <div class="row" style="margin:0; gap:8px">
+            <input id="phRotRange" type="range" min="-180" max="180" step="0.5" value="0" style="flex:1">
+            <input id="phRot" type="number" min="-180" max="180" step="0.5" value="0" style="width:66px">
+            <button id="phRotReset" title="Reset to 0°">↺</button>
           </div>
           <label style="margin-top:8px">Test photo (preview only — never published)</label>
           <input type="file" id="tplTestPhoto" accept="image/*">
@@ -345,6 +364,25 @@
           <label>Tags (comma separated)</label><input id="tplTags" placeholder="birthday, cake, wishes">
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CAPTION QUICK EDIT (from the Images tab) ─────────────────────────────── -->
+<div class="modal-back" id="capModalBack">
+  <div class="modal sm">
+    <div class="cap-thumb">
+      <img id="capThumb" alt="">
+      <div style="flex:1; min-width:0">
+        <h3 style="margin:0 0 2px" id="capTitle">Captions</h3>
+        <p class="muted" style="margin:0 0 10px">Each line becomes its own shareable card in the app. Use ✎ Design to style and position them.</p>
+        <div id="capQuickList"></div>
+        <button id="capQuickAdd" style="margin-top:6px">＋ add caption</button>
+      </div>
+    </div>
+    <div class="row" style="margin:16px 0 0; justify-content:flex-end">
+      <button id="capCancelBtn">Cancel</button>
+      <button id="capSaveBtn" class="primary">Save captions</button>
     </div>
   </div>
 </div>
@@ -379,6 +417,11 @@
           <div class="seg" id="cdThemeSeg">
             <button data-theme="light">◐ White text</button>
             <button data-theme="dark">◑ Dark text</button>
+          </div>
+          <label>Behind the text</label>
+          <div class="seg" id="cdBgSeg">
+            <button data-nobg="0">▣ Soft scrim</button>
+            <button data-nobg="1">▢ None (shadow only)</button>
           </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
@@ -598,6 +641,7 @@ function fillGrid(grid, catName, cat) {
     cell.innerHTML = `
       <img loading="lazy" src="${IMG}/all_images/${img}">
       <div class="bar"><span title="${img}">${img}</span>
+      <button class="caps" title="Edit captions"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path></svg><b class="capn">${(state.texts[img] || []).length}</b></button>
       <button class="design" title="Design caption cards">✎</button>
       <button class="vis">${off ? 'Show' : 'Hide'}</button></div>`;
     cell.querySelector('.vis').addEventListener('click', () => {
@@ -609,6 +653,7 @@ function fillGrid(grid, catName, cat) {
       cell.querySelector('.vis').textContent = list.includes(img) ? 'Show' : 'Hide';
     });
     cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img));
+    cell.querySelector('.caps').addEventListener('click', () => openCaptionEditor(img, cell));
     grid.appendChild(cell);
   }
 }
@@ -762,7 +807,7 @@ function renderTemplates() {
       const p = t.photoPosition;
       const radius = !p.borderRadius ? '0'
         : p.borderRadius >= Math.min(p.width, p.height) / 2 - 1 ? '50%' : '12%';
-      overlay = `<img class="ph-ov" src="${testPhotoUrl}" style="left:${(p.x / W * 100).toFixed(2)}%;top:${(p.y / H * 100).toFixed(2)}%;width:${(p.width / W * 100).toFixed(2)}%;height:${(p.height / H * 100).toFixed(2)}%;border-radius:${radius}">`;
+      overlay = `<img class="ph-ov" src="${testPhotoUrl}" style="left:${(p.x / W * 100).toFixed(2)}%;top:${(p.y / H * 100).toFixed(2)}%;width:${(p.width / W * 100).toFixed(2)}%;height:${(p.height / H * 100).toFixed(2)}%;border-radius:${radius};transform:rotate(${p.rotation || 0}deg)">`;
     }
     cell.innerHTML = `
       <img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}">
@@ -836,6 +881,7 @@ function openTplEditor(index) {
       : { x: 262, y: 300, w: 500, h: 500 },
     text: { x: typeof t?.textConfig?.x === 'number' ? t.textConfig.x : 0, y: t?.textConfig?.y ?? 900 },
     shape: !t ? 'circle' : br >= Math.min(pw, phh) / 2 ? 'circle' : br > 0 ? 'rounded' : 'square',
+    rotation: t?.photoPosition?.rotation || 0,
     align: t?.textConfig?.textAlign || 'center',
     file: t?.remoteFile || null, uploadB64: null, uploadName: null,
     zoom: 1, fit: 1, scale: 1, sel: null,
@@ -918,10 +964,44 @@ function positionOverlays() {
   else { tb.style.transform = ''; tb.style.right = ''; tb.style.left = ed.text.x * s + 'px'; }
   if (ed.align !== 'right') tb.style.right = '';
 
+  pb.style.transform = ed.rotation ? `rotate(${ed.rotation}deg)` : '';
+  $('rotBadge').textContent = `${Math.round(ed.rotation * 10) / 10}°`;
+
   // sync numeric inputs
   $('phX').value = Math.round(p.x); $('phY').value = Math.round(p.y);
   $('phW').value = Math.round(p.w); $('phH').value = Math.round(p.h);
+  $('phRot').value = Math.round(ed.rotation * 10) / 10;
+  $('phRotRange').value = ed.rotation;
 }
+
+function setRotation(deg) {
+  deg = ((deg + 180) % 360 + 360) % 360 - 180;           // normalise to (-180, 180]
+  ed.rotation = Math.round(deg * 2) / 2;
+  positionOverlays();
+}
+$('phRot').addEventListener('change', (e) => { const v = parseFloat(e.target.value); if (Number.isFinite(v)) setRotation(v); });
+$('phRotRange').addEventListener('input', (e) => setRotation(parseFloat(e.target.value)));
+$('phRotReset').addEventListener('click', () => setRotation(0));
+
+// rotate handle: drag around the frame's centre; snaps to multiples of 15° near them
+$('rotHandle').addEventListener('pointerdown', (e) => {
+  e.preventDefault(); e.stopPropagation();
+  selectEl('photo');
+  const h = $('rotHandle'), pb = $('photoBox');
+  h.setPointerCapture(e.pointerId);
+  pb.classList.add('rotating');
+  const r = pb.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const move = (ev) => {
+    let deg = Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180 / Math.PI + 90;
+    if (ev.shiftKey) deg = Math.round(deg / 15) * 15;
+    else { const near = Math.round(deg / 15) * 15; if (Math.abs(deg - near) < 2.5) deg = near; }
+    setRotation(deg);
+  };
+  const up = () => { h.removeEventListener('pointermove', move); h.removeEventListener('pointerup', up); pb.classList.remove('rotating'); };
+  h.addEventListener('pointermove', move);
+  h.addEventListener('pointerup', up);
+});
 ['tplFontSize', 'tplColor', 'tplDefaultText', 'tplFont'].forEach((id) =>
   $(id).addEventListener('input', () => positionOverlays()));
 
@@ -1020,7 +1100,7 @@ dragify($('textBox'), 'text', (dx, dy) => {
 });
 
 // corner resize handles
-document.querySelectorAll('#photoBox .handle').forEach((h) =>
+document.querySelectorAll('#photoBox .handle[data-corner]').forEach((h) =>
   h.addEventListener('pointerdown', (e) => {
     e.preventDefault(); e.stopPropagation();
     selectEl('photo');
@@ -1047,6 +1127,11 @@ document.addEventListener('keydown', (e) => {
   if (!ed || !$('tplModalBack').classList.contains('open') || !ed.sel) return;
   if (/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement?.tagName || '')) return;
   const step = (e.shiftKey ? 10 : 1);
+  if (ed.sel === 'photo' && (e.key === '[' || e.key === ']')) {
+    e.preventDefault();
+    setRotation(ed.rotation + (e.key === ']' ? step : -step));
+    return;
+  }
   const map = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
   const d = map[e.key];
   if (!d) return;
@@ -1114,6 +1199,7 @@ $('tplSaveBtn').addEventListener('click', () => {
       x: Math.round(ed.photo.x), y: Math.round(ed.photo.y),
       width: Math.round(ed.photo.w), height: Math.round(ed.photo.h),
       borderRadius: radius,
+      ...(ed.rotation ? { rotation: Math.round(ed.rotation * 10) / 10 } : {}),
     },
     textConfig: {
       defaultText: $('tplDefaultText').value.trim() || 'Your Name',
@@ -1158,6 +1244,7 @@ function openCardDesigner(file) {
       theme: p.theme === 'dark' ? 'dark' : 'light',
       fontFamily: p.fontFamily || '',
       fontSize: typeof p.fontSize === 'number' ? p.fontSize : 0.058,
+      noBg: !!p.noBg,
     },
     caps: [...(state.texts[file] || [])],
     capIdx: 0,
@@ -1201,7 +1288,8 @@ function renderCdText() {
   el.textContent = cd.caps[cd.capIdx] ?? '';
   Object.assign(el.style, {
     color: dark ? '#141414' : '#ffffff',
-    background: dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
+    background: cd.pos.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
+    textShadow: cd.pos.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
     fontSize: fontSize + 'px',
     fontFamily: css,
     fontWeight: weight,
@@ -1222,6 +1310,8 @@ function renderCdText() {
 function syncCdTheme() {
   document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
     b.classList.toggle('on', b.dataset.theme === cd.pos.theme));
+  document.querySelectorAll('#cdBgSeg button').forEach((b) =>
+    b.classList.toggle('on', (b.dataset.nobg === '1') === !!cd.pos.noBg));
 }
 
 function renderCapList() {
@@ -1254,6 +1344,8 @@ $('cdAddCap').addEventListener('click', () => {
 
 document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
   b.addEventListener('click', () => { cd.pos.theme = b.dataset.theme; syncCdTheme(); renderCdText(); }));
+document.querySelectorAll('#cdBgSeg button').forEach((b) =>
+  b.addEventListener('click', () => { cd.pos.noBg = b.dataset.nobg === '1'; syncCdTheme(); renderCdText(); }));
 $('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
 $('cdSize').addEventListener('input', (e) => { cd.pos.fontSize = parseFloat(e.target.value) / 100; renderCdText(); });
 
@@ -1282,6 +1374,7 @@ $('cardSaveBtn').addEventListener('click', () => {
   const pos = { x: +cd.pos.x.toFixed(4), y: +cd.pos.y.toFixed(4), theme: cd.pos.theme };
   if (cd.pos.fontFamily) pos.fontFamily = cd.pos.fontFamily;
   if (Math.abs(cd.pos.fontSize - 0.058) > 0.0005) pos.fontSize = +cd.pos.fontSize.toFixed(4);
+  if (cd.pos.noBg) pos.noBg = true;
   state.positions[cd.file] = pos;
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
@@ -1289,6 +1382,59 @@ $('cardSaveBtn').addEventListener('click', () => {
   renderCaptions();
 });
 window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
+
+// ── Caption quick editor (Images tab) ────────────────────────────────────────
+let capEd = null; // { file, caps, cell }
+
+function openCaptionEditor(file, cell) {
+  capEd = { file, caps: [...(state.texts[file] || [])], cell };
+  if (!capEd.caps.length) capEd.caps = [''];
+  $('capTitle').textContent = file;
+  $('capThumb').src = `${IMG}/all_images/${file}`;
+  renderCapQuickList();
+  $('capModalBack').classList.add('open');
+  const first = $('capQuickList').querySelector('input');
+  if (first) first.focus();
+}
+
+function renderCapQuickList() {
+  const root = $('capQuickList');
+  root.innerHTML = '';
+  capEd.caps.forEach((txt, i) => {
+    const row = document.createElement('div');
+    row.className = 'cap-row';
+    row.innerHTML = `<input value="" placeholder="Caption ${i + 1}"><button class="danger" title="remove">✕</button>`;
+    const inp = row.querySelector('input');
+    inp.value = txt;
+    inp.addEventListener('input', (e) => { capEd.caps[i] = e.target.value; });
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); $('capQuickAdd').click(); }
+    });
+    row.querySelector('button').addEventListener('click', () => {
+      capEd.caps.splice(i, 1);
+      if (!capEd.caps.length) capEd.caps = [''];
+      renderCapQuickList();
+    });
+    root.appendChild(row);
+  });
+}
+$('capQuickAdd').addEventListener('click', () => {
+  capEd.caps.push('');
+  renderCapQuickList();
+  const inputs = $('capQuickList').querySelectorAll('input');
+  inputs[inputs.length - 1]?.focus();
+});
+$('capCancelBtn').addEventListener('click', () => $('capModalBack').classList.remove('open'));
+$('capModalBack').addEventListener('pointerdown', (e) => { if (e.target === $('capModalBack')) $('capModalBack').classList.remove('open'); });
+$('capSaveBtn').addEventListener('click', () => {
+  const caps = capEd.caps.map((s) => s.trim()).filter(Boolean);
+  if (caps.length) state.texts[capEd.file] = caps; else delete state.texts[capEd.file];
+  markDirty('imageTexts.json');
+  const n = capEd.cell?.querySelector('.capn');
+  if (n) n.textContent = caps.length;
+  $('capModalBack').classList.remove('open');
+  renderCaptions();
+});
 
 // ── Captions tab ─────────────────────────────────────────────────────────────
 function renderCaptions() {
