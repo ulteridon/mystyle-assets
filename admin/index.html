@@ -113,6 +113,7 @@
   .ed-canvas { flex: 1; overflow: auto; display: grid; place-items: center; padding: 24px;
     background-color: #F7F3EE; background-image: radial-gradient(#EDE7F2 1.2px, transparent 1.2px); background-size: 22px 22px; }
   .ed-side { width: 320px; flex: 0 0 320px; overflow-y: auto; background: var(--bg); border-left: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .ed-side.left { border-left: none; border-right: 1px solid var(--border); }
   .ed-sec { border: 1px solid var(--border); border-radius: 16px; padding: 14px; background: var(--panel); box-shadow: 0 1px 2px rgba(36,30,46,.05); }
   .ed-sec.sel { border-color: var(--accent); }
   .ed-sec h4 { margin: 0 0 10px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-family: inherit; }
@@ -171,6 +172,7 @@
   /* colour picker: default swatches · document colours · custom */
   .cpick { border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin: 2px 0 8px; display: flex; flex-direction: column; gap: 6px; }
   .cpick-sec > span { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+  .cpick-sec > span small { text-transform: none; letter-spacing: 0; font-size: 11px; opacity: .8; }
   .cpick .swatches { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; }
   .cpick .swatches button { width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 2px solid var(--border); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
   .cpick .swatches button.on { border-color: var(--accent); box-shadow: 0 0 0 2px #E4D9FF; }
@@ -412,19 +414,7 @@
       <button id="cardSaveBtn" class="primary">Save cards</button>
     </div>
     <div class="ed-body">
-      <div class="ed-canvas" id="cdCanvas">
-        <div id="cdStage">
-          <img class="bg" id="cdBg" alt="">
-          <div id="cdLayers"></div>
-        </div>
-      </div>
-      <div class="ed-side">
-        <div class="ed-sec">
-          <h4>Captions — one card each</h4>
-          <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it. Use <b>＋ text layer</b> to put more than one text block on the same card (e.g. a title and a message).</p>
-          <div id="cdCapList"></div>
-          <button id="cdAddCap" style="margin-top:6px">＋ add caption (new card)</button>
-        </div>
+      <div class="ed-side left">
         <div class="ed-sec">
           <h4>Text style — <span id="cdStyleFor">this caption</span></h4>
           <p class="muted" style="margin:0 0 4px;font-size:12px">Every text block has its own position and style. Click one to edit it; a new one starts as a copy of the current one.</p>
@@ -447,6 +437,20 @@
           <p class="muted" style="margin:0 0 4px;font-size:12px">On the canvas: drag the side handles to change the text box width (text wraps inside), or the corners to scale the text.</p>
           <label>Position (fractions of image)</label>
           <div class="muted" style="font-size:12px" id="cdPos"></div>
+        </div>
+      </div>
+      <div class="ed-canvas" id="cdCanvas">
+        <div id="cdStage">
+          <img class="bg" id="cdBg" alt="">
+          <div id="cdLayers"></div>
+        </div>
+      </div>
+      <div class="ed-side">
+        <div class="ed-sec">
+          <h4>Captions — one card each</h4>
+          <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it. Use <b>＋ text layer</b> to put more than one text block on the same card (e.g. a title and a message).</p>
+          <div id="cdCapList"></div>
+          <button id="cdAddCap" style="margin-top:6px">＋ add caption (new card)</button>
         </div>
       </div>
     </div>
@@ -540,28 +544,48 @@ function bufToB64(buf) {
 const DEFAULT_COLORS = ['#ffffff', '#141414', '#ffd700', '#ff4d6d', '#ff8c42', '#4ade80', '#38bdf8', '#a78bfa', '#f472b6', '#8b1a1a', '#1e3a8a', '#065f46'];
 const isHex = (c) => typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c);
 
-// Every colour already used somewhere in the project (templates + captions),
-// so a palette chosen once can be reused everywhere — like Canva's
-// "Document colours".
-function documentColors() {
-  const set = new Set();
-  const add = (c) => { if (isHex(c)) set.add(c.toLowerCase()); };
-  for (const t of state.templates || []) add(t?.textConfig?.color);
-  for (const p of Object.values(state.positions || {})) add(p && p.color);
-  for (const arr of Object.values(state.texts || {}))
-    for (const e of arr) if (e && typeof e === 'object') { add(e.color); for (const l of e.layers || []) add(l && l.color); }
-  if (cd) for (const c of cd.caps) for (const l of c.layers) add(l.style.color);
-  if (ed) add(tplPick.value);
-  return [...set];
+// The image's dominant colours — like Canva's "Photo colours". Downsample,
+// bucket pixels by colour, take the most common buckets that are visibly
+// distinct from those already picked, and return each bucket's average.
+// Needs a CORS-clean image (crossOrigin="anonymous"); returns [] if tainted.
+function imagePalette(img, n = 5) {
+  try {
+    if (!img.naturalWidth) return [];
+    const S = 72, c = document.createElement('canvas');
+    c.width = S; c.height = Math.max(1, Math.round(S * img.naturalHeight / img.naturalWidth));
+    const ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    const d = ctx.getImageData(0, 0, c.width, c.height).data;
+    const buckets = new Map(); // key → { n, r, g, b }
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i + 3] < 128) continue;
+      const k = ((d[i] >> 4) << 8) | ((d[i + 1] >> 4) << 4) | (d[i + 2] >> 4);
+      const b = buckets.get(k) || { n: 0, r: 0, g: 0, b: 0 };
+      b.n++; b.r += d[i]; b.g += d[i + 1]; b.b += d[i + 2];
+      buckets.set(k, b);
+    }
+    const sorted = [...buckets.values()].sort((a, b) => b.n - a.n)
+      .map((b) => [Math.round(b.r / b.n), Math.round(b.g / b.n), Math.round(b.b / b.n)]);
+    const out = [];
+    const far = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) > 60;
+    for (const c of sorted) {
+      if (out.every((o) => far(o, c))) out.push(c);
+      if (out.length >= n) break;
+    }
+    // Fill from the top buckets if the image is too uniform for n distinct colours.
+    for (const c of sorted) { if (out.length >= n) break; if (!out.includes(c)) out.push(c); }
+    return out.map(([r, g, b]) => '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join(''));
+  } catch { return []; }
 }
 
 // opts.defaultLabel adds a "use the default" chip (value null); opts.onChange(color|null).
 // api.set(color, { silent, fallback }) — fallback is what the picker shows when the value is null.
+// api.setPalette(colors) fills the "Document colours" row (the image's top colours).
 function makeColorPicker(root, opts = {}) {
   root.classList.add('cpick');
   root.innerHTML = `
     <div class="cpick-sec"><span>Default colours</span><div class="swatches" data-k="def"></div></div>
-    <div class="cpick-sec"><span>Document colours</span><div class="swatches" data-k="doc"></div><i class="cpick-empty">none used yet</i></div>
+    <div class="cpick-sec"><span>Document colours <small>· from the image</small></span><div class="swatches" data-k="doc"></div><i class="cpick-empty">no image loaded</i></div>
     <div class="cpick-sec"><span>Custom</span><div class="cpick-custom"><input type="color" title="Colour picker"><input type="text" class="hex" maxlength="7" placeholder="#rrggbb" spellcheck="false" title="Hex colour"></div></div>`;
   const def = root.querySelector('[data-k="def"]'), doc = root.querySelector('[data-k="doc"]'), empty = root.querySelector('.cpick-empty');
   const picker = root.querySelector('input[type="color"]'), hex = root.querySelector('input.hex');
@@ -595,10 +619,9 @@ function makeColorPicker(root, opts = {}) {
       value = isHex(v) ? v.toLowerCase() : null;
       if (o.fallback) fallback = o.fallback;
       paint();
-      if (!o.silent) { if (opts.onChange) opts.onChange(value); api.refresh(); }
+      if (!o.silent && opts.onChange) opts.onChange(value);
     },
-    refresh() {
-      const cols = documentColors();
+    setPalette(cols) {
       doc.innerHTML = '';
       for (const c of cols) doc.appendChild(swatch(c));
       empty.style.display = cols.length ? 'none' : '';
@@ -984,7 +1007,7 @@ function openTplEditor(index) {
   $('tplDefaultText').value = t?.textConfig?.defaultText || 'Your Name';
   $('tplFontSize').value = t?.textConfig?.fontSize && t.textConfig.fontSize > 24 ? t.textConfig.fontSize : 56;
   tplPick.set(t?.textConfig?.color || '#ffffff', { silent: true });
-  tplPick.refresh();
+  tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
   $('tplModalBack').classList.add('open');
@@ -999,9 +1022,11 @@ function loadStageImage() {
   const url = ed.uploadB64
     ? `data:image/*;base64,${ed.uploadB64}`
     : ed.file ? `${IMG}/all_images/${ed.file}` : '';
+  img.crossOrigin = 'anonymous';               // so imagePalette can read pixels
   img.src = url;
   img.onload = () => {
     if (img.naturalWidth > 0) { ed.tplW = img.naturalWidth; ed.tplH = img.naturalHeight; }
+    tplPick.setPalette(imagePalette(img));
     fitStage();
   };
   // CDN may briefly 404 fresh uploads — lay out anyway with the stored size.
@@ -1400,13 +1425,15 @@ function openCardDesigner(file) {
   $('cardTitle').textContent = `Design cards — ${file}`;
   $('cardModalBack').classList.add('open');
   renderCapList();
-  cdPick.refresh();
+  cdPick.setPalette([]);
   syncCdControls();
 
   const img = $('cdBg');
+  img.crossOrigin = 'anonymous';               // so imagePalette can read pixels
   img.src = `${IMG}/all_images/${file}`;
   img.onload = () => {
     if (img.naturalWidth > 0) { cd.imgW = img.naturalWidth; cd.imgH = img.naturalHeight; }
+    cdPick.setPalette(imagePalette(img));
     layoutCdStage();
   };
   img.onerror = () => layoutCdStage();
