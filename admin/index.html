@@ -151,6 +151,8 @@
   #cdText { white-space: pre-wrap; }
   #cdText[contenteditable="true"] { cursor: text; outline: 2px dashed var(--accent); outline-offset: 3px; }
   .cap-row button { padding: 4px 9px; font-size: 12px; }
+  .cap-row .cap-tag { display: none; color: var(--accent); font-size: 11px; font-weight: 700; padding-top: 10px; white-space: nowrap; }
+  .cap-row.custom .cap-tag { display: inline; }
 
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
   .caption-img { display: flex; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); }
@@ -415,7 +417,12 @@
           <button id="cdAddCap" style="margin-top:6px">＋ add caption</button>
         </div>
         <div class="ed-sec">
-          <h4>Text style — shared by all captions</h4>
+          <h4>Text style</h4>
+          <div class="seg" id="cdScopeSeg">
+            <button data-scope="shared">Shared by all captions</button>
+            <button data-scope="custom">Custom for this caption</button>
+          </div>
+          <p class="muted" id="cdScopeHint" style="margin:6px 0 2px;font-size:12px"></p>
           <label>Theme</label>
           <div class="seg" id="cdThemeSeg">
             <button data-theme="light">◐ White text</button>
@@ -1224,6 +1231,15 @@ $('tplSaveBtn').addEventListener('click', () => {
   renderTemplates();
 });
 
+// ── Caption entries ──────────────────────────────────────────────────────────
+// imageTexts.json entries are either a plain string (uses the image's shared
+// style from imagePositions.json) or { text, x, y, theme, fontFamily, fontSize,
+// noBg } carrying the caption's own style.
+const STYLE_KEYS = ['x', 'y', 'theme', 'fontFamily', 'fontSize', 'noBg'];
+const capText = (e) => (typeof e === 'string' ? e : (e && e.text) || '');
+const withText = (e, t) => (typeof e === 'string' || !e ? t : { ...e, text: t });
+const hasOwnStyle = (e) => !!e && typeof e === 'object' && STYLE_KEYS.some((k) => k in e);
+
 // ── Multi-line caption fields ────────────────────────────────────────────────
 // Captions may contain line breaks: Enter inserts one at the caret (text after
 // the caret moves to the next line), Ctrl/Cmd+Enter adds a new caption.
@@ -1255,29 +1271,39 @@ let cd = null; // { file, imgW, imgH, stageW, pos {x,y,theme,fontFamily?,fontSiz
 
 function openCardDesigner(file) {
   const p = state.positions[file] || {};
+  const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
+  const base = {
+    x: num(p.x, 0.5), y: num(p.y, 0.5),
+    theme: p.theme === 'dark' ? 'dark' : 'light',
+    fontFamily: p.fontFamily || '',
+    fontSize: num(p.fontSize, 0.058),
+    noBg: !!p.noBg,
+  };
+  // A custom style is stored complete, so missing fields fall back to the base.
+  const styleFrom = (e) => ({
+    x: num(e.x, base.x), y: num(e.y, base.y),
+    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : base.theme,
+    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : base.fontFamily,
+    fontSize: num(e.fontSize, base.fontSize),
+    noBg: typeof e.noBg === 'boolean' ? e.noBg : base.noBg,
+  });
   cd = {
     file,
     imgW: 1080, imgH: 1080, stageW: 400,
-    pos: {
-      x: typeof p.x === 'number' ? p.x : 0.5,
-      y: typeof p.y === 'number' ? p.y : 0.5,
-      theme: p.theme === 'dark' ? 'dark' : 'light',
-      fontFamily: p.fontFamily || '',
-      fontSize: typeof p.fontSize === 'number' ? p.fontSize : 0.058,
-      noBg: !!p.noBg,
-    },
-    caps: [...(state.texts[file] || [])],
+    base,
+    caps: (state.texts[file] || []).map((e) => ({ text: capText(e), style: hasOwnStyle(e) ? styleFrom(e) : null })),
     capIdx: 0,
   };
-  if (!cd.caps.length) cd.caps = ['Your caption here'];
+  // Everything below edits cd.pos — the selected caption's own style when it
+  // has one, otherwise the shared base.
+  Object.defineProperty(cd, 'pos', { get: () => (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].style) || cd.base });
+  if (!cd.caps.length) cd.caps = [{ text: 'Your caption here', style: null }];
 
   $('cdText').contentEditable = 'false';
   $('cardTitle').textContent = `Design cards — ${file}`;
-  $('cdFont').value = cd.pos.fontFamily;
-  $('cdSize').value = (cd.pos.fontSize * 100).toFixed(1);
   $('cardModalBack').classList.add('open');
-  syncCdTheme();
   renderCapList();
+  syncCdControls();
 
   const img = $('cdBg');
   img.src = `${IMG}/all_images/${file}`;
@@ -1306,7 +1332,7 @@ function renderCdText() {
   const fontSize = Math.max(8, W * cd.pos.fontSize);
   const dark = cd.pos.theme === 'dark';
   const [, , css, weight] = fontCss(cd.pos.fontFamily || 'Poppins_700Bold');
-  if (!el.isContentEditable) el.textContent = cd.caps[cd.capIdx] ?? '';
+  if (!el.isContentEditable) el.textContent = (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].text) || '';
   Object.assign(el.style, {
     color: dark ? '#141414' : '#ffffff',
     background: cd.pos.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
@@ -1335,40 +1361,59 @@ function syncCdTheme() {
   document.querySelectorAll('#cdBgSeg button').forEach((b) =>
     b.classList.toggle('on', (b.dataset.nobg === '1') === !!cd.pos.noBg));
 }
+function syncCdControls() {
+  syncCdTheme();
+  const c = cd.caps[cd.capIdx];
+  const custom = !!(c && c.style);
+  document.querySelectorAll('#cdScopeSeg button').forEach((b) =>
+    b.classList.toggle('on', (b.dataset.scope === 'custom') === custom));
+  $('cdScopeHint').textContent = custom
+    ? `Caption ${cd.capIdx + 1} has its own position & style.`
+    : `Editing the shared style — captions without a custom style use it.`;
+  $('cdFont').value = cd.pos.fontFamily || '';
+  $('cdCapList').querySelectorAll('.cap-row').forEach((r, j) => r.classList.toggle('custom', !!(cd.caps[j] && cd.caps[j].style)));
+}
+document.querySelectorAll('#cdScopeSeg button').forEach((b) =>
+  b.addEventListener('click', () => {
+    const c = cd.caps[cd.capIdx]; if (!c) return;
+    if (b.dataset.scope === 'custom') { if (!c.style) c.style = { ...cd.base }; }
+    else c.style = null;
+    syncCdControls(); renderCdText();
+  }));
 
 function renderCapList() {
   const root = $('cdCapList');
   root.innerHTML = '';
-  cd.caps.forEach((txt, i) => {
+  cd.caps.forEach((c, i) => {
     const row = document.createElement('div');
-    row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '');
-    const inp = capField(txt, `Caption ${i + 1}`);
+    row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '') + (c.style ? ' custom' : '');
+    const inp = capField(c.text, `Caption ${i + 1}`);
     row.appendChild(inp);
-    row.insertAdjacentHTML('beforeend', `<button class="danger" title="remove">✕</button>`);
+    row.insertAdjacentHTML('beforeend', `<span class="cap-tag" title="This caption has its own style">◆</span><button class="danger" title="remove">✕</button>`);
     // Selecting a caption must not rebuild the list — that would destroy the
     // field mid-click and drop focus, making it impossible to type in.
     inp.addEventListener('focus', () => {
       cd.capIdx = i;
       root.querySelectorAll('.cap-row').forEach((r, j) => r.classList.toggle('on', j === i));
-      renderCdText();
+      syncCdControls(); renderCdText();
     });
-    inp.addEventListener('input', (e) => { cd.caps[i] = e.target.value; if (cd.capIdx === i) renderCdText(); });
+    inp.addEventListener('input', (e) => { cd.caps[i].text = e.target.value; if (cd.capIdx === i) renderCdText(); });
     inp.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('cdAddCap').click(); }
     });
     row.querySelector('button').addEventListener('click', () => {
       cd.caps.splice(i, 1);
-      if (!cd.caps.length) cd.caps = [''];
+      if (!cd.caps.length) cd.caps = [{ text: '', style: null }];
       cd.capIdx = Math.min(cd.capIdx, cd.caps.length - 1);
-      renderCapList(); renderCdText();
+      renderCapList(); syncCdControls(); renderCdText();
     });
     root.appendChild(row);
   });
 }
 $('cdAddCap').addEventListener('click', () => {
-  cd.caps.push('');
+  cd.caps.push({ text: '', style: null });
   cd.capIdx = cd.caps.length - 1;
-  renderCapList(); renderCdText();
+  renderCapList(); syncCdControls(); renderCdText();
   const inputs = $('cdCapList').querySelectorAll('textarea');
   inputs[inputs.length - 1]?.focus();
 });
@@ -1390,9 +1435,9 @@ $('cdSizeNum').addEventListener('change', (e) => setCdSize(parseFloat(e.target.v
 // mode; Enter inserts a line break at the caret; Esc / clicking away commits.
 function cdSyncFromCanvas() {
   const el = $('cdText');
-  cd.caps[cd.capIdx] = el.innerText.replace(/\r/g, '');
+  cd.caps[cd.capIdx].text = el.innerText.replace(/\r/g, '');
   const ta = $('cdCapList').querySelectorAll('textarea')[cd.capIdx];
-  if (ta) { ta.value = cd.caps[cd.capIdx]; autoGrow(ta); }
+  if (ta) { ta.value = cd.caps[cd.capIdx].text; autoGrow(ta); }
 }
 function cdStartEdit() {
   const el = $('cdText');
@@ -1447,14 +1492,20 @@ $('cdText').addEventListener('pointerdown', (e) => {
 $('cardCancelBtn').addEventListener('click', () => { $('cdText').contentEditable = 'false'; $('cardModalBack').classList.remove('open'); });
 $('cardSaveBtn').addEventListener('click', () => {
   cdStopEdit();
-  const caps = cd.caps.map((s) => s.trim()).filter(Boolean);
+  const styleOut = (st, full) => {
+    const o = { x: +st.x.toFixed(4), y: +st.y.toFixed(4), theme: st.theme };
+    if (st.fontFamily) o.fontFamily = st.fontFamily;
+    if (full || Math.abs(st.fontSize - 0.058) > 0.0005) o.fontSize = +st.fontSize.toFixed(4);
+    if (full || st.noBg) o.noBg = !!st.noBg;
+    return o;
+  };
+  const caps = cd.caps
+    .map((c) => ({ text: c.text.trim(), style: c.style }))
+    .filter((c) => c.text)
+    .map((c) => (c.style ? { text: c.text, ...styleOut(c.style, true) } : c.text));
   state.texts[cd.file] = caps;
   if (!caps.length) delete state.texts[cd.file];
-  const pos = { x: +cd.pos.x.toFixed(4), y: +cd.pos.y.toFixed(4), theme: cd.pos.theme };
-  if (cd.pos.fontFamily) pos.fontFamily = cd.pos.fontFamily;
-  if (Math.abs(cd.pos.fontSize - 0.058) > 0.0005) pos.fontSize = +cd.pos.fontSize.toFixed(4);
-  if (cd.pos.noBg) pos.noBg = true;
-  state.positions[cd.file] = pos;
+  state.positions[cd.file] = styleOut(cd.base, false);
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
   $('cardModalBack').classList.remove('open');
@@ -1482,10 +1533,10 @@ function renderCapQuickList() {
   capEd.caps.forEach((txt, i) => {
     const row = document.createElement('div');
     row.className = 'cap-row';
-    const inp = capField(txt, `Caption ${i + 1}`);
+    const inp = capField(capText(txt), `Caption ${i + 1}`);
     row.appendChild(inp);
     row.insertAdjacentHTML('beforeend', `<button class="danger" title="remove">✕</button>`);
-    inp.addEventListener('input', (e) => { capEd.caps[i] = e.target.value; });
+    inp.addEventListener('input', (e) => { capEd.caps[i] = withText(capEd.caps[i], e.target.value); });
     inp.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('capQuickAdd').click(); }
     });
@@ -1506,7 +1557,7 @@ $('capQuickAdd').addEventListener('click', () => {
 $('capCancelBtn').addEventListener('click', () => $('capModalBack').classList.remove('open'));
 $('capModalBack').addEventListener('pointerdown', (e) => { if (e.target === $('capModalBack')) $('capModalBack').classList.remove('open'); });
 $('capSaveBtn').addEventListener('click', () => {
-  const caps = capEd.caps.map((s) => s.trim()).filter(Boolean);
+  const caps = capEd.caps.map((e) => withText(e, capText(e).trim())).filter((e) => capText(e));
   if (caps.length) state.texts[capEd.file] = caps; else delete state.texts[capEd.file];
   markDirty('imageTexts.json');
   const n = capEd.cell?.querySelector('.capn');
@@ -1549,14 +1600,14 @@ function fillCaptions(body, cat) {
     const redraw = () => {
       list.querySelectorAll('.row').forEach((r) => r.remove());
       const arr = state.texts[img] ?? [];
-      arr.forEach((txt, i) => {
+      arr.forEach((entry, i) => {
         const r = document.createElement('div');
         r.className = 'row';
-        const ta = capField(txt, `Caption ${i + 1}`);
+        const ta = capField(capText(entry), `Caption ${i + 1}`);
         r.appendChild(ta);
-        r.insertAdjacentHTML('beforeend', `<button class="danger">✕</button>`);
+        r.insertAdjacentHTML('beforeend', `${hasOwnStyle(entry) ? '<span class="muted" title="Has its own style" style="padding-top:9px;color:var(--accent);font-weight:700">◆</span>' : ''}<button class="danger">✕</button>`);
         ta.addEventListener('change', (e) => {
-          state.texts[img][i] = e.target.value;
+          state.texts[img][i] = withText(state.texts[img][i], e.target.value);
           markDirty('imageTexts.json');
         });
         r.querySelector('button').addEventListener('click', () => {
