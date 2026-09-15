@@ -1271,6 +1271,7 @@ function openCardDesigner(file) {
   };
   if (!cd.caps.length) cd.caps = ['Your caption here'];
 
+  $('cdText').contentEditable = 'false';
   $('cardTitle').textContent = `Design cards — ${file}`;
   $('cdFont').value = cd.pos.fontFamily;
   $('cdSize').value = (cd.pos.fontSize * 100).toFixed(1);
@@ -1443,8 +1444,9 @@ $('cdText').addEventListener('pointerdown', (e) => {
   el.addEventListener('pointerup', up);
 });
 
-$('cardCancelBtn').addEventListener('click', () => $('cardModalBack').classList.remove('open'));
+$('cardCancelBtn').addEventListener('click', () => { $('cdText').contentEditable = 'false'; $('cardModalBack').classList.remove('open'); });
 $('cardSaveBtn').addEventListener('click', () => {
+  cdStopEdit();
   const caps = cd.caps.map((s) => s.trim()).filter(Boolean);
   state.texts[cd.file] = caps;
   if (!caps.length) delete state.texts[cd.file];
