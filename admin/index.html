@@ -144,9 +144,12 @@
   #cdStage img.bg { display: block; width: 100%; height: 100%; }
   #cdText { position: absolute; cursor: move; text-align: center; line-height: 1.32; z-index: 4; box-sizing: border-box; }
   #cdText:hover { outline: 1.5px dashed rgba(124,92,252,.6); }
-  .cap-row { display: flex; gap: 5px; margin: 4px 0; align-items: center; }
-  .cap-row input { flex: 1; min-width: 0; }
-  .cap-row.on input { outline: 2px solid #E4D9FF; border-color: var(--accent); }
+  .cap-row { display: flex; gap: 5px; margin: 4px 0; align-items: flex-start; }
+  .cap-row textarea { flex: 1; min-width: 0; resize: none; overflow: hidden; line-height: 1.35; font-family: inherit; min-height: 34px; }
+  .cap-row.on textarea { outline: 2px solid #E4D9FF; border-color: var(--accent); }
+  .caption-list textarea { flex: 1; resize: none; overflow: hidden; line-height: 1.35; font-family: inherit; min-height: 34px; }
+  #cdText { white-space: pre-wrap; }
+  #cdText[contenteditable="true"] { cursor: text; outline: 2px dashed var(--accent); outline-offset: 3px; }
   .cap-row button { padding: 4px 9px; font-size: 12px; }
 
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
@@ -392,7 +395,7 @@
   <div class="editor">
     <div class="ed-top">
       <b id="cardTitle">Card designer</b>
-      <span class="muted">drag the caption on the image · every caption becomes its own card in the app</span>
+      <span class="muted">drag the caption to move · double-click it to edit in place · Enter = new line</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
       <button id="cardSaveBtn" class="primary">Save cards</button>
@@ -425,8 +428,8 @@
           </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
-          <label>Size — <span id="cdSizeVal"></span>% of image width</label>
-          <input id="cdSize" type="range" min="3" max="12" step="0.2" style="width:100%">
+          <label>Size — <input id="cdSizeNum" type="number" min="2" max="40" step="0.1" style="width:64px"> % of image width</label>
+          <input id="cdSize" type="range" min="2" max="40" step="0.1" style="width:100%">
           <label>Position (fractions of image)</label>
           <div class="muted" style="font-size:12px" id="cdPos"></div>
         </div>
@@ -1221,6 +1224,23 @@ $('tplSaveBtn').addEventListener('click', () => {
   renderTemplates();
 });
 
+// ── Multi-line caption fields ────────────────────────────────────────────────
+// Captions may contain line breaks: Enter inserts one at the caret (text after
+// the caret moves to the next line), Ctrl/Cmd+Enter adds a new caption.
+function autoGrow(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 2 + 'px';
+}
+function capField(value, placeholder) {
+  const ta = document.createElement('textarea');
+  ta.rows = 1;
+  ta.placeholder = placeholder || '';
+  ta.value = value;
+  ta.addEventListener('input', () => autoGrow(ta));
+  requestAnimationFrame(() => autoGrow(ta));
+  return ta;
+}
+
 // ── Card designer (Images tab) ───────────────────────────────────────────────
 // One background + N captions = N cards in the app. Placement/theme/font/size
 // are stored per background in imagePositions.json — mirrors the app's
@@ -1285,7 +1305,7 @@ function renderCdText() {
   const fontSize = Math.max(8, W * cd.pos.fontSize);
   const dark = cd.pos.theme === 'dark';
   const [, , css, weight] = fontCss(cd.pos.fontFamily || 'Poppins_700Bold');
-  el.textContent = cd.caps[cd.capIdx] ?? '';
+  if (!el.isContentEditable) el.textContent = cd.caps[cd.capIdx] ?? '';
   Object.assign(el.style, {
     color: dark ? '#141414' : '#ffffff',
     background: cd.pos.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
@@ -1296,7 +1316,7 @@ function renderCdText() {
     borderRadius: fontSize * 0.7 + 'px',
     padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
     maxWidth: W * 0.86 + 'px',
-    whiteSpace: 'normal',
+    whiteSpace: 'pre-wrap',
   });
   // measure, then centre on the anchor, clamped like the app does
   const bw = el.offsetWidth, bh = el.offsetHeight;
@@ -1304,7 +1324,8 @@ function renderCdText() {
   el.style.left = clamp(cd.pos.x * W - bw / 2, 0, Math.max(0, W - bw)) + 'px';
   el.style.top = clamp(cd.pos.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
   $('cdPos').textContent = `x ${cd.pos.x.toFixed(3)} · y ${cd.pos.y.toFixed(3)}`;
-  $('cdSizeVal').textContent = (cd.pos.fontSize * 100).toFixed(1);
+  $('cdSizeNum').value = (cd.pos.fontSize * 100).toFixed(1);
+  $('cdSize').value = (cd.pos.fontSize * 100).toFixed(1);
 }
 
 function syncCdTheme() {
@@ -1320,11 +1341,11 @@ function renderCapList() {
   cd.caps.forEach((txt, i) => {
     const row = document.createElement('div');
     row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '');
-    row.innerHTML = `<input value=""><button class="danger" title="remove">✕</button>`;
-    const inp = row.querySelector('input');
-    inp.value = txt;
+    const inp = capField(txt, `Caption ${i + 1}`);
+    row.appendChild(inp);
+    row.insertAdjacentHTML('beforeend', `<button class="danger" title="remove">✕</button>`);
     // Selecting a caption must not rebuild the list — that would destroy the
-    // input mid-click and drop focus, making the field impossible to type in.
+    // field mid-click and drop focus, making it impossible to type in.
     inp.addEventListener('focus', () => {
       cd.capIdx = i;
       root.querySelectorAll('.cap-row').forEach((r, j) => r.classList.toggle('on', j === i));
@@ -1332,7 +1353,7 @@ function renderCapList() {
     });
     inp.addEventListener('input', (e) => { cd.caps[i] = e.target.value; if (cd.capIdx === i) renderCdText(); });
     inp.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') { e.preventDefault(); $('cdAddCap').click(); }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('cdAddCap').click(); }
     });
     row.querySelector('button').addEventListener('click', () => {
       cd.caps.splice(i, 1);
@@ -1347,7 +1368,7 @@ $('cdAddCap').addEventListener('click', () => {
   cd.caps.push('');
   cd.capIdx = cd.caps.length - 1;
   renderCapList(); renderCdText();
-  const inputs = $('cdCapList').querySelectorAll('input');
+  const inputs = $('cdCapList').querySelectorAll('textarea');
   inputs[inputs.length - 1]?.focus();
 });
 
@@ -1356,11 +1377,58 @@ document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
 document.querySelectorAll('#cdBgSeg button').forEach((b) =>
   b.addEventListener('click', () => { cd.pos.noBg = b.dataset.nobg === '1'; syncCdTheme(); renderCdText(); }));
 $('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
-$('cdSize').addEventListener('input', (e) => { cd.pos.fontSize = parseFloat(e.target.value) / 100; renderCdText(); });
+function setCdSize(pct) {
+  if (!Number.isFinite(pct)) return;
+  cd.pos.fontSize = Math.min(40, Math.max(2, pct)) / 100;
+  renderCdText();
+}
+$('cdSize').addEventListener('input', (e) => setCdSize(parseFloat(e.target.value)));
+$('cdSizeNum').addEventListener('change', (e) => setCdSize(parseFloat(e.target.value)));
+
+// In-place editing of the caption on the canvas. Double-click enters edit
+// mode; Enter inserts a line break at the caret; Esc / clicking away commits.
+function cdSyncFromCanvas() {
+  const el = $('cdText');
+  cd.caps[cd.capIdx] = el.innerText.replace(/\r/g, '');
+  const ta = $('cdCapList').querySelectorAll('textarea')[cd.capIdx];
+  if (ta) { ta.value = cd.caps[cd.capIdx]; autoGrow(ta); }
+}
+function cdStartEdit() {
+  const el = $('cdText');
+  if (el.isContentEditable) return;
+  el.contentEditable = 'true';
+  el.focus();
+  const r = document.createRange(); r.selectNodeContents(el); r.collapse(false);
+  const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+}
+function cdStopEdit() {
+  const el = $('cdText');
+  if (!el.isContentEditable) return;
+  cdSyncFromCanvas();
+  el.contentEditable = 'false';
+  renderCdText();
+}
+$('cdText').addEventListener('dblclick', (e) => { e.preventDefault(); cdStartEdit(); });
+$('cdText').addEventListener('blur', cdStopEdit);
+$('cdText').addEventListener('input', () => { cdSyncFromCanvas(); renderCdText(); });
+$('cdText').addEventListener('keydown', (e) => {
+  const el = $('cdText');
+  if (!el.isContentEditable) return;
+  e.stopPropagation();
+  if (e.key === 'Escape') { e.preventDefault(); el.blur(); return; }
+  if (e.key === 'Enter') { e.preventDefault(); document.execCommand('insertText', false, '\n'); }
+});
+$('cdText').addEventListener('paste', (e) => {
+  const el = $('cdText');
+  if (!el.isContentEditable) return;
+  e.preventDefault();
+  document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text'));
+});
 
 $('cdText').addEventListener('pointerdown', (e) => {
-  e.preventDefault();
   const el = $('cdText');
+  if (el.isContentEditable) return;            // editing: let the caret move
+  e.preventDefault();
   el.setPointerCapture(e.pointerId);
   const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
   let last = { x: e.clientX, y: e.clientY };
@@ -1402,7 +1470,7 @@ function openCaptionEditor(file, cell) {
   $('capThumb').src = `${IMG}/all_images/${file}`;
   renderCapQuickList();
   $('capModalBack').classList.add('open');
-  const first = $('capQuickList').querySelector('input');
+  const first = $('capQuickList').querySelector('textarea');
   if (first) first.focus();
 }
 
@@ -1412,12 +1480,12 @@ function renderCapQuickList() {
   capEd.caps.forEach((txt, i) => {
     const row = document.createElement('div');
     row.className = 'cap-row';
-    row.innerHTML = `<input value="" placeholder="Caption ${i + 1}"><button class="danger" title="remove">✕</button>`;
-    const inp = row.querySelector('input');
-    inp.value = txt;
+    const inp = capField(txt, `Caption ${i + 1}`);
+    row.appendChild(inp);
+    row.insertAdjacentHTML('beforeend', `<button class="danger" title="remove">✕</button>`);
     inp.addEventListener('input', (e) => { capEd.caps[i] = e.target.value; });
     inp.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') { e.preventDefault(); $('capQuickAdd').click(); }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('capQuickAdd').click(); }
     });
     row.querySelector('button').addEventListener('click', () => {
       capEd.caps.splice(i, 1);
@@ -1430,7 +1498,7 @@ function renderCapQuickList() {
 $('capQuickAdd').addEventListener('click', () => {
   capEd.caps.push('');
   renderCapQuickList();
-  const inputs = $('capQuickList').querySelectorAll('input');
+  const inputs = $('capQuickList').querySelectorAll('textarea');
   inputs[inputs.length - 1]?.focus();
 });
 $('capCancelBtn').addEventListener('click', () => $('capModalBack').classList.remove('open'));
@@ -1482,9 +1550,10 @@ function fillCaptions(body, cat) {
       arr.forEach((txt, i) => {
         const r = document.createElement('div');
         r.className = 'row';
-        r.innerHTML = `<input value=""><button class="danger">✕</button>`;
-        r.querySelector('input').value = txt;
-        r.querySelector('input').addEventListener('change', (e) => {
+        const ta = capField(txt, `Caption ${i + 1}`);
+        r.appendChild(ta);
+        r.insertAdjacentHTML('beforeend', `<button class="danger">✕</button>`);
+        ta.addEventListener('change', (e) => {
           state.texts[img][i] = e.target.value;
           markDirty('imageTexts.json');
         });
