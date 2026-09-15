@@ -168,6 +168,9 @@
   .cap-row button { padding: 4px 9px; font-size: 12px; }
   .cap-addlayer { display: none; font-size: 11px; padding: 3px 8px; margin: 2px 0 2px; }
   .cap-card.on .cap-addlayer { display: inline-block; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 5px; margin: 4px 0 8px; }
+  .swatches button { width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 2px solid var(--border); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .swatches button.on { border-color: var(--accent); box-shadow: 0 0 0 2px #E4D9FF; }
   .seg-mini { font-size: 11px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
   .seg-mini.on { background: var(--accent); color: #fff; border-color: var(--accent); }
 
@@ -429,6 +432,8 @@
           </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
+          <label>Text colour <input id="cdColor" type="color" style="width:44px;height:26px;padding:0;vertical-align:middle;margin-left:6px"> <button id="cdColorAuto" class="seg-mini" title="Use the theme's default (white or dark)">theme default</button></label>
+          <div id="cdSwatches" class="swatches"></div>
           <label>Size — <input id="cdSizeNum" type="number" min="2" max="40" step="0.1" style="width:64px"> % of image width</label>
           <input id="cdSize" type="range" min="2" max="40" step="0.1" style="width:100%">
           <label>Box width — <input id="cdWidthNum" type="number" min="15" max="100" step="1" style="width:64px"> % of image width <button id="cdWidthAuto" class="seg-mini" title="Shrink to fit the text (max 86 %)">auto</button></label>
@@ -1277,6 +1282,7 @@ function openCardDesigner(file) {
     fontSize: num(p.fontSize, 0.058),
     noBg: !!p.noBg,
     width: num(p.width, null),
+    color: /^#[0-9a-f]{6}$/i.test(p.color || '') ? p.color : null,
   };
   // A custom style is stored complete, so missing fields fall back to `from`.
   const styleFrom = (e, from) => ({
@@ -1286,6 +1292,7 @@ function openCardDesigner(file) {
     fontSize: num(e.fontSize, from.fontSize),
     noBg: typeof e.noBg === 'boolean' ? e.noBg : from.noBg,
     width: num(e.width, from.width),
+    color: /^#[0-9a-f]{6}$/i.test(e.color || '') ? e.color : from.color,
   });
   // Legacy plain-string captions inherit the image's shared style so nothing moves.
   // Extra layers fall back to the card's main style, like the app does.
@@ -1367,7 +1374,7 @@ function renderCdText() {
     if (!body.isContentEditable) body.textContent = layer.text || '';
     el.classList.toggle('sel', i === cd.layerIdx);
     Object.assign(el.style, {
-      color: dark ? '#141414' : '#ffffff',
+      color: st.color || (dark ? '#141414' : '#ffffff'),
       background: st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
       textShadow: st.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
       fontSize: fontSize + 'px',
@@ -1393,6 +1400,9 @@ function renderCdText() {
   $('cdWidthNum').value = wPct;
   $('cdWidth').value = wPct;
   $('cdWidthAuto').classList.toggle('on', !cd.pos.width);
+  $('cdColor').value = cd.pos.color || (cd.pos.theme === 'dark' ? '#141414' : '#ffffff');
+  $('cdColorAuto').classList.toggle('on', !cd.pos.color);
+  $('cdSwatches').querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.c === (cd.pos.color || '')));
 }
 
 function syncCdTheme() {
@@ -1483,6 +1493,19 @@ document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
 document.querySelectorAll('#cdBgSeg button').forEach((b) =>
   b.addEventListener('click', () => { cd.pos.noBg = b.dataset.nobg === '1'; syncCdTheme(); renderCdText(); }));
 $('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
+$('cdColor').addEventListener('input', (e) => { cd.pos.color = e.target.value; renderCdText(); });
+$('cdColorAuto').addEventListener('click', () => { cd.pos.color = null; renderCdText(); });
+{
+  // Quick-pick swatches; the colour input covers everything else.
+  const SWATCHES = ['#ffffff', '#141414', '#ffd700', '#ff4d6d', '#ff8c42', '#4ade80', '#38bdf8', '#a78bfa', '#f472b6', '#8b1a1a', '#1e3a8a', '#065f46'];
+  const root = $('cdSwatches');
+  for (const c of SWATCHES) {
+    const b = document.createElement('button');
+    b.dataset.c = c; b.title = c; b.style.background = c;
+    b.addEventListener('click', () => { cd.pos.color = c; renderCdText(); });
+    root.appendChild(b);
+  }
+}
 function setCdSize(pct) {
   if (!Number.isFinite(pct)) return;
   cd.pos.fontSize = Math.min(40, Math.max(2, pct)) / 100;
@@ -1596,6 +1619,7 @@ $('cardSaveBtn').addEventListener('click', () => {
     if (full || Math.abs(st.fontSize - 0.058) > 0.0005) o.fontSize = +st.fontSize.toFixed(4);
     if (full || st.noBg) o.noBg = !!st.noBg;
     if (st.width) o.width = +st.width.toFixed(4);
+    if (st.color) o.color = st.color.toLowerCase();
     return o;
   };
   const caps = cd.caps
