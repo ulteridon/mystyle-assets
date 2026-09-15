@@ -365,9 +365,11 @@
     "theme": "light"
   },
   "quotes_attitude_2.webp": {
-    "x": 0.5,
-    "y": 0.88,
-    "theme": "light"
+    "x": 0.5138,
+    "y": 0.7959,
+    "theme": "light",
+    "fontFamily": "PlayfairDisplay_700Bold",
+    "fontSize": 0.078
   },
   "quotes_attitude_3.webp": {
     "x": 0.5,
