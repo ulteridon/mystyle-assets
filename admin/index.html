@@ -168,9 +168,18 @@
   .cap-row button { padding: 4px 9px; font-size: 12px; }
   .cap-addlayer { display: none; font-size: 11px; padding: 3px 8px; margin: 2px 0 2px; }
   .cap-card.on .cap-addlayer { display: inline-block; }
-  .swatches { display: flex; flex-wrap: wrap; gap: 5px; margin: 4px 0 8px; }
-  .swatches button { width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 2px solid var(--border); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
-  .swatches button.on { border-color: var(--accent); box-shadow: 0 0 0 2px #E4D9FF; }
+  /* colour picker: default swatches · document colours · custom */
+  .cpick { border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin: 2px 0 8px; display: flex; flex-direction: column; gap: 6px; }
+  .cpick-sec > span { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+  .cpick .swatches { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; }
+  .cpick .swatches button { width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 2px solid var(--border); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .cpick .swatches button.on { border-color: var(--accent); box-shadow: 0 0 0 2px #E4D9FF; }
+  .cpick .swatches button.auto { width: auto; border-radius: 11px; padding: 0 8px; font-size: 11px; background: #F1EDF6; color: var(--muted); font-weight: 600; box-shadow: none; }
+  .cpick .swatches button.auto.on { color: #5B3DF5; background: #fff; }
+  .cpick-empty { font-size: 11px; color: var(--muted); }
+  .cpick-custom { display: flex; align-items: center; gap: 6px; }
+  .cpick-custom input[type=color] { width: 34px; height: 26px; padding: 0; border: 1px solid var(--border); border-radius: 6px; background: none; cursor: pointer; }
+  .cpick-custom input.hex { width: 84px; font-family: ui-monospace, monospace; font-size: 12px; }
   .seg-mini { font-size: 11px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
   .seg-mini.on { background: var(--accent); color: #fff; border-color: var(--accent); }
 
@@ -353,10 +362,9 @@
           <input id="tplDefaultText" value="Your Name">
           <label>Font</label>
           <select id="tplFont"></select>
-          <div class="row" style="margin:8px 0 0">
-            <label style="margin:0">Size <input id="tplFontSize" type="number" value="56" style="width:64px"></label>
-            <label style="margin:0">Colour <input id="tplColor" type="color" value="#ffffff"></label>
-          </div>
+          <label>Font size — <input id="tplFontSize" type="number" min="8" max="400" value="56" style="width:64px"> px (template pixels)</label>
+          <label>Text colour</label>
+          <div id="tplColorPicker"></div>
           <label>Align</label>
           <div class="seg" id="alignSeg">
             <button data-align="left">⟸ Left</button>
@@ -432,13 +440,11 @@
           </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
-          <label>Text colour <input id="cdColor" type="color" style="width:44px;height:26px;padding:0;vertical-align:middle;margin-left:6px"> <button id="cdColorAuto" class="seg-mini" title="Use the theme's default (white or dark)">theme default</button></label>
-          <div id="cdSwatches" class="swatches"></div>
-          <label>Size — <input id="cdSizeNum" type="number" min="2" max="40" step="0.1" style="width:64px"> % of image width</label>
-          <input id="cdSize" type="range" min="2" max="40" step="0.1" style="width:100%">
-          <label>Box width — <input id="cdWidthNum" type="number" min="15" max="100" step="1" style="width:64px"> % of image width <button id="cdWidthAuto" class="seg-mini" title="Shrink to fit the text (max 86 %)">auto</button></label>
-          <input id="cdWidth" type="range" min="15" max="100" step="1" style="width:100%">
-          <p class="muted" style="margin:0 0 4px;font-size:12px">Text wraps inside the box. Drag the box's side handles on the canvas to resize it, or the corners to scale the text.</p>
+          <label>Text colour</label>
+          <div id="cdColorPicker"></div>
+          <label>Font size — <input id="cdSizeNum" type="number" min="1" step="1" style="width:64px"> px <span class="muted" id="cdSizeNote"></span></label>
+          <input id="cdSize" type="range" min="1" step="1" style="width:100%">
+          <p class="muted" style="margin:0 0 4px;font-size:12px">On the canvas: drag the side handles to change the text box width (text wraps inside), or the corners to scale the text.</p>
           <label>Position (fractions of image)</label>
           <div class="muted" style="font-size:12px" id="cdPos"></div>
         </div>
@@ -528,6 +534,79 @@ function bufToB64(buf) {
   for (let i = 0; i < bytes.length; i += 0x8000)
     bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
   return btoa(bin);
+}
+
+// ── Colour picker (default swatches · document colours · custom) ─────────────
+const DEFAULT_COLORS = ['#ffffff', '#141414', '#ffd700', '#ff4d6d', '#ff8c42', '#4ade80', '#38bdf8', '#a78bfa', '#f472b6', '#8b1a1a', '#1e3a8a', '#065f46'];
+const isHex = (c) => typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c);
+
+// Every colour already used somewhere in the project (templates + captions),
+// so a palette chosen once can be reused everywhere — like Canva's
+// "Document colours".
+function documentColors() {
+  const set = new Set();
+  const add = (c) => { if (isHex(c)) set.add(c.toLowerCase()); };
+  for (const t of state.templates || []) add(t?.textConfig?.color);
+  for (const p of Object.values(state.positions || {})) add(p && p.color);
+  for (const arr of Object.values(state.texts || {}))
+    for (const e of arr) if (e && typeof e === 'object') { add(e.color); for (const l of e.layers || []) add(l && l.color); }
+  if (cd) for (const c of cd.caps) for (const l of c.layers) add(l.style.color);
+  if (ed) add(tplPick.value);
+  return [...set];
+}
+
+// opts.defaultLabel adds a "use the default" chip (value null); opts.onChange(color|null).
+// api.set(color, { silent, fallback }) — fallback is what the picker shows when the value is null.
+function makeColorPicker(root, opts = {}) {
+  root.classList.add('cpick');
+  root.innerHTML = `
+    <div class="cpick-sec"><span>Default colours</span><div class="swatches" data-k="def"></div></div>
+    <div class="cpick-sec"><span>Document colours</span><div class="swatches" data-k="doc"></div><i class="cpick-empty">none used yet</i></div>
+    <div class="cpick-sec"><span>Custom</span><div class="cpick-custom"><input type="color" title="Colour picker"><input type="text" class="hex" maxlength="7" placeholder="#rrggbb" spellcheck="false" title="Hex colour"></div></div>`;
+  const def = root.querySelector('[data-k="def"]'), doc = root.querySelector('[data-k="doc"]'), empty = root.querySelector('.cpick-empty');
+  const picker = root.querySelector('input[type="color"]'), hex = root.querySelector('input.hex');
+  let value = null, fallback = '#ffffff';
+  const swatch = (c) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.c = c; b.title = c; b.style.background = c;
+    b.addEventListener('click', () => api.set(c));
+    return b;
+  };
+  if (opts.defaultLabel) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'auto'; b.dataset.c = ''; b.textContent = opts.defaultLabel; b.title = 'Use the default colour';
+    b.addEventListener('click', () => api.set(null));
+    def.appendChild(b);
+  }
+  for (const c of DEFAULT_COLORS) def.appendChild(swatch(c));
+  picker.addEventListener('input', () => api.set(picker.value));
+  hex.addEventListener('change', () => {
+    const v = hex.value.trim().replace(/^([0-9a-f]{6})$/i, '#$1');
+    if (isHex(v)) api.set(v.toLowerCase()); else paint();
+  });
+  function paint() {
+    root.querySelectorAll('.swatches button').forEach((b) => b.classList.toggle('on', b.dataset.c === (value || '')));
+    picker.value = value || fallback;
+    hex.value = value || '';
+  }
+  const api = {
+    get value() { return value; },
+    set(v, o = {}) {
+      value = isHex(v) ? v.toLowerCase() : null;
+      if (o.fallback) fallback = o.fallback;
+      paint();
+      if (!o.silent) { if (opts.onChange) opts.onChange(value); api.refresh(); }
+    },
+    refresh() {
+      const cols = documentColors();
+      doc.innerHTML = '';
+      for (const c of cols) doc.appendChild(swatch(c));
+      empty.style.display = cols.length ? 'none' : '';
+      paint();
+    },
+  };
+  paint();
+  return api;
 }
 
 // ── GitHub fetch / commit ────────────────────────────────────────────────────
@@ -904,7 +983,8 @@ function openTplEditor(index) {
   $('tplTags').value = (t?.tags || []).join(', ');
   $('tplDefaultText').value = t?.textConfig?.defaultText || 'Your Name';
   $('tplFontSize').value = t?.textConfig?.fontSize && t.textConfig.fontSize > 24 ? t.textConfig.fontSize : 56;
-  $('tplColor').value = t?.textConfig?.color || '#ffffff';
+  tplPick.set(t?.textConfig?.color || '#ffffff', { silent: true });
+  tplPick.refresh();
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
   $('tplModalBack').classList.add('open');
@@ -963,7 +1043,7 @@ function positionOverlays() {
   tb.style.fontFamily = css;
   tb.style.fontWeight = weight;
   tb.style.fontSize = Math.max(6, parseFloat($('tplFontSize').value || '56') * s) + 'px';
-  tb.style.color = $('tplColor').value;
+  tb.style.color = tplPick.value || '#ffffff';
   tb.style.top = ed.text.y * s + 'px';
   if (ed.align === 'center') { tb.style.left = '50%'; tb.style.transform = 'translateX(-50%)'; }
   else if (ed.align === 'right') { tb.style.transform = ''; tb.style.left = ''; tb.style.right = (ed.tplW - ed.text.x) * s + 'px'; }
@@ -1008,8 +1088,9 @@ $('rotHandle').addEventListener('pointerdown', (e) => {
   h.addEventListener('pointermove', move);
   h.addEventListener('pointerup', up);
 });
-['tplFontSize', 'tplColor', 'tplDefaultText', 'tplFont'].forEach((id) =>
+['tplFontSize', 'tplDefaultText', 'tplFont'].forEach((id) =>
   $(id).addEventListener('input', () => positionOverlays()));
+const tplPick = makeColorPicker($('tplColorPicker'), { onChange: () => { if (ed) positionOverlays(); } });
 
 // numeric X/Y/W/H edits
 [['phX', 'x'], ['phY', 'y'], ['phW', 'w'], ['phH', 'h']].forEach(([id, k]) =>
@@ -1213,7 +1294,7 @@ $('tplSaveBtn').addEventListener('click', () => {
       y: Math.round(ed.text.y),
       width: '100%',
       fontSize: parseInt($('tplFontSize').value || '56', 10),
-      color: $('tplColor').value,
+      color: tplPick.value || '#ffffff',
       fontFamily: $('tplFont').value,
       textAlign: align,
     },
@@ -1319,6 +1400,7 @@ function openCardDesigner(file) {
   $('cardTitle').textContent = `Design cards — ${file}`;
   $('cardModalBack').classList.add('open');
   renderCapList();
+  cdPick.refresh();
   syncCdControls();
 
   const img = $('cdBg');
@@ -1394,15 +1476,13 @@ function renderCdText() {
     el.style.top = clamp(st.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
   });
   $('cdPos').textContent = `x ${cd.pos.x.toFixed(3)} · y ${cd.pos.y.toFixed(3)}`;
-  $('cdSizeNum').value = (cd.pos.fontSize * 100).toFixed(1);
-  $('cdSize').value = (cd.pos.fontSize * 100).toFixed(1);
-  const wPct = ((cd.pos.width || CD_AUTO_WIDTH) * 100).toFixed(0);
-  $('cdWidthNum').value = wPct;
-  $('cdWidth').value = wPct;
-  $('cdWidthAuto').classList.toggle('on', !cd.pos.width);
-  $('cdColor').value = cd.pos.color || (cd.pos.theme === 'dark' ? '#141414' : '#ffffff');
-  $('cdColorAuto').classList.toggle('on', !cd.pos.color);
-  $('cdSwatches').querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.c === (cd.pos.color || '')));
+  // Font size is shown in pixels at the image's native width (what the app renders at).
+  const px = Math.round(cd.pos.fontSize * cd.imgW);
+  for (const id of ['cdSizeNum', 'cdSize']) {
+    $(id).min = Math.round(0.02 * cd.imgW); $(id).max = Math.round(0.4 * cd.imgW); $(id).value = px;
+  }
+  $('cdSizeNote').textContent = `(image is ${cd.imgW} px wide)`;
+  cdPick.set(cd.pos.color, { silent: true, fallback: cd.pos.theme === 'dark' ? '#141414' : '#ffffff' });
 }
 
 function syncCdTheme() {
@@ -1493,34 +1573,18 @@ document.querySelectorAll('#cdThemeSeg button').forEach((b) =>
 document.querySelectorAll('#cdBgSeg button').forEach((b) =>
   b.addEventListener('click', () => { cd.pos.noBg = b.dataset.nobg === '1'; syncCdTheme(); renderCdText(); }));
 $('cdFont').addEventListener('input', (e) => { cd.pos.fontFamily = e.target.value; renderCdText(); });
-$('cdColor').addEventListener('input', (e) => { cd.pos.color = e.target.value; renderCdText(); });
-$('cdColorAuto').addEventListener('click', () => { cd.pos.color = null; renderCdText(); });
-{
-  // Quick-pick swatches; the colour input covers everything else.
-  const SWATCHES = ['#ffffff', '#141414', '#ffd700', '#ff4d6d', '#ff8c42', '#4ade80', '#38bdf8', '#a78bfa', '#f472b6', '#8b1a1a', '#1e3a8a', '#065f46'];
-  const root = $('cdSwatches');
-  for (const c of SWATCHES) {
-    const b = document.createElement('button');
-    b.dataset.c = c; b.title = c; b.style.background = c;
-    b.addEventListener('click', () => { cd.pos.color = c; renderCdText(); });
-    root.appendChild(b);
-  }
-}
-function setCdSize(pct) {
-  if (!Number.isFinite(pct)) return;
-  cd.pos.fontSize = Math.min(40, Math.max(2, pct)) / 100;
+const cdPick = makeColorPicker($('cdColorPicker'), {
+  defaultLabel: 'Theme default',
+  onChange: (c) => { if (!cd) return; cd.pos.color = c; renderCdText(); },
+});
+// Font size: the field is in pixels at the image's native width; stored as a fraction.
+function setCdSize(px) {
+  if (!Number.isFinite(px)) return;
+  cd.pos.fontSize = Math.min(0.4, Math.max(0.02, px / cd.imgW));
   renderCdText();
 }
 $('cdSize').addEventListener('input', (e) => setCdSize(parseFloat(e.target.value)));
 $('cdSizeNum').addEventListener('change', (e) => setCdSize(parseFloat(e.target.value)));
-function setCdWidth(pct) {
-  if (!Number.isFinite(pct)) return;
-  cd.pos.width = Math.min(100, Math.max(15, pct)) / 100;
-  renderCdText();
-}
-$('cdWidth').addEventListener('input', (e) => setCdWidth(parseFloat(e.target.value)));
-$('cdWidthNum').addEventListener('change', (e) => setCdWidth(parseFloat(e.target.value)));
-$('cdWidthAuto').addEventListener('click', () => { cd.pos.width = null; renderCdText(); });
 
 // In-place editing of a layer on the canvas. Double-click enters edit mode;
 // Enter inserts a line break at the caret; Esc / clicking away commits.
