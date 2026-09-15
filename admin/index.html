@@ -151,8 +151,6 @@
   #cdText { white-space: pre-wrap; }
   #cdText[contenteditable="true"] { cursor: text; outline: 2px dashed var(--accent); outline-offset: 3px; }
   .cap-row button { padding: 4px 9px; font-size: 12px; }
-  .cap-row .cap-tag { display: none; color: var(--accent); font-size: 11px; font-weight: 700; padding-top: 10px; white-space: nowrap; }
-  .cap-row.custom .cap-tag { display: inline; }
 
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
   .caption-img { display: flex; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); }
@@ -417,12 +415,8 @@
           <button id="cdAddCap" style="margin-top:6px">＋ add caption</button>
         </div>
         <div class="ed-sec">
-          <h4>Text style</h4>
-          <div class="seg" id="cdScopeSeg">
-            <button data-scope="shared">Shared by all captions</button>
-            <button data-scope="custom">Custom for this caption</button>
-          </div>
-          <p class="muted" id="cdScopeHint" style="margin:6px 0 2px;font-size:12px"></p>
+          <h4>Text style — <span id="cdStyleFor">this caption</span></h4>
+          <p class="muted" style="margin:0 0 4px;font-size:12px">Every caption has its own position and style. Click a caption to edit it; a new caption starts as a copy of the current one.</p>
           <label>Theme</label>
           <div class="seg" id="cdThemeSeg">
             <button data-theme="light">◐ White text</button>
@@ -1291,13 +1285,13 @@ function openCardDesigner(file) {
     file,
     imgW: 1080, imgH: 1080, stageW: 400,
     base,
-    caps: (state.texts[file] || []).map((e) => ({ text: capText(e), style: hasOwnStyle(e) ? styleFrom(e) : null })),
+    // Legacy plain-string captions inherit the image's shared style so nothing moves.
+    caps: (state.texts[file] || []).map((e) => ({ text: capText(e), style: hasOwnStyle(e) ? styleFrom(e) : { ...base } })),
     capIdx: 0,
   };
-  // Everything below edits cd.pos — the selected caption's own style when it
-  // has one, otherwise the shared base.
+  // Everything below edits cd.pos — always the selected caption's own style.
   Object.defineProperty(cd, 'pos', { get: () => (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].style) || cd.base });
-  if (!cd.caps.length) cd.caps = [{ text: 'Your caption here', style: null }];
+  if (!cd.caps.length) cd.caps = [{ text: 'Your caption here', style: { ...base } }];
 
   $('cdText').contentEditable = 'false';
   $('cardTitle').textContent = `Design cards — ${file}`;
@@ -1363,33 +1357,19 @@ function syncCdTheme() {
 }
 function syncCdControls() {
   syncCdTheme();
-  const c = cd.caps[cd.capIdx];
-  const custom = !!(c && c.style);
-  document.querySelectorAll('#cdScopeSeg button').forEach((b) =>
-    b.classList.toggle('on', (b.dataset.scope === 'custom') === custom));
-  $('cdScopeHint').textContent = custom
-    ? `Caption ${cd.capIdx + 1} has its own position & style.`
-    : `Editing the shared style — captions without a custom style use it.`;
+  $('cdStyleFor').textContent = `caption ${cd.capIdx + 1}`;
   $('cdFont').value = cd.pos.fontFamily || '';
-  $('cdCapList').querySelectorAll('.cap-row').forEach((r, j) => r.classList.toggle('custom', !!(cd.caps[j] && cd.caps[j].style)));
 }
-document.querySelectorAll('#cdScopeSeg button').forEach((b) =>
-  b.addEventListener('click', () => {
-    const c = cd.caps[cd.capIdx]; if (!c) return;
-    if (b.dataset.scope === 'custom') { if (!c.style) c.style = { ...cd.base }; }
-    else c.style = null;
-    syncCdControls(); renderCdText();
-  }));
 
 function renderCapList() {
   const root = $('cdCapList');
   root.innerHTML = '';
   cd.caps.forEach((c, i) => {
     const row = document.createElement('div');
-    row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '') + (c.style ? ' custom' : '');
+    row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '');
     const inp = capField(c.text, `Caption ${i + 1}`);
     row.appendChild(inp);
-    row.insertAdjacentHTML('beforeend', `<span class="cap-tag" title="This caption has its own style">◆</span><button class="danger" title="remove">✕</button>`);
+    row.insertAdjacentHTML('beforeend', `<button class="danger" title="remove">✕</button>`);
     // Selecting a caption must not rebuild the list — that would destroy the
     // field mid-click and drop focus, making it impossible to type in.
     inp.addEventListener('focus', () => {
@@ -1403,7 +1383,7 @@ function renderCapList() {
     });
     row.querySelector('button').addEventListener('click', () => {
       cd.caps.splice(i, 1);
-      if (!cd.caps.length) cd.caps = [{ text: '', style: null }];
+      if (!cd.caps.length) cd.caps = [{ text: '', style: { ...cd.base } }];
       cd.capIdx = Math.min(cd.capIdx, cd.caps.length - 1);
       renderCapList(); syncCdControls(); renderCdText();
     });
@@ -1411,7 +1391,7 @@ function renderCapList() {
   });
 }
 $('cdAddCap').addEventListener('click', () => {
-  cd.caps.push({ text: '', style: null });
+  cd.caps.push({ text: '', style: { ...cd.pos } });
   cd.capIdx = cd.caps.length - 1;
   renderCapList(); syncCdControls(); renderCdText();
   const inputs = $('cdCapList').querySelectorAll('textarea');
@@ -1500,9 +1480,9 @@ $('cardSaveBtn').addEventListener('click', () => {
     return o;
   };
   const caps = cd.caps
-    .map((c) => ({ text: c.text.trim(), style: c.style }))
+    .map((c) => ({ text: c.text.trim(), style: c.style || cd.base }))
     .filter((c) => c.text)
-    .map((c) => (c.style ? { text: c.text, ...styleOut(c.style, true) } : c.text));
+    .map((c) => ({ text: c.text, ...styleOut(c.style, true) }));
   state.texts[cd.file] = caps;
   if (!caps.length) delete state.texts[cd.file];
   state.positions[cd.file] = styleOut(cd.base, false);
@@ -1605,7 +1585,7 @@ function fillCaptions(body, cat) {
         r.className = 'row';
         const ta = capField(capText(entry), `Caption ${i + 1}`);
         r.appendChild(ta);
-        r.insertAdjacentHTML('beforeend', `${hasOwnStyle(entry) ? '<span class="muted" title="Has its own style" style="padding-top:9px;color:var(--accent);font-weight:700">◆</span>' : ''}<button class="danger">✕</button>`);
+        r.insertAdjacentHTML('beforeend', `<button class="danger">✕</button>`);
         ta.addEventListener('change', (e) => {
           state.texts[img][i] = withText(state.texts[img][i], e.target.value);
           markDirty('imageTexts.json');
