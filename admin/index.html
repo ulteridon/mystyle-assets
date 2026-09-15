@@ -142,14 +142,34 @@
   /* card designer */
   #cdStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 14px; box-shadow: 0 20px 60px rgba(36,30,46,.22); }
   #cdStage img.bg { display: block; width: 100%; height: 100%; }
-  #cdText { position: absolute; cursor: move; text-align: center; line-height: 1.32; z-index: 4; box-sizing: border-box; }
-  #cdText:hover { outline: 1.5px dashed rgba(124,92,252,.6); }
+  #cdLayers { position: absolute; inset: 0; }
+  .cd-text { position: absolute; cursor: move; text-align: center; line-height: 1.32; z-index: 4; box-sizing: border-box; white-space: pre-wrap; }
+  .cd-text:hover { outline: 1.5px dashed rgba(124,92,252,.6); }
+  .cd-text.sel { outline: 1.5px solid var(--accent); }
+  .cd-body { display: block; min-width: 1ch; outline: none; }
+  .cd-body[contenteditable="true"] { cursor: text; }
+  .cd-text:has(.cd-body[contenteditable="true"]) { outline: 2px dashed var(--accent); outline-offset: 3px; }
+  /* resize handles — sides set the box width, corners scale the text (Canva-style) */
+  .cd-h { position: absolute; width: 11px; height: 11px; background: #fff; border: 2px solid var(--accent); border-radius: 50%; display: none; z-index: 7; box-sizing: border-box; }
+  .cd-text.sel:not(:has(.cd-body[contenteditable="true"])) .cd-h { display: block; }
+  .cd-h.w  { left: -6px; top: 50%; margin-top: -9px; cursor: ew-resize; border-radius: 3px; height: 18px; }
+  .cd-h.e  { right: -6px; top: 50%; margin-top: -9px; cursor: ew-resize; border-radius: 3px; height: 18px; }
+  .cd-h.nw { left: -6px; top: -6px; cursor: nwse-resize; }
+  .cd-h.se { right: -6px; bottom: -6px; cursor: nwse-resize; }
+  .cd-h.ne { right: -6px; top: -6px; cursor: nesw-resize; }
+  .cd-h.sw { left: -6px; bottom: -6px; cursor: nesw-resize; }
+  .cap-card { border: 1px solid var(--border); border-radius: 10px; padding: 4px 6px; margin: 6px 0; }
+  .cap-card.on { border-color: var(--accent); background: rgba(124,92,252,.05); }
   .cap-row { display: flex; gap: 5px; margin: 4px 0; align-items: flex-start; }
+  .cap-row.layer { margin-left: 14px; position: relative; }
+  .cap-row.layer::before { content: '↳'; position: absolute; left: -13px; top: 8px; font-size: 11px; color: var(--muted); }
   .cap-row textarea { flex: 1; min-width: 0; resize: none; overflow: hidden; line-height: 1.35; font-family: inherit; min-height: 34px; }
   .cap-row.on textarea { outline: 2px solid #E4D9FF; border-color: var(--accent); }
-  #cdText { white-space: pre-wrap; }
-  #cdText[contenteditable="true"] { cursor: text; outline: 2px dashed var(--accent); outline-offset: 3px; }
   .cap-row button { padding: 4px 9px; font-size: 12px; }
+  .cap-addlayer { display: none; font-size: 11px; padding: 3px 8px; margin: 2px 0 2px; }
+  .cap-card.on .cap-addlayer { display: inline-block; }
+  .seg-mini { font-size: 11px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
+  .seg-mini.on { background: var(--accent); color: #fff; border-color: var(--accent); }
 
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
   #log { background: #241E2E; color: #F5EFE7; border-radius: 14px; padding: 12px 14px; font: 12px/1.6 ui-monospace, monospace; white-space: pre-wrap; max-height: 320px; overflow: auto; }
@@ -375,7 +395,7 @@
   <div class="editor">
     <div class="ed-top">
       <b id="cardTitle">Card designer</b>
-      <span class="muted">drag the caption to move · double-click it to edit in place · Enter = new line</span>
+      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
       <button id="cardSaveBtn" class="primary">Save cards</button>
@@ -384,19 +404,19 @@
       <div class="ed-canvas" id="cdCanvas">
         <div id="cdStage">
           <img class="bg" id="cdBg" alt="">
-          <div id="cdText">caption</div>
+          <div id="cdLayers"></div>
         </div>
       </div>
       <div class="ed-side">
         <div class="ed-sec">
           <h4>Captions — one card each</h4>
-          <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it.</p>
+          <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it. Use <b>＋ text layer</b> to put more than one text block on the same card (e.g. a title and a message).</p>
           <div id="cdCapList"></div>
-          <button id="cdAddCap" style="margin-top:6px">＋ add caption</button>
+          <button id="cdAddCap" style="margin-top:6px">＋ add caption (new card)</button>
         </div>
         <div class="ed-sec">
           <h4>Text style — <span id="cdStyleFor">this caption</span></h4>
-          <p class="muted" style="margin:0 0 4px;font-size:12px">Every caption has its own position and style. Click a caption to edit it; a new caption starts as a copy of the current one.</p>
+          <p class="muted" style="margin:0 0 4px;font-size:12px">Every text block has its own position and style. Click one to edit it; a new one starts as a copy of the current one.</p>
           <label>Theme</label>
           <div class="seg" id="cdThemeSeg">
             <button data-theme="light">◐ White text</button>
@@ -411,6 +431,9 @@
           <select id="cdFont"><option value="">Category default</option></select>
           <label>Size — <input id="cdSizeNum" type="number" min="2" max="40" step="0.1" style="width:64px"> % of image width</label>
           <input id="cdSize" type="range" min="2" max="40" step="0.1" style="width:100%">
+          <label>Box width — <input id="cdWidthNum" type="number" min="15" max="100" step="1" style="width:64px"> % of image width <button id="cdWidthAuto" class="seg-mini" title="Shrink to fit the text (max 86 %)">auto</button></label>
+          <input id="cdWidth" type="range" min="15" max="100" step="1" style="width:100%">
+          <p class="muted" style="margin:0 0 4px;font-size:12px">Text wraps inside the box. Drag the box's side handles on the canvas to resize it, or the corners to scale the text.</p>
           <label>Position (fractions of image)</label>
           <div class="muted" style="font-size:12px" id="cdPos"></div>
         </div>
@@ -1226,10 +1249,17 @@ function capField(value, placeholder) {
 }
 
 // ── Card designer (Images tab) ───────────────────────────────────────────────
-// One background + N captions = N cards in the app. Placement/theme/font/size
-// are stored per background in imagePositions.json — mirrors the app's
-// ImageComposite renderer so the preview matches the phone.
-let cd = null; // { file, imgW, imgH, stageW, pos {x,y,theme,fontFamily?,fontSize?}, caps [], capIdx }
+// One background + N captions = N cards in the app. Each card can carry extra
+// text layers (drawn on the same card). Placement/theme/font/size/width are
+// stored per layer in imageTexts.json; the image's shared default lives in
+// imagePositions.json — mirrors the app's ImageComposite renderer so the
+// preview matches the phone.
+//
+// Style: { x, y, theme, fontFamily, fontSize, noBg, width }. `width` is the
+// text box width as a fraction of the image (text wraps inside it); null =
+// auto (shrink to fit, capped at 86 % like the app default).
+const CD_AUTO_WIDTH = 0.86;
+let cd = null; // { file, imgW, imgH, stageW, base, caps [{ layers [{ text, style }] }], capIdx, layerIdx }
 
 {
   const sel = $('cdFont');
@@ -1246,28 +1276,39 @@ function openCardDesigner(file) {
     fontFamily: p.fontFamily || '',
     fontSize: num(p.fontSize, 0.058),
     noBg: !!p.noBg,
+    width: num(p.width, null),
   };
-  // A custom style is stored complete, so missing fields fall back to the base.
-  const styleFrom = (e) => ({
-    x: num(e.x, base.x), y: num(e.y, base.y),
-    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : base.theme,
-    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : base.fontFamily,
-    fontSize: num(e.fontSize, base.fontSize),
-    noBg: typeof e.noBg === 'boolean' ? e.noBg : base.noBg,
+  // A custom style is stored complete, so missing fields fall back to `from`.
+  const styleFrom = (e, from) => ({
+    x: num(e.x, from.x), y: num(e.y, from.y),
+    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : from.theme,
+    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : from.fontFamily,
+    fontSize: num(e.fontSize, from.fontSize),
+    noBg: typeof e.noBg === 'boolean' ? e.noBg : from.noBg,
+    width: num(e.width, from.width),
   });
+  // Legacy plain-string captions inherit the image's shared style so nothing moves.
+  // Extra layers fall back to the card's main style, like the app does.
+  const cardFrom = (e) => {
+    const main = { text: capText(e), style: hasOwnStyle(e) ? styleFrom(e, base) : { ...base } };
+    const extra = (e && typeof e === 'object' && Array.isArray(e.layers) ? e.layers : [])
+      .map((l) => ({ text: capText(l), style: styleFrom(l || {}, main.style) }));
+    return { layers: [main, ...extra] };
+  };
   cd = {
     file,
     imgW: 1080, imgH: 1080, stageW: 400,
     base,
-    // Legacy plain-string captions inherit the image's shared style so nothing moves.
-    caps: (state.texts[file] || []).map((e) => ({ text: capText(e), style: hasOwnStyle(e) ? styleFrom(e) : { ...base } })),
+    caps: (state.texts[file] || []).map(cardFrom),
     capIdx: 0,
+    layerIdx: 0,
   };
-  // Everything below edits cd.pos — always the selected caption's own style.
-  Object.defineProperty(cd, 'pos', { get: () => (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].style) || cd.base });
-  if (!cd.caps.length) cd.caps = [{ text: 'Your caption here', style: { ...base } }];
+  // Everything below edits cd.pos — always the selected layer's own style.
+  Object.defineProperty(cd, 'layer', { get: () => (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].layers[cd.layerIdx]) || null });
+  Object.defineProperty(cd, 'pos', { get: () => (cd.layer && cd.layer.style) || cd.base });
+  if (!cd.caps.length) cd.caps = [{ layers: [{ text: 'Your caption here', style: { ...base } }] }];
 
-  $('cdText').contentEditable = 'false';
+  $('cdLayers').innerHTML = '';
   $('cardTitle').textContent = `Design cards — ${file}`;
   $('cardModalBack').classList.add('open');
   renderCapList();
@@ -1293,34 +1334,65 @@ function layoutCdStage() {
   renderCdText();
 }
 
+const cdEditingEl = () => $('cdLayers').querySelector('.cd-text[contenteditable="true"]');
+
+// One <div class="cd-text"> per layer of the selected card. Elements are
+// reused between renders so an in-place edit keeps its caret.
+function cdLayerEls() {
+  const root = $('cdLayers');
+  const layers = cd.caps[cd.capIdx].layers;
+  while (root.children.length > layers.length) root.lastElementChild.remove();
+  while (root.children.length < layers.length) root.appendChild(makeCdTextEl(root.children.length));
+  return [...root.children];
+}
+function makeCdTextEl() {
+  const el = document.createElement('div');
+  el.className = 'cd-text';
+  el.innerHTML = '<span class="cd-body"></span>' +
+    ['w', 'e', 'nw', 'ne', 'sw', 'se'].map((h) => `<i class="cd-h ${h}" data-h="${h}"></i>`).join('');
+  wireCdTextEl(el);
+  return el;
+}
+
 // Mirrors the app's ImageComposite: block centred on (x,y), clamped inside.
 function renderCdText() {
-  const el = $('cdText');
   const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
-  const fontSize = Math.max(8, W * cd.pos.fontSize);
-  const dark = cd.pos.theme === 'dark';
-  const [, , css, weight] = fontCss(cd.pos.fontFamily || 'Poppins_700Bold');
-  if (!el.isContentEditable) el.textContent = (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].text) || '';
-  Object.assign(el.style, {
-    color: dark ? '#141414' : '#ffffff',
-    background: cd.pos.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
-    textShadow: cd.pos.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
-    fontSize: fontSize + 'px',
-    fontFamily: css,
-    fontWeight: weight,
-    borderRadius: fontSize * 0.7 + 'px',
-    padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
-    maxWidth: W * 0.86 + 'px',
-    whiteSpace: 'pre-wrap',
-  });
-  // measure, then centre on the anchor, clamped like the app does
-  const bw = el.offsetWidth, bh = el.offsetHeight;
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-  el.style.left = clamp(cd.pos.x * W - bw / 2, 0, Math.max(0, W - bw)) + 'px';
-  el.style.top = clamp(cd.pos.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
+  const els = cdLayerEls();
+  cd.caps[cd.capIdx].layers.forEach((layer, i) => {
+    const el = els[i], st = layer.style, body = el.querySelector('.cd-body');
+    const fontSize = Math.max(8, W * st.fontSize);
+    const dark = st.theme === 'dark';
+    const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
+    if (!body.isContentEditable) body.textContent = layer.text || '';
+    el.classList.toggle('sel', i === cd.layerIdx);
+    Object.assign(el.style, {
+      color: dark ? '#141414' : '#ffffff',
+      background: st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
+      textShadow: st.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
+      fontSize: fontSize + 'px',
+      fontFamily: css,
+      fontWeight: weight,
+      borderRadius: fontSize * 0.7 + 'px',
+      padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
+      // Fixed width when set (Canva-style box), otherwise shrink-to-fit up to 86 %.
+      width: st.width ? W * st.width + 'px' : 'auto',
+      maxWidth: st.width ? 'none' : W * CD_AUTO_WIDTH + 'px',
+      whiteSpace: 'pre-wrap',
+      zIndex: i === cd.layerIdx ? 5 : 4,
+    });
+    // measure, then centre on the anchor, clamped like the app does
+    const bw = el.offsetWidth, bh = el.offsetHeight;
+    el.style.left = clamp(st.x * W - bw / 2, 0, Math.max(0, W - bw)) + 'px';
+    el.style.top = clamp(st.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
+  });
   $('cdPos').textContent = `x ${cd.pos.x.toFixed(3)} · y ${cd.pos.y.toFixed(3)}`;
   $('cdSizeNum').value = (cd.pos.fontSize * 100).toFixed(1);
   $('cdSize').value = (cd.pos.fontSize * 100).toFixed(1);
+  const wPct = ((cd.pos.width || CD_AUTO_WIDTH) * 100).toFixed(0);
+  $('cdWidthNum').value = wPct;
+  $('cdWidth').value = wPct;
+  $('cdWidthAuto').classList.toggle('on', !cd.pos.width);
 }
 
 function syncCdTheme() {
@@ -1331,42 +1403,76 @@ function syncCdTheme() {
 }
 function syncCdControls() {
   syncCdTheme();
-  $('cdStyleFor').textContent = `caption ${cd.capIdx + 1}`;
+  $('cdStyleFor').textContent = cd.layerIdx === 0 ? `caption ${cd.capIdx + 1}` : `caption ${cd.capIdx + 1} · layer ${cd.layerIdx + 1}`;
   $('cdFont').value = cd.pos.fontFamily || '';
+}
+
+function cdSelect(capIdx, layerIdx) {
+  const changedCard = capIdx !== cd.capIdx;
+  cd.capIdx = capIdx; cd.layerIdx = layerIdx;
+  if (changedCard) $('cdLayers').innerHTML = '';
+  $('cdCapList').querySelectorAll('.cap-row').forEach((r) =>
+    r.classList.toggle('on', +r.dataset.cap === capIdx && +r.dataset.layer === layerIdx));
+  $('cdCapList').querySelectorAll('.cap-card').forEach((c) => c.classList.toggle('on', +c.dataset.cap === capIdx));
+  syncCdControls(); renderCdText();
 }
 
 function renderCapList() {
   const root = $('cdCapList');
   root.innerHTML = '';
-  cd.caps.forEach((c, i) => {
-    const row = document.createElement('div');
-    row.className = 'cap-row' + (i === cd.capIdx ? ' on' : '');
-    const inp = capField(c.text, `Caption ${i + 1}`);
-    row.appendChild(inp);
-    row.insertAdjacentHTML('beforeend', `<button class="danger" title="remove">✕</button>`);
-    // Selecting a caption must not rebuild the list — that would destroy the
-    // field mid-click and drop focus, making it impossible to type in.
-    inp.addEventListener('focus', () => {
-      cd.capIdx = i;
-      root.querySelectorAll('.cap-row').forEach((r, j) => r.classList.toggle('on', j === i));
-      syncCdControls(); renderCdText();
+  cd.caps.forEach((card, i) => {
+    const box = document.createElement('div');
+    box.className = 'cap-card' + (i === cd.capIdx ? ' on' : '');
+    box.dataset.cap = i;
+    card.layers.forEach((layer, j) => {
+      const row = document.createElement('div');
+      row.className = 'cap-row' + (j > 0 ? ' layer' : '') + (i === cd.capIdx && j === cd.layerIdx ? ' on' : '');
+      row.dataset.cap = i; row.dataset.layer = j;
+      const inp = capField(layer.text, j === 0 ? `Caption ${i + 1}` : `Text layer ${j + 1}`);
+      row.appendChild(inp);
+      row.insertAdjacentHTML('beforeend', `<button class="danger" title="${j === 0 ? 'remove card' : 'remove layer'}">✕</button>`);
+      // Selecting must not rebuild the list — that would destroy the field
+      // mid-click and drop focus, making it impossible to type in.
+      inp.addEventListener('focus', () => cdSelect(i, j));
+      inp.addEventListener('input', (e) => { layer.text = e.target.value; if (cd.capIdx === i) renderCdText(); });
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('cdAddCap').click(); }
+      });
+      row.querySelector('button').addEventListener('click', () => {
+        if (j === 0) {
+          cd.caps.splice(i, 1);
+          if (!cd.caps.length) cd.caps = [{ layers: [{ text: '', style: { ...cd.base } }] }];
+          cd.capIdx = Math.min(cd.capIdx, cd.caps.length - 1);
+        } else {
+          card.layers.splice(j, 1);
+        }
+        cd.layerIdx = 0;
+        $('cdLayers').innerHTML = '';
+        renderCapList(); syncCdControls(); renderCdText();
+      });
+      box.appendChild(row);
     });
-    inp.addEventListener('input', (e) => { cd.caps[i].text = e.target.value; if (cd.capIdx === i) renderCdText(); });
-    inp.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('cdAddCap').click(); }
-    });
-    row.querySelector('button').addEventListener('click', () => {
-      cd.caps.splice(i, 1);
-      if (!cd.caps.length) cd.caps = [{ text: '', style: { ...cd.base } }];
-      cd.capIdx = Math.min(cd.capIdx, cd.caps.length - 1);
+    const add = document.createElement('button');
+    add.className = 'cap-addlayer';
+    add.textContent = '＋ text layer on this card';
+    add.title = 'Add another text block to the same card (e.g. a title + a message)';
+    add.addEventListener('click', () => {
+      const from = card.layers[card.layers.length - 1].style;
+      // New layer starts as a copy of the last one, nudged down so it's visible.
+      card.layers.push({ text: '', style: { ...from, y: Math.min(0.95, from.y + 0.15) } });
+      cd.capIdx = i; cd.layerIdx = card.layers.length - 1;
       renderCapList(); syncCdControls(); renderCdText();
+      const rows = root.querySelectorAll(`.cap-row[data-cap="${i}"] textarea`);
+      rows[rows.length - 1]?.focus();
     });
-    root.appendChild(row);
+    box.appendChild(add);
+    root.appendChild(box);
   });
 }
 $('cdAddCap').addEventListener('click', () => {
-  cd.caps.push({ text: '', style: { ...cd.pos } });
-  cd.capIdx = cd.caps.length - 1;
+  cd.caps.push({ layers: [{ text: '', style: { ...cd.pos } }] });
+  cd.capIdx = cd.caps.length - 1; cd.layerIdx = 0;
+  $('cdLayers').innerHTML = '';
   renderCapList(); syncCdControls(); renderCdText();
   const inputs = $('cdCapList').querySelectorAll('textarea');
   inputs[inputs.length - 1]?.focus();
@@ -1384,66 +1490,104 @@ function setCdSize(pct) {
 }
 $('cdSize').addEventListener('input', (e) => setCdSize(parseFloat(e.target.value)));
 $('cdSizeNum').addEventListener('change', (e) => setCdSize(parseFloat(e.target.value)));
-
-// In-place editing of the caption on the canvas. Double-click enters edit
-// mode; Enter inserts a line break at the caret; Esc / clicking away commits.
-function cdSyncFromCanvas() {
-  const el = $('cdText');
-  cd.caps[cd.capIdx].text = el.innerText.replace(/\r/g, '');
-  const ta = $('cdCapList').querySelectorAll('textarea')[cd.capIdx];
-  if (ta) { ta.value = cd.caps[cd.capIdx].text; autoGrow(ta); }
-}
-function cdStartEdit() {
-  const el = $('cdText');
-  if (el.isContentEditable) return;
-  el.contentEditable = 'true';
-  el.focus();
-  const r = document.createRange(); r.selectNodeContents(el); r.collapse(false);
-  const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-}
-function cdStopEdit() {
-  const el = $('cdText');
-  if (!el.isContentEditable) return;
-  cdSyncFromCanvas();
-  el.contentEditable = 'false';
+function setCdWidth(pct) {
+  if (!Number.isFinite(pct)) return;
+  cd.pos.width = Math.min(100, Math.max(15, pct)) / 100;
   renderCdText();
 }
-$('cdText').addEventListener('dblclick', (e) => { e.preventDefault(); cdStartEdit(); });
-$('cdText').addEventListener('blur', cdStopEdit);
-$('cdText').addEventListener('input', () => { cdSyncFromCanvas(); renderCdText(); });
-$('cdText').addEventListener('keydown', (e) => {
-  const el = $('cdText');
-  if (!el.isContentEditable) return;
-  e.stopPropagation();
-  if (e.key === 'Escape') { e.preventDefault(); el.blur(); return; }
-  if (e.key === 'Enter') { e.preventDefault(); document.execCommand('insertText', false, '\n'); }
-});
-$('cdText').addEventListener('paste', (e) => {
-  const el = $('cdText');
-  if (!el.isContentEditable) return;
-  e.preventDefault();
-  document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text'));
-});
+$('cdWidth').addEventListener('input', (e) => setCdWidth(parseFloat(e.target.value)));
+$('cdWidthNum').addEventListener('change', (e) => setCdWidth(parseFloat(e.target.value)));
+$('cdWidthAuto').addEventListener('click', () => { cd.pos.width = null; renderCdText(); });
 
-$('cdText').addEventListener('pointerdown', (e) => {
-  const el = $('cdText');
-  if (el.isContentEditable) return;            // editing: let the caret move
-  e.preventDefault();
-  el.setPointerCapture(e.pointerId);
-  const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
-  let last = { x: e.clientX, y: e.clientY };
-  const move = (ev) => {
-    cd.pos.x = Math.min(1, Math.max(0, cd.pos.x + (ev.clientX - last.x) / W));
-    cd.pos.y = Math.min(1, Math.max(0, cd.pos.y + (ev.clientY - last.y) / H));
-    last = { x: ev.clientX, y: ev.clientY };
-    renderCdText();
-  };
-  const up = () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up); };
-  el.addEventListener('pointermove', move);
-  el.addEventListener('pointerup', up);
-});
+// In-place editing of a layer on the canvas. Double-click enters edit mode;
+// Enter inserts a line break at the caret; Esc / clicking away commits.
+function cdSyncFromCanvas(body) {
+  const el = body.closest('.cd-text');
+  const idx = [...$('cdLayers').children].indexOf(el);
+  const layer = cd.caps[cd.capIdx].layers[idx];
+  if (!layer) return;
+  layer.text = body.innerText.replace(/\r/g, '');
+  const ta = $('cdCapList').querySelector(`.cap-row[data-cap="${cd.capIdx}"][data-layer="${idx}"] textarea`);
+  if (ta) { ta.value = layer.text; autoGrow(ta); }
+}
+function cdStartEdit(el) {
+  const body = el.querySelector('.cd-body');
+  if (body.isContentEditable) return;
+  body.contentEditable = 'true';
+  body.focus();
+  const r = document.createRange(); r.selectNodeContents(body); r.collapse(false);
+  const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+}
+function cdStopEdit(body) {
+  body = body || cdEditingEl()?.querySelector('.cd-body');
+  if (!body || !body.isContentEditable) return;
+  cdSyncFromCanvas(body);
+  body.contentEditable = 'false';
+  renderCdText();
+}
 
-$('cardCancelBtn').addEventListener('click', () => { $('cdText').contentEditable = 'false'; $('cardModalBack').classList.remove('open'); });
+// Drag to move; side handles set the box width; corner handles scale the text
+// (and the box, when it has a fixed width) — like Canva.
+function wireCdTextEl(el) {
+  const body = el.querySelector('.cd-body');
+  const idxOf = () => [...$('cdLayers').children].indexOf(el);
+
+  el.addEventListener('dblclick', (e) => { e.preventDefault(); cdSelect(cd.capIdx, idxOf()); cdStartEdit(el); });
+  body.addEventListener('blur', () => cdStopEdit(body));
+  body.addEventListener('input', () => { cdSyncFromCanvas(body); renderCdText(); });
+  body.addEventListener('keydown', (e) => {
+    if (!body.isContentEditable) return;
+    e.stopPropagation();
+    if (e.key === 'Escape') { e.preventDefault(); body.blur(); return; }
+    if (e.key === 'Enter') { e.preventDefault(); document.execCommand('insertText', false, '\n'); }
+  });
+  body.addEventListener('paste', (e) => {
+    if (!body.isContentEditable) return;
+    e.preventDefault();
+    document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text'));
+  });
+
+  el.addEventListener('pointerdown', (e) => {
+    if (body.isContentEditable) return;            // editing: let the caret move
+    e.preventDefault();
+    const other = cdEditingEl();
+    if (other) cdStopEdit(other.querySelector('.cd-body'));
+    cdSelect(cd.capIdx, idxOf());
+    const st = cd.pos;
+    const handle = e.target.closest('.cd-h')?.dataset.h || null;
+    el.setPointerCapture(e.pointerId);
+    const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
+    const start = { x: e.clientX, y: e.clientY, bw: el.offsetWidth, fs: st.fontSize, w: st.width, px: st.x };
+    let last = { x: e.clientX, y: e.clientY };
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const move = (ev) => {
+      const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
+      if (!handle) {
+        st.x = clamp(st.x + (ev.clientX - last.x) / W, 0, 1);
+        st.y = clamp(st.y + (ev.clientY - last.y) / H, 0, 1);
+        last = { x: ev.clientX, y: ev.clientY };
+      } else if (handle === 'e' || handle === 'w') {
+        // Opposite edge stays put: width changes by dx, centre shifts by dx/2.
+        const dir = handle === 'e' ? 1 : -1;
+        const w0 = start.w || start.bw / W;
+        st.width = clamp(w0 + (dir * dx) / W, 0.15, 1);
+        st.x = clamp(start.px + (dir * (st.width - w0)) / 2, 0, 1);
+      } else {
+        // Corner: scale by how far the corner moved relative to the box width.
+        const sx = handle.endsWith('e') ? 1 : -1, sy = handle.startsWith('s') ? 1 : -1;
+        const k = clamp((start.bw + (sx * dx + sy * dy) / 2) / Math.max(1, start.bw), 0.2, 5);
+        st.fontSize = clamp(start.fs * k, 0.02, 0.4);
+        if (start.w) st.width = clamp(start.w * k, 0.15, 1);
+      }
+      renderCdText();
+    };
+    const up = () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up); };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', up);
+  });
+}
+
+$('cardCancelBtn').addEventListener('click', () => { $('cdLayers').innerHTML = ''; $('cardModalBack').classList.remove('open'); });
 $('cardSaveBtn').addEventListener('click', () => {
   cdStopEdit();
   const styleOut = (st, full) => {
@@ -1451,17 +1595,23 @@ $('cardSaveBtn').addEventListener('click', () => {
     if (st.fontFamily) o.fontFamily = st.fontFamily;
     if (full || Math.abs(st.fontSize - 0.058) > 0.0005) o.fontSize = +st.fontSize.toFixed(4);
     if (full || st.noBg) o.noBg = !!st.noBg;
+    if (st.width) o.width = +st.width.toFixed(4);
     return o;
   };
   const caps = cd.caps
-    .map((c) => ({ text: c.text.trim(), style: c.style || cd.base }))
-    .filter((c) => c.text)
-    .map((c) => ({ text: c.text, ...styleOut(c.style, true) }));
+    .map((card) => card.layers.map((l) => ({ text: l.text.trim(), style: l.style || cd.base })).filter((l) => l.text))
+    .filter((layers) => layers.length)
+    .map(([main, ...extra]) => {
+      const o = { text: main.text, ...styleOut(main.style, true) };
+      if (extra.length) o.layers = extra.map((l) => ({ text: l.text, ...styleOut(l.style, true) }));
+      return o;
+    });
   state.texts[cd.file] = caps;
   if (!caps.length) delete state.texts[cd.file];
   state.positions[cd.file] = styleOut(cd.base, false);
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
+  $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
 });
 window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
