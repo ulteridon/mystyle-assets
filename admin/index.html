@@ -147,17 +147,11 @@
   .cap-row { display: flex; gap: 5px; margin: 4px 0; align-items: flex-start; }
   .cap-row textarea { flex: 1; min-width: 0; resize: none; overflow: hidden; line-height: 1.35; font-family: inherit; min-height: 34px; }
   .cap-row.on textarea { outline: 2px solid #E4D9FF; border-color: var(--accent); }
-  .caption-list textarea { flex: 1; resize: none; overflow: hidden; line-height: 1.35; font-family: inherit; min-height: 34px; }
   #cdText { white-space: pre-wrap; }
   #cdText[contenteditable="true"] { cursor: text; outline: 2px dashed var(--accent); outline-offset: 3px; }
   .cap-row button { padding: 4px 9px; font-size: 12px; }
 
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
-  .caption-img { display: flex; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); }
-  .caption-img img { width: 84px; height: 110px; object-fit: cover; border-radius: 12px; }
-  .caption-list { flex: 1; }
-  .caption-list .row { margin: 4px 0; }
-  .caption-list input { flex: 1; }
   #log { background: #241E2E; color: #F5EFE7; border-radius: 14px; padding: 12px 14px; font: 12px/1.6 ui-monospace, monospace; white-space: pre-wrap; max-height: 320px; overflow: auto; }
   #log:empty { display: none; }
   .filelist { margin: 8px 0; padding-left: 18px; }
@@ -196,10 +190,6 @@
   <div class="nav-item" data-tab="templates">
     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="12" rx="2"></rect><rect x="13" y="3" width="8" height="7" rx="2"></rect><rect x="13" y="12" width="8" height="9" rx="2"></rect><rect x="3" y="17" width="8" height="4" rx="2"></rect></svg>
     <span>Templates</span>
-  </div>
-  <div class="nav-item" data-tab="captions">
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path><path d="M8 11h8M8 14h5"></path></svg>
-    <span>Captions</span>
   </div>
   <div class="nav-item" data-tab="publish">
     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"></path><path d="M6 10l6-6 6 6"></path><path d="M4 20h16"></path></svg>
@@ -251,16 +241,6 @@
       <label class="muted">Seed from app project: <input type="file" id="seedTplFile" accept=".json"></label>
     </div>
     <div class="grid" id="tplGrid" style="padding:0"></div>
-  </section>
-
-  <!-- ── CAPTIONS ───────────────────────────────────────────────────────── -->
-  <section class="tab" id="tab-captions">
-    <h2 class="page-title">Captions</h2>
-    <p class="muted">Caption variations overlaid on Images-tab cards (imageTexts.json). Each line becomes its own shareable card in the app.</p>
-    <div class="row">
-      <label class="muted">Seed from app project: <input type="file" id="seedTextsFile" accept=".json"></label>
-    </div>
-    <div id="capList"></div>
   </section>
 
   <!-- ── PUBLISH ────────────────────────────────────────────────────────── -->
@@ -590,7 +570,7 @@ document.querySelectorAll('.nav-item').forEach((b) =>
     $('tab-' + b.dataset.tab).classList.add('active');
   }));
 
-function renderAll() { renderCats(); renderTemplates(); renderCaptions(); refreshDirtyUI(); }
+function renderAll() { renderCats(); renderTemplates(); refreshDirtyUI(); }
 
 // ── Images & categories tab ──────────────────────────────────────────────────
 function renderCats() {
@@ -838,12 +818,6 @@ $('seedTplFile').addEventListener('change', async (e) => {
   state.templates = JSON.parse(await f.text());
   markDirty('templates_db.json');
   renderTemplates();
-});
-$('seedTextsFile').addEventListener('change', async (e) => {
-  const f = e.target.files[0]; if (!f) return;
-  state.texts = JSON.parse(await f.text());
-  markDirty('imageTexts.json');
-  renderCaptions();
 });
 
 // ── Template layout editor (Canva-style) ─────────────────────────────────────
@@ -1489,7 +1463,6 @@ $('cardSaveBtn').addEventListener('click', () => {
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
   $('cardModalBack').classList.remove('open');
-  renderCaptions();
 });
 window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
 
@@ -1543,72 +1516,7 @@ $('capSaveBtn').addEventListener('click', () => {
   const n = capEd.cell?.querySelector('.capn');
   if (n) n.textContent = caps.length;
   $('capModalBack').classList.remove('open');
-  renderCaptions();
 });
-
-// ── Captions tab ─────────────────────────────────────────────────────────────
-function renderCaptions() {
-  const root = $('capList');
-  root.innerHTML = '';
-  if (!state.manifest) { root.innerHTML = '<p class="muted">Press Load first.</p>'; return; }
-  for (const [cn, cat] of Object.entries(state.manifest.categories)) {
-    if (cat.kind !== 'image') continue;
-    const div = document.createElement('div');
-    div.className = 'cat';
-    div.innerHTML = `<div class="cat-head"><b>${cn}</b>
-      <span class="kind">${cat.images.length} images</span>
-      <span style="flex:1"></span><button class="expand">▾</button></div>
-      <div class="body" style="display:none"></div>`;
-    const body = div.querySelector('.body');
-    div.querySelector('.expand').addEventListener('click', (e) => {
-      const open = body.style.display !== 'none';
-      body.style.display = open ? 'none' : 'block';
-      e.target.textContent = open ? '▾' : '▴';
-      if (!open && !body.childElementCount) fillCaptions(body, cat);
-    });
-    root.appendChild(div);
-  }
-}
-
-function fillCaptions(body, cat) {
-  for (const img of cat.images) {
-    const row = document.createElement('div');
-    row.className = 'caption-img';
-    row.innerHTML = `<img loading="lazy" src="${IMG}/all_images/${img}">
-      <div class="caption-list"><div class="muted" style="margin-bottom:4px">${img}</div></div>`;
-    const list = row.querySelector('.caption-list');
-    const redraw = () => {
-      list.querySelectorAll('.row').forEach((r) => r.remove());
-      const arr = state.texts[img] ?? [];
-      arr.forEach((entry, i) => {
-        const r = document.createElement('div');
-        r.className = 'row';
-        const ta = capField(capText(entry), `Caption ${i + 1}`);
-        r.appendChild(ta);
-        r.insertAdjacentHTML('beforeend', `<button class="danger">✕</button>`);
-        ta.addEventListener('change', (e) => {
-          state.texts[img][i] = withText(state.texts[img][i], e.target.value);
-          markDirty('imageTexts.json');
-        });
-        r.querySelector('button').addEventListener('click', () => {
-          state.texts[img].splice(i, 1);
-          markDirty('imageTexts.json'); redraw();
-        });
-        list.appendChild(r);
-      });
-      const add = document.createElement('div');
-      add.className = 'row';
-      add.innerHTML = `<button>＋ add caption</button>`;
-      add.querySelector('button').addEventListener('click', () => {
-        (state.texts[img] = state.texts[img] || []).push('New caption');
-        markDirty('imageTexts.json'); redraw();
-      });
-      list.appendChild(add);
-    };
-    redraw();
-    body.appendChild(row);
-  }
-}
 
 // ── Publish ──────────────────────────────────────────────────────────────────
 function log(msg) {
