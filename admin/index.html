@@ -489,12 +489,12 @@
         <span id="cdDesignPos">1 / 1</span>
         <button id="cdNext" title="Next design (Alt+→)">›</button>
       </span>
-      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design</span>
+      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design · Alt+N = save &amp; next design</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
       <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Only cards ticked <b>Verified</b> go to phones; the rest stay saved in the admin.</span>
       <button id="cardSaveBtn" title="Keep in the admin draft; publish later from the Publish tab">Save cards</button>
-      <button id="cardSaveNextBtn" title="Save these cards and open the next background in this category (Alt+N)">Save &amp; next image ›</button>
+      <button id="cardSaveNextBtn" title="Save, then move to the next design; after the last design, opens the next background (Alt+N)">Save &amp; next design ›</button>
       <button id="cardSavePublishBtn" class="primary" title="Save all cards, then publish: only the ticked (verified) designs reach phones">Save &amp; publish verified</button>
     </div>
     <div class="ed-body">
@@ -533,6 +533,7 @@
         <div class="ed-sec">
           <h4>Captions — one card each</h4>
           <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it. Use <b>＋ text layer</b> to put more than one text block on the same card (e.g. a title and a message).</p>
+          <div class="muted" style="font-size:11.5px;margin-bottom:4px">One design at a time · use ‹ › above (or Alt+←/→) to switch design</div>
           <div id="cdCapList"></div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
             <button id="cdAddCap">＋ add caption (new card)</button>
@@ -556,7 +557,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.8 · editor flow';
+const ADMIN_VERSION = '2026-09-16.9 · next design';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -2032,7 +2033,9 @@ function cdGo(delta) {
   if (!cd || !cd.caps.length) return;
   cdStopEdit();
   const n = cd.caps.length;
-  cdSelect((cd.capIdx + delta + n) % n, 0);
+  cd.capIdx = (cd.capIdx + delta + n) % n; cd.layerIdx = 0;
+  $('cdLayers').innerHTML = '';
+  renderCapList(); syncCdControls(); renderCdText(); cdUpdatePos();
 }
 // Next / previous background in the same manifest category (then the next category).
 function neighborImage(file, dir) {
@@ -2046,9 +2049,14 @@ $('cdNext').addEventListener('click', () => cdGo(1));
 $('cdVerifyAll').addEventListener('click', () => { cd.caps.forEach((c) => { c.verified = true; }); renderCapList(); cdUpdatePos(); });
 $('cdUnverifyAll').addEventListener('click', () => { cd.caps.forEach((c) => { c.verified = false; }); renderCapList(); cdUpdatePos(); });
 $('cardSaveNextBtn').addEventListener('click', () => {
-  const next = neighborImage(cd.file, 1);
+  if (cd.capIdx < cd.caps.length - 1) {          // more designs on this background
+    saveCards(true);
+    cdGo(1);
+    return;
+  }
+  const next = neighborImage(cd.file, 1);        // last design → next background
   saveCards();
-  if (next) openCardDesigner(next, 0); else alert('That was the last background.');
+  if (next) openCardDesigner(next, 0); else alert('That was the last design of the last background.');
 });
 document.addEventListener('keydown', (e) => {
   if (!cd || !$('cardModalBack').classList.contains('open') || !e.altKey) return;
@@ -2070,7 +2078,9 @@ function cdSelect(capIdx, layerIdx) {
 function renderCapList() {
   const root = $('cdCapList');
   root.innerHTML = '';
+  // Only the current design is shown; ‹ › / Save & next move between designs.
   cd.caps.forEach((card, i) => {
+    if (i !== cd.capIdx) return;
     const box = document.createElement('div');
     box.className = 'cap-card' + (i === cd.capIdx ? ' on' : '') + (card.verified ? ' verified' : '');
     box.dataset.cap = i;
@@ -2241,7 +2251,7 @@ function wireCdTextEl(el) {
 }
 
 $('cardCancelBtn').addEventListener('click', () => { $('cdLayers').innerHTML = ''; $('cardModalBack').classList.remove('open'); });
-function saveCards() {
+function saveCards(keepOpen = false) {
   cdStopEdit();
   const styleOut = (st, full) => {
     const o = { x: +st.x.toFixed(4), y: +st.y.toFixed(4), theme: st.theme };
@@ -2271,10 +2281,11 @@ function saveCards() {
   markDirty('app_config.json');
   markDirty('verified.json');
   renderCats();
+  if (keepOpen) return;
   $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
 }
-$('cardSaveBtn').addEventListener('click', saveCards);
+$('cardSaveBtn').addEventListener('click', () => saveCards());
 $('cardSavePublishBtn').addEventListener('click', async () => {
   saveCards();
   showTab('publish');
