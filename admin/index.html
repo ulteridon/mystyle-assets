@@ -491,10 +491,9 @@
       </span>
       <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design · Alt+N = save &amp; next design</span>
       <span style="flex:1"></span>
-      <button id="cardCancelBtn">Cancel</button>
-      <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Saving keeps it here; only designs ticked <b>Verified</b> reach phones when you Publish from the Publish tab.</span>
-      <button id="cardSaveBtn" title="Save these cards in the admin (publish later from the Publish tab)">Save cards</button>
-      <button id="cardSaveNextBtn" class="primary" title="Save, then move to the next design; after the last design, opens the next background (Alt+N)">Save &amp; next design ›</button>
+      <span class="muted" id="cdAutosaveNote" style="margin-right:auto;font-size:12px">Edits save automatically and appear on the Publish tab. Only designs ticked <b>Verified</b> reach phones when you Publish.</span>
+      <button id="cardCancelBtn" title="Close the designer (everything is already saved)">Close</button>
+      <button id="cardSaveNextBtn" class="primary" title="Next design; after the last design, opens the next background (Alt+N)">Next design ›</button>
     </div>
     <div class="ed-body">
       <div class="ed-side left">
@@ -534,11 +533,7 @@
           <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it. Use <b>＋ text layer</b> to put more than one text block on the same card (e.g. a title and a message).</p>
           <div class="muted" style="font-size:11.5px;margin-bottom:4px">One design at a time · use ‹ › above (or Alt+←/→) to switch design</div>
           <div id="cdCapList"></div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
-            <button id="cdAddCap">＋ add caption (new card)</button>
-            <button id="cdVerifyAll" title="Tick Verified on every card of this background">✓ Verify all</button>
-            <button id="cdUnverifyAll" title="Untick Verified on every card">Untick all</button>
-          </div>
+          <button id="cdAddCap" style="margin-top:6px">＋ add design (new caption)</button>
         </div>
       </div>
     </div>
@@ -556,7 +551,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.10 · publish tab only';
+const ADMIN_VERSION = '2026-09-16.11 · autosave';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1917,7 +1912,8 @@ function openCardDesigner(file, capIdx = 0) {
   // Everything below edits cd.pos — always the selected layer's own style.
   Object.defineProperty(cd, 'layer', { get: () => (cd.caps[cd.capIdx] && cd.caps[cd.capIdx].layers[cd.layerIdx]) || null });
   Object.defineProperty(cd, 'pos', { get: () => (cd.layer && cd.layer.style) || cd.base });
-  if (!cd.caps.length) cd.caps = [{ layers: [{ text: 'Your caption here', style: { ...base } }] }];
+  if (!cd.caps.length) cd.caps = [{ layers: [{ text: '', style: { ...base } }], verified: false }];
+  cd.baseline = JSON.stringify(buildCards());   // autosave compares against this, so opening never dirties
 
   $('cdLayers').innerHTML = '';
   $('cardTitle').textContent = `Design cards — ${file}`;
@@ -2030,7 +2026,7 @@ function cdUpdatePos() {
 }
 function cdGo(delta) {
   if (!cd || !cd.caps.length) return;
-  cdStopEdit();
+  saveCards(true);
   const n = cd.caps.length;
   cd.capIdx = (cd.capIdx + delta + n) % n; cd.layerIdx = 0;
   $('cdLayers').innerHTML = '';
@@ -2045,8 +2041,6 @@ function neighborImage(file, dir) {
 }
 $('cdPrev').addEventListener('click', () => cdGo(-1));
 $('cdNext').addEventListener('click', () => cdGo(1));
-$('cdVerifyAll').addEventListener('click', () => { cd.caps.forEach((c) => { c.verified = true; }); renderCapList(); cdUpdatePos(); });
-$('cdUnverifyAll').addEventListener('click', () => { cd.caps.forEach((c) => { c.verified = false; }); renderCapList(); cdUpdatePos(); });
 $('cardSaveNextBtn').addEventListener('click', () => {
   if (cd.capIdx < cd.caps.length - 1) {          // more designs on this background
     saveCards(true);
@@ -2057,6 +2051,11 @@ $('cardSaveNextBtn').addEventListener('click', () => {
   saveCards();
   if (next) openCardDesigner(next, 0); else alert('That was the last design of the last background.');
 });
+// Autosave triggers: any re-render of the canvas text (drag, resize, style,
+// typing, add/remove) and the Verified tick. Change detection in saveCards
+// means opening or merely selecting never marks anything dirty.
+const _renderCdText = renderCdText;
+renderCdText = function () { _renderCdText.apply(this, arguments); cdScheduleAutosave(); };
 document.addEventListener('keydown', (e) => {
   if (!cd || !$('cardModalBack').classList.contains('open') || !e.altKey) return;
   if (e.key === 'ArrowLeft') { e.preventDefault(); cdGo(-1); }
@@ -2087,7 +2086,7 @@ function renderCapList() {
     head.className = 'cap-head';
     head.innerHTML = `<span class="cap-n">Design ${i + 1}</span>
       <label class="cap-ver" title="Verified designs go live with Save &amp; publish verified; unverified ones stay hidden on phones"><input type="checkbox" ${card.verified ? 'checked' : ''}> Verified</label>`;
-    head.querySelector('input').addEventListener('change', (e) => { card.verified = e.target.checked; box.classList.toggle('verified', card.verified); });
+    head.querySelector('input').addEventListener('change', (e) => { card.verified = e.target.checked; box.classList.toggle('verified', card.verified); cdScheduleAutosave(); });
     box.appendChild(head);
     card.layers.forEach((layer, j) => {
       const row = document.createElement('div');
@@ -2249,9 +2248,8 @@ function wireCdTextEl(el) {
   });
 }
 
-$('cardCancelBtn').addEventListener('click', () => { $('cdLayers').innerHTML = ''; $('cardModalBack').classList.remove('open'); });
-function saveCards(keepOpen = false) {
-  cdStopEdit();
+$('cardCancelBtn').addEventListener('click', () => saveCards());
+function buildCards() {
   const styleOut = (st, full) => {
     const o = { x: +st.x.toFixed(4), y: +st.y.toFixed(4), theme: st.theme };
     if (st.fontFamily) o.fontFamily = st.fontFamily;
@@ -2270,21 +2268,43 @@ function saveCards(keepOpen = false) {
       o.verified = verified;
       return o;
     });
-  state.drafts[cd.file] = caps;
-  if (!caps.length) delete state.drafts[cd.file];
-  state.positions[cd.file] = styleOut(cd.base, false);
-  syncHiddenFromVerified();
-  markDirty('imageTextsDraft.json');
-  markDirty('imageTexts.json');
-  markDirty('imagePositions.json');
-  markDirty('app_config.json');
-  markDirty('verified.json');
-  renderCats();
+  return { caps, pos: styleOut(cd.base, false) };
+}
+// Autosave: every change in the designer is written to the draft (and the
+// localStorage backup) as soon as the editor pauses. Nothing to press.
+let cdAutosaveTimer = null;
+function cdScheduleAutosave() {
+  if (!cd || !$('cardModalBack').classList.contains('open')) return;
+  clearTimeout(cdAutosaveTimer);
+  cdAutosaveTimer = setTimeout(() => saveCards(true), 500);
+}
+function saveCards(keepOpen = false) {
+  clearTimeout(cdAutosaveTimer);
+  if (!cd) return;
+  cdStopEdit();
+  const built = buildCards();
+  const { caps, pos } = built;
+  const now = JSON.stringify(built);
+  const changed = now !== cd.baseline;
+  if (changed) {
+    cd.baseline = now;
+    state.drafts[cd.file] = caps;
+    if (!caps.length) delete state.drafts[cd.file];
+    state.positions[cd.file] = pos;
+    syncHiddenFromVerified();
+    markDirty('imageTextsDraft.json');
+    markDirty('imageTexts.json');
+    markDirty('imagePositions.json');
+    markDirty('app_config.json');
+    markDirty('verified.json');
+    renderCats();
+    const note = $('cdAutosaveNote');
+    if (note) { note.textContent = `Saved ${new Date().toLocaleTimeString()} · appears on the Publish tab. Only designs ticked Verified reach phones.`; }
+  }
   if (keepOpen) return;
   $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
 }
-$('cardSaveBtn').addEventListener('click', () => saveCards());
 window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
 
 // ── Caption quick editor (Images tab) ────────────────────────────────────────
