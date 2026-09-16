@@ -54,6 +54,25 @@
   section.tab.active { display: block; }
 
   /* ── Category cards ── */
+  .ready { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 16px 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .ready-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .ready-head b { font-size: 15px; }
+  .ready-big { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+  .ready-big small { font-size: 13px; font-weight: 600; color: var(--muted); margin-left: 4px; }
+  .ready-sub { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 10px; text-transform: uppercase; letter-spacing: .4px; }
+  .ready tr.warn-tpl td:first-child::after { content: ' · backgrounds without template'; color: var(--red); font-size: 11px; font-weight: 600; }
+  .ready-bar { height: 10px; border-radius: 999px; background: #F0EAF6; overflow: hidden; margin: 12px 0 10px; display: flex; }
+  .ready-bar i { display: block; height: 100%; }
+  .ready-bar .live { background: var(--green); }
+  .ready-bar .pending { background: #F5B942; }
+  .ready-stats { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+  .ready-stats b { color: var(--text); }
+  .ready-stats .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .ready table { width: 100%; min-width: 520px; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  .ready th, .ready td { text-align: left; padding: 6px 8px; border-top: 1px solid var(--border); }
+  .ready th { color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: .4px; border-top: none; }
+  .ready td.num, .ready th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ready tr.warn td:first-child::after { content: ' · no captions'; color: var(--red); font-size: 11px; font-weight: 600; }
   .cat { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; margin-bottom: 14px; box-shadow: var(--shadow); }
   .cat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; flex-wrap: wrap; }
   .cat-head b { font-size: 15px; }
@@ -67,6 +86,7 @@
   .thumb { position: relative; border-radius: 14px; overflow: hidden; background: #EFE9E4; box-shadow: 0 1px 2px rgba(36,30,46,.08); }
   .thumb img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
   .thumb.off img { opacity: .25; }
+  .thumb .bar button.verify { background: var(--green); color: #fff; border-color: transparent; }
   .thumb .bar { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: center; gap: 4px; padding: 6px 8px; background: linear-gradient(180deg, rgba(20,16,28,0), rgba(20,16,28,.72)); font-size: 11px; }
   .thumb .bar span { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; opacity: .85; }
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
@@ -251,6 +271,22 @@
   <section class="tab active" id="tab-images">
     <h2 class="page-title">Images &amp; Categories</h2>
     <p class="muted">Everything here controls what the app shows. Hide a category or a single image and it disappears from the phone after the next app launch (once published). Add images to a category — or create a new category — and they appear in the app.</p>
+    <div class="ready" id="readyPanel">
+      <div class="ready-head">
+        <b>Design readiness</b>
+        <span class="muted">designs = backgrounds × captions. <b>Live</b> = verified and published, so visible on phones right now. Unverified items are always hidden.</span>
+        <span style="flex:1"></span>
+        <span class="ready-big" id="readyBig">—</span>
+        <button id="readyToggle">Show all designs</button>
+      </div>
+      <div class="ready-sub">Images tab · designs = backgrounds × captions</div>
+      <div class="ready-bar"><i class="live" id="readyLive" style="width:0"></i><i class="pending" id="readyPending" style="width:0"></i></div>
+      <div class="ready-stats" id="readyStats"></div>
+      <div class="ready-head" style="margin-top:14px"><span class="ready-sub" style="margin:0">Templates tab · every uploaded background should carry a template</span><span style="flex:1"></span><span class="ready-big" id="readyBigTpl">—</span></div>
+      <div class="ready-bar"><i class="live" id="readyLiveTpl" style="width:0"></i><i class="pending" id="readyPendingTpl" style="width:0"></i></div>
+      <div class="ready-stats" id="readyStatsTpl"></div>
+      <div id="readyDetail" style="display:none; overflow-x:auto"></div>
+    </div>
     <div class="row">
       <input id="newCatName" placeholder="new_category_name">
       <select id="newCatKind"><option value="image">Images tab (share-as-is)</option><option value="template">Templates (photo posters)</option></select>
@@ -486,7 +522,34 @@ const state = {
   shas: {},                    // path → blob sha (needed to update)
   dirty: new Set(),            // paths with unsaved changes
   pendingUploads: [],          // {path, base64, label} — new image binaries
+  verified: { images: new Set(), templates: new Set() },   // verified.json — only these go live
 };
+
+// ── Verification model ───────────────────────────────────────────────────────
+// Nothing reaches phones until an editor verifies it. hiddenImages /
+// hiddenTemplates in app_config.json are DERIVED: every image-kind background
+// and every template that is not in verified.json is hidden. New uploads and
+// new templates start unverified. Saving in the card designer / template
+// editor, or pressing "Verify", marks the item verified; Publish makes it live.
+function allImageFiles() {
+  return Object.values(state.manifest?.categories || {}).filter((c) => c.kind !== 'template').flatMap((c) => c.images || []);
+}
+function syncHiddenFromVerified() {
+  if (!state.manifest || !state.config) return;
+  state.config.hiddenImages = allImageFiles().filter((f) => !state.verified.images.has(f));
+  state.config.hiddenTemplates = (state.templates || []).map((t) => t.id).filter((id) => !state.verified.templates.has(id));
+}
+function setVerified(kind, key, on) {
+  const set = state.verified[kind];
+  if (on) set.add(key); else set.delete(key);
+  syncHiddenFromVerified();
+  markDirty('verified.json');
+  markDirty('app_config.json');
+}
+function isVerified(kind, key) { return state.verified[kind].has(key); }
+function verifiedOut() {
+  return { images: [...state.verified.images].sort(), templates: [...state.verified.templates].sort() };
+}
 
 // localStorage throws in sandboxed contexts (e.g. data: previews) — degrade to
 // session-only token storage instead of killing the whole script.
@@ -519,7 +582,68 @@ function refreshDirtyUI() {
   for (const p of state.dirty) ul.insertAdjacentHTML('beforeend', `<li>📝 ${p}</li>`);
   for (const u of state.pendingUploads) ul.insertAdjacentHTML('beforeend', `<li>🖼️ ${u.path}</li>`);
   if (!n) ul.innerHTML = '<li class="muted">Nothing to publish.</li>';
+  saveDraft();
+  if (typeof renderReadiness === 'function') renderReadiness();
 }
+
+// ── Draft autosave ───────────────────────────────────────────────────────────
+// Every unpublished change is mirrored into localStorage so a reload, tab
+// discard, or sign-out cannot destroy it. Cleared automatically once the
+// dirty count hits zero (i.e. after a successful publish).
+const DRAFT_KEY = 'admin_draft_v1';
+function hasUnpublished() { return state.dirty.size + state.pendingUploads.length > 0; }
+function saveDraft() {
+  if (!state.manifest) return;                 // nothing loaded yet
+  if (!hasUnpublished()) { try { localStorage.removeItem(DRAFT_KEY); } catch {} return; }
+  const draft = {
+    savedAt: new Date().toISOString(),
+    dirty: [...state.dirty],
+    manifest: state.manifest, config: state.config, templates: state.templates,
+    texts: state.texts, positions: state.positions,
+    pendingUploads: state.pendingUploads,
+    verified: verifiedOut(),
+  };
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch {
+    // Quota (image binaries are big) — keep at least the JSON edits.
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...draft, pendingUploads: [], uploadsDropped: state.pendingUploads.map((u) => u.label || u.path) }));
+    } catch {}
+  }
+}
+function readDraft() {
+  try { const raw = localStorage.getItem(DRAFT_KEY); return raw ? JSON.parse(raw) : null; } catch { return null; }
+}
+function offerDraftRestore() {
+  const d = readDraft();
+  if (!d || !(d.dirty?.length || d.pendingUploads?.length)) return;
+  const when = new Date(d.savedAt).toLocaleString();
+  const NL = String.fromCharCode(10);
+  const items = [...d.dirty.map((p) => '📝 ' + p), ...(d.pendingUploads || []).map((u) => '🖼️ ' + u.path)].join(NL);
+  const dropped = d.uploadsDropped?.length ? `${NL}${NL}(Image uploads too large to keep were dropped: ${d.uploadsDropped.join(', ')} — re-add them.)` : '';
+  const ok = confirm(`Unpublished changes from ${when} were found:${NL}${NL}${items}${dropped}${NL}${NL}Restore them? (Cancel discards them for good.)`);
+  if (!ok) { try { localStorage.removeItem(DRAFT_KEY); } catch {} return; }
+  if (d.dirty.includes('manifest.json') && d.manifest) state.manifest = d.manifest;
+  if (d.dirty.includes('app_config.json') && d.config) state.config = d.config;
+  if (d.dirty.includes('templates_db.json') && d.templates) state.templates = d.templates;
+  if (d.dirty.includes('imageTexts.json') && d.texts) state.texts = d.texts;
+  if (d.dirty.includes('imagePositions.json') && d.positions) state.positions = d.positions;
+  if (d.verified) state.verified = { images: new Set(d.verified.images || []), templates: new Set(d.verified.templates || []) };
+  state.dirty = new Set(d.dirty);
+  state.pendingUploads = d.pendingUploads || [];
+  syncHiddenFromVerified();
+  renderAll();
+}
+
+// Warn before the tab closes / reloads with unpublished work.
+let allowUnload = false;
+window.addEventListener('beforeunload', (e) => {
+  if (allowUnload || !hasUnpublished()) return;
+  e.preventDefault();
+  e.returnValue = 'You have unpublished changes.';
+  return e.returnValue;
+});
 
 // ── UTF-8-safe base64 ────────────────────────────────────────────────────────
 function b64encode(str) {
@@ -666,12 +790,13 @@ async function loadAll() {
   const btn = $('loadBtn');
   btn.disabled = true; btn.textContent = 'Loading…';
   try {
-    const [man, cfg, tpl, txt, pos] = await Promise.all([
+    const [man, cfg, tpl, txt, pos, ver] = await Promise.all([
       ghGetJson('manifest.json', null),
       ghGetJson('app_config.json', { hiddenCategories: [], hiddenTemplates: [], hiddenImages: [] }),
       ghGetJson('templates_db.json', null),
       ghGetJson('imageTexts.json', {}),
       ghGetJson('imagePositions.json', {}),
+      ghGetJson('verified.json', null),
     ]);
     if (!man.data) throw new Error('manifest.json not found in the repo');
     state.manifest = man.data;  state.shas['manifest.json'] = man.sha;
@@ -680,11 +805,24 @@ async function loadAll() {
     state.templates = tpl.data;  state.shas['templates_db.json'] = tpl.sha;
     state.texts = txt.data;      state.shas['imageTexts.json'] = txt.sha;
     state.positions = pos.data;  state.shas['imagePositions.json'] = pos.sha;
+    state.shas['verified.json'] = ver.sha;
+    if (ver.data) {
+      state.verified = { images: new Set(ver.data.images || []), templates: new Set(ver.data.templates || []) };
+    } else {
+      // First run without verified.json: whatever is visible today counts as verified.
+      state.verified = {
+        images: new Set(allImageFiles().filter((f) => !state.config.hiddenImages.includes(f))),
+        templates: new Set((tpl.data || []).map((t) => t.id).filter((id) => !state.config.hiddenTemplates.includes(id))),
+      };
+    }
     if (!state.templates) {
       state.templates = [];
       alert('templates_db.json is not in the assets repo yet.\nUse "Seed from app project" on the Templates tab to load assets/templates_db.json, then Publish.');
     }
+    syncHiddenFromVerified();
+    snapshotPublished();
     renderAll();
+    offerDraftRestore();
   } catch (e) {
     alert('Load failed: ' + e.message + '\n\nCheck the token (needs repo scope for ' + OWNER + '/' + REPO + ').');
   } finally {
@@ -703,6 +841,151 @@ document.querySelectorAll('.nav-item').forEach((b) =>
   }));
 
 function renderAll() { renderCats(); renderTemplates(); refreshDirtyUI(); }
+
+// ── Design readiness ─────────────────────────────────────────────────────────
+// A "design" is one shareable card on the phone: each visible image-kind
+// background × each caption (a background with no captions is one plain card).
+// "Live" counts against a snapshot of what was last published, so edits that
+// are saved but not yet published show up as pending, not live.
+function snapshotPublished() {
+  syncHiddenFromVerified();
+  state.published = JSON.parse(JSON.stringify({
+    manifest: state.manifest, config: state.config, texts: state.texts, templates: state.templates,
+  }));
+}
+function countDesigns(src) {
+  // src = { manifest, config, texts, templates }
+  const out = { designs: 0, backgrounds: 0, noCaption: 0, hiddenDesigns: 0, templates: 0, hiddenTemplates: 0, cats: {}, imgs: {} };
+  if (!src?.manifest) return out;
+  const cfg = src.config || { hiddenCategories: [], hiddenImages: [], hiddenTemplates: [] };
+  const texts = src.texts || {};
+  for (const [name, cat] of Object.entries(src.manifest.categories || {})) {
+    if (cat.kind === 'template') continue;
+    const catHidden = cfg.hiddenCategories.includes(name);
+    const row = { backgrounds: 0, captions: 0, designs: 0, visible: 0, noCaption: 0, hidden: catHidden };
+    for (const img of cat.images || []) {
+      const n = (texts[img] || []).length;
+      const d = Math.max(n, 1);
+      row.backgrounds++; row.captions += n; row.designs += d;
+      if (!n) row.noCaption++;
+      const vis = catHidden || cfg.hiddenImages.includes(img) ? 0 : d;
+      out.imgs[img] = vis;
+      if (vis) row.visible += d; else out.hiddenDesigns += d;
+    }
+    out.cats[name] = row;
+    out.backgrounds += row.backgrounds; out.designs += row.designs; out.noCaption += row.noCaption;
+  }
+  out.visibleDesigns = out.designs - out.hiddenDesigns;
+
+  // Templates: each template-kind background file should carry at least one
+  // template layout; a file with none is uploaded but invisible on phones.
+  // tplVis[id] = 1 if that template is visible (not hidden, category not hidden).
+  out.tplCats = {}; out.tplVis = {}; out.tplFiles = 0; out.tplNoLayout = 0; out.visibleTemplates = 0;
+  const fileCat = {};                       // background filename → manifest category
+  for (const [name, cat] of Object.entries(src.manifest.categories || {})) {
+    if (cat.kind !== 'template') continue;
+    out.tplCats[name] = { files: (cat.images || []).length, templates: 0, visible: 0, noLayout: 0, hidden: cfg.hiddenCategories.includes(name), used: new Set() };
+    for (const f of cat.images || []) fileCat[f] = name;
+    out.tplFiles += out.tplCats[name].files;
+  }
+  for (const t of src.templates || []) {
+    out.templates++;
+    const tcat = t.category || t.title || 'Other';
+    const file = decodeURIComponent((t.templateUri || '').split('/').pop() || '');
+    const mcat = fileCat[file];
+    const row = mcat ? out.tplCats[mcat] : (out.tplCats[tcat] ||= { files: 0, templates: 0, visible: 0, noLayout: 0, hidden: false, used: new Set() });
+    row.templates++;
+    if (file) row.used.add(file);
+    const hidden = cfg.hiddenTemplates.includes(t.id) || cfg.hiddenCategories.includes(tcat) || row.hidden;
+    out.tplVis[t.id] = hidden ? 0 : 1;
+    if (hidden) out.hiddenTemplates++; else { row.visible++; out.visibleTemplates++; }
+  }
+  for (const row of Object.values(out.tplCats)) { row.noLayout = Math.max(0, row.files - row.used.size); out.tplNoLayout += row.noLayout; delete row.used; }
+  return out;
+}
+function renderReadiness() {
+  if (!state.manifest || !$('readyBig')) return;
+  syncHiddenFromVerified();
+  const work = countDesigns(state);
+  const live = countDesigns(state.published || {});
+  const total = work.designs;
+  // Per background: live = designs that are published AND still visible in the
+  // working copy; pending = visible here but not published yet; retiring =
+  // published but hidden/removed here (disappears from phones on publish).
+  let liveN = 0, pendingN = 0, retiringN = 0;
+  const liveByCat = {};
+  for (const [name, cat] of Object.entries(state.manifest.categories || {})) {
+    if (cat.kind === 'template') continue;
+    liveByCat[name] = 0;
+    for (const img of cat.images || []) {
+      const w = work.imgs[img] || 0, p = live.imgs[img] || 0, l = Math.min(w, p);
+      liveN += l; pendingN += w - l; liveByCat[name] += l;
+    }
+  }
+  for (const [img, p] of Object.entries(live.imgs)) retiringN += Math.max(0, p - Math.min(p, work.imgs[img] || 0));
+  const pct = total ? Math.round((liveN / total) * 100) : 0;
+  $('readyBig').innerHTML = `${liveN} <small>live of ${total} designs · ${pct}%</small>`;
+  $('readyLive').style.width = total ? `${(liveN / total) * 100}%` : '0';
+  $('readyPending').style.width = total ? `${(pendingN / total) * 100}%` : '0';
+  const avg = work.backgrounds ? (work.designs / work.backgrounds).toFixed(1) : '0';
+  $('readyStats').innerHTML = `
+    <span><i class="dot" style="background:var(--green)"></i><b>${liveN}</b> live on phones</span>
+    <span><i class="dot" style="background:#F5B942"></i><b>${pendingN}</b> saved, not published</span>
+    <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenDesigns}</b> unverified (hidden on phones)</span>
+    ${retiringN ? `<span style="color:var(--red)"><b>${retiringN}</b> still on phones, removed on publish</span>` : ''}
+    <span><b>${work.backgrounds}</b> backgrounds · <b>${avg}</b> designs each</span>
+    ${work.noCaption ? `<span style="color:var(--red)"><b>${work.noCaption}</b> background${work.noCaption > 1 ? 's' : ''} with no captions</span>` : ''}`;
+
+  // Templates: live = visible here AND visible in the published copy.
+  let tLive = 0, tPending = 0, tRetiring = 0;
+  const tLiveByCat = {};
+  for (const t of state.templates || []) {
+    const w = work.tplVis[t.id] || 0, p = live.tplVis?.[t.id] || 0, l = Math.min(w, p);
+    tLive += l; tPending += w - l;
+    const file = decodeURIComponent((t.templateUri || '').split('/').pop() || '');
+    const cat = Object.entries(state.manifest.categories).find(([, c]) => c.kind === 'template' && (c.images || []).includes(file))?.[0] || t.category || t.title || 'Other';
+    tLiveByCat[cat] = (tLiveByCat[cat] || 0) + l;
+  }
+  for (const [id, p] of Object.entries(live.tplVis || {})) if (p && !(work.tplVis[id] || 0)) tRetiring++;
+  const tTotal = Math.max(work.tplFiles, work.templates);   // every uploaded background should become ≥1 template
+  const tPct = tTotal ? Math.round((tLive / tTotal) * 100) : 0;
+  $('readyBigTpl').innerHTML = `${tLive} <small>live of ${tTotal} templates · ${tPct}%</small>`;
+  $('readyLiveTpl').style.width = tTotal ? `${(tLive / tTotal) * 100}%` : '0';
+  $('readyPendingTpl').style.width = tTotal ? `${(tPending / tTotal) * 100}%` : '0';
+  $('readyStatsTpl').innerHTML = `
+    <span><i class="dot" style="background:var(--green)"></i><b>${tLive}</b> live on phones</span>
+    <span><i class="dot" style="background:#F5B942"></i><b>${tPending}</b> saved, not published</span>
+    <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenTemplates}</b> unverified (hidden on phones)</span>
+    ${tRetiring ? `<span style="color:var(--red)"><b>${tRetiring}</b> still on phones, removed on publish</span>` : ''}
+    <span><b>${work.tplFiles}</b> template backgrounds · <b>${work.templates}</b> layouts</span>
+    ${work.tplNoLayout ? `<span style="color:var(--red)"><b>${work.tplNoLayout}</b> background${work.tplNoLayout > 1 ? 's' : ''} with no template yet</span>` : ''}`;
+
+  const det = $('readyDetail');
+  if (det.style.display === 'none') return;
+  const rows = Object.entries(work.cats).sort(([a], [b]) => a.localeCompare(b)).map(([name, r]) => {
+    const l = liveByCat[name] || 0;
+    return `<tr class="${r.noCaption ? 'warn' : ''}"><td>${name}${r.hidden ? ' <span class="hidden-flag">HIDDEN</span>' : ''}</td>
+      <td class="num">${r.backgrounds}</td><td class="num">${r.captions}</td><td class="num">${r.designs}</td>
+      <td class="num">${r.visible}</td><td class="num" style="color:var(--green);font-weight:700">${l}</td></tr>`;
+  }).join('');
+  det.innerHTML = `<table><thead><tr><th>Category</th><th class="num">Backgrounds</th><th class="num">Captions</th><th class="num">Designs</th><th class="num">Verified</th><th class="num">Live</th></tr></thead>
+    <tbody>${rows || '<tr><td colspan="6" class="muted">No image categories yet.</td></tr>'}</tbody>
+    <tfoot><tr><th>Total</th><th class="num">${work.backgrounds}</th><th class="num">${Object.values(work.cats).reduce((s, r) => s + r.captions, 0)}</th><th class="num">${work.designs}</th><th class="num">${work.visibleDesigns}</th><th class="num">${liveN}</th></tr></tfoot></table>`;
+  const tRows = Object.entries(work.tplCats).sort(([a], [b]) => a.localeCompare(b)).map(([name, r]) =>
+    `<tr class="${r.noLayout ? 'warn-tpl' : ''}"><td>${name}${r.hidden ? ' <span class="hidden-flag">HIDDEN</span>' : ''}</td>
+      <td class="num">${r.files}</td><td class="num">${r.templates}</td><td class="num" style="${r.noLayout ? 'color:var(--red);font-weight:700' : ''}">${r.noLayout}</td>
+      <td class="num">${r.visible}</td><td class="num" style="color:var(--green);font-weight:700">${tLiveByCat[name] || 0}</td></tr>`).join('');
+  det.innerHTML += `<table><thead><tr><th>Template category</th><th class="num">Backgrounds</th><th class="num">Templates</th><th class="num">No template</th><th class="num">Verified</th><th class="num">Live</th></tr></thead>
+    <tbody>${tRows || '<tr><td colspan="6" class="muted">No template categories yet.</td></tr>'}</tbody>
+    <tfoot><tr><th>Total</th><th class="num">${work.tplFiles}</th><th class="num">${work.templates}</th><th class="num">${work.tplNoLayout}</th><th class="num">${work.visibleTemplates}</th><th class="num">${tLive}</th></tr></tfoot></table>`;
+}
+$('readyToggle').addEventListener('click', () => {
+  const det = $('readyDetail');
+  const open = det.style.display === 'none';
+  det.style.display = open ? '' : 'none';
+  $('readyToggle').textContent = open ? 'Hide details' : 'Show all designs';
+  renderReadiness();
+});
 
 // ── Images & categories tab ──────────────────────────────────────────────────
 function renderCats() {
@@ -751,7 +1034,7 @@ function renderCats() {
 
 function fillGrid(grid, catName, cat) {
   for (const img of cat.images) {
-    const off = state.config.hiddenImages.includes(img);
+    const off = !isVerified('images', img);
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
     cell.innerHTML = `
@@ -759,14 +1042,14 @@ function fillGrid(grid, catName, cat) {
       <div class="bar"><span title="${img}">${img}</span>
       <button class="caps" title="Edit captions"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path></svg><b class="capn">${(state.texts[img] || []).length}</b></button>
       <button class="design" title="Design caption cards">✎</button>
-      <button class="vis">${off ? 'Show' : 'Hide'}</button></div>`;
+      <button class="vis${off ? ' verify' : ''}" title="${off ? 'Unverified: hidden on phones. Verify to make it live on next publish.' : 'Verified: live on phones once published. Unverify to take it down.'}">${off ? '✓ Verify' : 'Unverify'}</button></div>`;
     cell.querySelector('.vis').addEventListener('click', () => {
-      const list = state.config.hiddenImages;
-      const i = list.indexOf(img);
-      if (i >= 0) list.splice(i, 1); else list.push(img);
-      markDirty('app_config.json');
-      cell.classList.toggle('off');
-      cell.querySelector('.vis').textContent = list.includes(img) ? 'Show' : 'Hide';
+      setVerified('images', img, !isVerified('images', img));
+      const now = !isVerified('images', img);
+      cell.classList.toggle('off', now);
+      const b = cell.querySelector('.vis');
+      b.textContent = now ? '✓ Verify' : 'Unverify';
+      b.classList.toggle('verify', now);
     });
     cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img));
     cell.querySelector('.caps').addEventListener('click', () => openCaptionEditor(img, cell));
@@ -910,7 +1193,7 @@ function renderTemplates() {
   const list = state.templates || [];
   $('tplCount').textContent = `${list.length} templates`;
   list.forEach((t, idx) => {
-    const off = state.config.hiddenTemplates.includes(t.id) ||
+    const off = !isVerified('templates', t.id) ||
                 state.config.hiddenCategories.includes(t.category || t.title || 'Other');
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
@@ -932,13 +1215,11 @@ function renderTemplates() {
       <div class="bar"><span title="${t.id}">${t.id}</span>
         <span style="display:flex;gap:4px">
           <button class="edit">Edit</button>
-          <button class="tog">${state.config.hiddenTemplates.includes(t.id) ? 'Show' : 'Hide'}</button>
+          <button class="tog${isVerified('templates', t.id) ? '' : ' verify'}">${isVerified('templates', t.id) ? 'Unverify' : '✓ Verify'}</button>
         </span></div>`;
     cell.querySelector('.tog').addEventListener('click', () => {
-      const list2 = state.config.hiddenTemplates;
-      const i = list2.indexOf(t.id);
-      if (i >= 0) list2.splice(i, 1); else list2.push(t.id);
-      markDirty('app_config.json'); renderTemplates();
+      setVerified('templates', t.id, !isVerified('templates', t.id));
+      renderTemplates();
     });
     cell.querySelector('.edit').addEventListener('click', () => openTplEditor(idx));
     grid.appendChild(cell);
@@ -1332,6 +1613,7 @@ $('tplSaveBtn').addEventListener('click', () => {
   };
   if (ed.index >= 0) state.templates[ed.index] = tpl;
   else state.templates.push(tpl);
+  setVerified('templates', tpl.id, true);      // editor reviewed & saved -> verified
   markDirty('templates_db.json');
   $('tplModalBack').classList.remove('open');
   renderTemplates();
@@ -1730,6 +2012,8 @@ $('cardSaveBtn').addEventListener('click', () => {
   state.positions[cd.file] = styleOut(cd.base, false);
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
+  setVerified('images', cd.file, true);        // editor reviewed & saved -> verified
+  renderCats();
   $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
 });
@@ -1813,7 +2097,10 @@ $('publishBtn').addEventListener('click', async () => {
       'templates_db.json': () => state.templates,
       'imageTexts.json': () => state.texts,
       'imagePositions.json': () => state.positions,
+      'verified.json': () => verifiedOut(),
     };
+    syncHiddenFromVerified();
+    if (state.dirty.has('verified.json') || state.dirty.has('manifest.json') || state.dirty.has('templates_db.json')) state.dirty.add('app_config.json');
     for (const [path, get] of Object.entries(files)) {
       if (!state.dirty.has(path)) continue;
       log(`Committing ${path} …`);
@@ -1821,6 +2108,8 @@ $('publishBtn').addEventListener('click', async () => {
       state.dirty.delete(path);
       refreshDirtyUI();
     }
+    snapshotPublished();
+    renderReadiness();
     log('✅ Published. The app will see it on next launch (allow ~5 min for the CDN).');
   } catch (e) {
     log('❌ ' + e.message);
@@ -1873,6 +2162,9 @@ $('authBtn').addEventListener('click', doSignIn);
 $('authToken').addEventListener('keydown', (e) => { if (e.key === 'Enter') doSignIn(); });
 
 $('signOutBtn').addEventListener('click', () => {
+  if (hasUnpublished() && !confirm('You have unpublished changes. They will be kept as a draft and offered again after you sign back in. Sign out anyway?')) return;
+  saveDraft();
+  allowUnload = true;
   storageSet('gh_token', '');
   tokenInput.value = '';
   location.reload();
