@@ -91,6 +91,12 @@
   .grid-sec.published { color: var(--green); }  .grid-sec.published .n { background: #E6F8EE; color: var(--green); }
   .grid-sec.saved { color: #B9791A; }          .grid-sec.saved .n { background: #FFF4DE; color: #B9791A; }
   .grid-sec.unverified .n { background: #F0EAF6; color: var(--muted); }
+  .thumb.design-cell { container-type: inline-size; }
+  .thumb.design-cell img { aspect-ratio: 1 / 1; }
+  .thumb .cap-ov { position: absolute; transform: translate(-50%, -50%); display: inline-block; text-align: center; line-height: 1.25; font-weight: 700; border-radius: .7em; padding: .5em .7em; box-sizing: border-box; white-space: pre-wrap; word-break: break-word; pointer-events: none; font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif; }
+  .thumb.off .cap-ov { opacity: .35; }
+  .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .thumb .ver input { width: 13px; height: 13px; margin: 0; accent-color: var(--green); }
   .thumb .st { position: absolute; top: 8px; left: 8px; font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; color: #fff; background: rgba(36,30,46,.55); letter-spacing: .3px; }
   .thumb .st.published { background: var(--green); }  .thumb .st.saved { background: #F5B942; color: #241E2E; }
   .cat-head .counts { display: inline-flex; gap: 6px; font-size: 11px; font-weight: 700; }
@@ -469,9 +475,9 @@
       <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
-      <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Tick <b>Verified</b> on a card, or press its <b>Publish</b>, to send just that design to phones.</span>
+      <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Only cards ticked <b>Verified</b> go to phones; the rest stay saved in the admin.</span>
       <button id="cardSaveBtn" title="Keep in the admin draft; publish later from the Publish tab">Save cards</button>
-      <button id="cardSavePublishBtn" class="primary" title="Save all cards and publish every verified design to phones now">Save &amp; publish verified</button>
+      <button id="cardSavePublishBtn" class="primary" title="Save all cards, then publish: only the ticked (verified) designs reach phones">Save &amp; publish verified</button>
     </div>
     <div class="ed-body">
       <div class="ed-side left">
@@ -528,7 +534,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.6 · per-design publish';
+const ADMIN_VERSION = '2026-09-16.7 · design grid';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -606,6 +612,23 @@ function imageStatus(img) {
   if (!pub || pub.config.hiddenImages.includes(img)) return 'saved';
   if (JSON.stringify(pub.texts[img] || []) !== JSON.stringify(state.texts[img] || [])) return 'saved';
   return 'published';
+}
+// One design = one caption on one background.
+function designStatus(img, i) {
+  const cap = (state.drafts[img] || [])[i];
+  if (!capVerified(cap)) return 'unverified';
+  const pub = state.published;
+  if (!pub || pub.config.hiddenImages.includes(img)) return 'saved';
+  const key = JSON.stringify(stripVerified(cap));
+  return (pub.texts[img] || []).some((c) => JSON.stringify(c) === key) ? 'published' : 'saved';
+}
+function designCounts(files) {
+  const c = { published: 0, saved: 0, unverified: 0, total: 0 };
+  for (const img of files) {
+    const caps = state.drafts[img] || [];
+    caps.forEach((_, i) => { c[designStatus(img, i)]++; c.total++; });
+  }
+  return c;
 }
 function imageChip(img) {
   const c = imageCounts(img), st = imageStatus(img);
@@ -1101,8 +1124,8 @@ function renderCats() {
       <div class="cat-head">
         <b>${name}</b>
         <span class="kind">${cat.kind} · group ${cat.group} · ${cat.images.length} files</span>
-        ${(() => { const c = { published: 0, saved: 0, unverified: 0 }; for (const img of cat.images) c[imageStatus(img)]++;
-          return `<span class="counts"><span class="published">${c.published} published</span><span class="saved">${c.saved} saved</span><span>${c.unverified} unverified</span></span>`; })()}
+        ${(() => { const c = designCounts(cat.images);
+          return `<span class="counts" title="designs = backgrounds × captions"><span class="published">${c.published} published</span><span class="saved">${c.saved} saved</span><span>${c.unverified} unverified</span><span>${c.total} designs</span></span>`; })()}
         ${catHidden ? '<span class="hidden-flag">HIDDEN IN APP</span>' : ''}
         <span style="flex:1"></span>
         <label class="muted" style="cursor:pointer">＋ add images<input type="file" multiple accept="image/*" hidden></label>
@@ -1135,29 +1158,75 @@ function renderCats() {
 
 function fillGrid(grid, catName, cat) {
   grid.innerHTML = '';
+  // Every caption on every background is its own cell (a "design"), grouped
+  // by status. Backgrounds with no captions show once so they can be designed.
   const groups = { published: [], saved: [], unverified: [] };
-  for (const img of cat.images) groups[imageStatus(img)].push(img);
+  for (const img of cat.images) {
+    const caps = state.drafts[img] || [];
+    if (!caps.length) { groups.unverified.push({ img, i: -1 }); continue; }
+    caps.forEach((_, i) => groups[designStatus(img, i)].push({ img, i }));
+  }
   for (const status of ['published', 'saved', 'unverified']) {
     if (!groups[status].length) continue;
     grid.appendChild(sectionHeader(status, groups[status].length));
-    for (const img of groups[status]) fillImageCell(grid, img, status);
+    for (const { img, i } of groups[status]) fillDesignCell(grid, img, i, status);
   }
 }
-function fillImageCell(grid, img, status) {
-  {
-    const off = status === 'unverified';
-    const cell = document.createElement('div');
-    cell.className = 'thumb' + (off ? ' off' : '');
-    cell.innerHTML = `
-      <img loading="lazy" src="${IMG}/all_images/${img}">
-      <span class="st ${status}">${imageChip(img)}</span>
-      <div class="bar"><span title="${img}">${img}</span>
-      <button class="caps" title="Edit captions"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path></svg><b class="capn">${(state.drafts[img] || []).length}</b></button>
-      <button class="design" title="Design caption cards (verify here)">✎</button></div>`;
-    cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img));
-    cell.querySelector('.caps').addEventListener('click', () => openCaptionEditor(img, cell));
-    grid.appendChild(cell);
-  }
+// Approximate the phone's caption rendering on a thumbnail (same rules as the
+// designer: theme colours, pill background, fraction-of-width font size).
+function captionOverlay(img, cap) {
+  const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
+  const p = state.positions[img] || {};
+  const base = { x: num(p.x, 0.5), y: num(p.y, 0.5), theme: p.theme === 'dark' ? 'dark' : 'light', fontFamily: p.fontFamily || '',
+    fontSize: num(p.fontSize, 0.058), noBg: !!p.noBg, width: num(p.width, null), color: /^#[0-9a-f]{6}$/i.test(p.color || '') ? p.color : null };
+  const styleFrom = (e, from) => ({
+    x: num(e.x, from.x), y: num(e.y, from.y),
+    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : from.theme,
+    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : from.fontFamily,
+    fontSize: num(e.fontSize, from.fontSize), noBg: typeof e.noBg === 'boolean' ? e.noBg : from.noBg,
+    width: num(e.width, from.width), color: /^#[0-9a-f]{6}$/i.test(e.color || '') ? e.color : from.color,
+  });
+  const st = hasOwnStyle(cap) ? styleFrom(cap, base) : base;
+  const dark = st.theme === 'dark';
+  const fs = (st.fontSize || 0.058) * 100;   // cqw units = % of thumbnail width
+  const color = st.color || (dark ? '#141414' : '#ffffff');
+  const bg = st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)';
+  const shadow = st.noBg ? `0 1px ${(fs * 0.18).toFixed(2)}cqw ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none';
+  const width = st.width ? `width:${(st.width * 100).toFixed(1)}%;` : `max-width:${CD_AUTO_WIDTH * 100}%;`;
+  const fnt = fontCss(st.fontFamily || 'Poppins_700Bold');
+  const font = `font-family:${fnt[2]};font-weight:${fnt[3]};`;
+  const layers = [cap, ...((cap && cap.layers) || [])];
+  return layers.map((l, k) => {
+    const ls = k === 0 ? st : styleFrom(l || {}, st);
+    const lfs = (ls.fontSize || 0.058) * 100;
+    return `<span class="cap-ov" style="left:${(ls.x ?? 0.5) * 100}%;top:${(ls.y ?? 0.5) * 100}%;font-size:${lfs.toFixed(2)}cqw;color:${ls.color || color};background:${ls.noBg ? 'transparent' : bg};text-shadow:${shadow};${k === 0 ? width : ''}${font}">${escapeHtml(capText(l))}</span>`;
+  }).join('');
+}
+function escapeHtml(t) { return String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+function fillDesignCell(grid, img, i, status) {
+  const caps = state.drafts[img] || [];
+  const cap = i >= 0 ? caps[i] : null;
+  const off = status === 'unverified';
+  const cell = document.createElement('div');
+  cell.className = 'thumb design-cell' + (off ? ' off' : '');
+  const label = i >= 0 ? `${img} · design ${i + 1}/${caps.length}` : `${img} · no captions yet`;
+  cell.innerHTML = `
+    <img loading="lazy" src="${IMG}/all_images/${img}">
+    ${cap ? captionOverlay(img, cap) : ''}
+    <span class="st ${status}">${STATUS_LABEL[status]}</span>
+    ${cap ? `<label class="ver" title="Tick = verified: goes to phones on the next publish"><input type="checkbox" ${capVerified(cap) ? 'checked' : ''}> Verified</label>` : ''}
+    <div class="bar"><span title="${label}">${label}</span>
+    <button class="design" title="Open in the card designer">✎</button></div>`;
+  cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img, Math.max(0, i)));
+  const ver = cell.querySelector('.ver input');
+  if (ver) ver.addEventListener('change', (e) => {
+    caps[i] = { ...(typeof caps[i] === 'string' ? { text: caps[i] } : caps[i]), verified: e.target.checked };
+    state.drafts[img] = caps;
+    syncHiddenFromVerified();
+    markDirty('imageTextsDraft.json'); markDirty('imageTexts.json'); markDirty('app_config.json'); markDirty('verified.json');
+    renderCats();
+  });
+  grid.appendChild(cell);
 }
 
 function allFilenames() {
@@ -1773,7 +1842,7 @@ let cd = null; // { file, imgW, imgH, stageW, base, caps [{ layers [{ text, styl
     sel.insertAdjacentHTML('beforeend', `<option value="${fam}" style="font-family:${css};font-weight:${w}">${label}</option>`);
 }
 
-function openCardDesigner(file) {
+function openCardDesigner(file, capIdx = 0) {
   const p = state.positions[file] || {};
   const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
   const base = {
@@ -1808,7 +1877,7 @@ function openCardDesigner(file) {
     imgW: 1080, imgH: 1080, stageW: 400,
     base,
     caps: (state.drafts[file] || []).map(cardFrom),
-    capIdx: 0,
+    capIdx: Math.max(0, Math.min(capIdx, (state.drafts[file] || []).length - 1)),
     layerIdx: 0,
   };
   // Everything below edits cd.pos — always the selected layer's own style.
@@ -1939,15 +2008,8 @@ function renderCapList() {
     const head = document.createElement('div');
     head.className = 'cap-head';
     head.innerHTML = `<span class="cap-n">Design ${i + 1}</span>
-      <label class="cap-ver" title="Verified designs go live on the next Publish; unverified ones stay hidden on phones"><input type="checkbox" ${card.verified ? 'checked' : ''}> Verified</label>
-      <button class="cap-pub" title="Verify this design, save, and publish it to phones now">Publish</button>`;
+      <label class="cap-ver" title="Verified designs go live with Save &amp; publish verified; unverified ones stay hidden on phones"><input type="checkbox" ${card.verified ? 'checked' : ''}> Verified</label>`;
     head.querySelector('input').addEventListener('change', (e) => { card.verified = e.target.checked; box.classList.toggle('verified', card.verified); });
-    head.querySelector('.cap-pub').addEventListener('click', async () => {
-      card.verified = true;
-      saveCards();
-      showTab('publish');
-      await publishAll();
-    });
     box.appendChild(head);
     card.layers.forEach((layer, j) => {
       const row = document.createElement('div');
