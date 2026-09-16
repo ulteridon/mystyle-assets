@@ -86,7 +86,18 @@
   .thumb { position: relative; border-radius: 14px; overflow: hidden; background: #EFE9E4; box-shadow: 0 1px 2px rgba(36,30,46,.08); }
   .thumb img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
   .thumb.off img { opacity: .25; }
-  .thumb .bar button.verify { background: var(--green); color: #fff; border-color: transparent; }
+  .grid-sec { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-top: 6px; }
+  .grid-sec .n { font-weight: 700; background: #F6F2FB; color: var(--accent); border-radius: 999px; padding: 1px 9px; text-transform: none; letter-spacing: 0; }
+  .grid-sec.published { color: var(--green); }  .grid-sec.published .n { background: #E6F8EE; color: var(--green); }
+  .grid-sec.saved { color: #B9791A; }          .grid-sec.saved .n { background: #FFF4DE; color: #B9791A; }
+  .grid-sec.unverified .n { background: #F0EAF6; color: var(--muted); }
+  .thumb .st { position: absolute; top: 8px; left: 8px; font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; color: #fff; background: rgba(36,30,46,.55); letter-spacing: .3px; }
+  .thumb .st.published { background: var(--green); }  .thumb .st.saved { background: #F5B942; color: #241E2E; }
+  .cat-head .counts { display: inline-flex; gap: 6px; font-size: 11px; font-weight: 700; }
+  .cat-head .counts span { border-radius: 999px; padding: 2px 8px; background: #F0EAF6; color: var(--muted); }
+  .cat-head .counts .published { background: #E6F8EE; color: var(--green); }  .cat-head .counts .saved { background: #FFF4DE; color: #B9791A; }
+  .verify-box { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; cursor: pointer; margin-right: auto; }
+  .verify-box input { width: 16px; height: 16px; accent-color: var(--green); }
   .thumb .bar { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: center; gap: 4px; padding: 6px 8px; background: linear-gradient(180deg, rgba(20,16,28,0), rgba(20,16,28,.72)); font-size: 11px; }
   .thumb .bar span { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; opacity: .85; }
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
@@ -342,6 +353,7 @@
       </div>
       <button id="tplDeleteBtn" class="danger">Delete</button>
       <button id="tplCancelBtn">Cancel</button>
+      <label class="verify-box" title="Checked: this template is verified and goes live on the next Publish. Unchecked: kept in the admin but hidden on phones."><input type="checkbox" id="tplVerified" checked> Verified · publish to phones</label>
       <button id="tplSaveBtn" class="primary">Save template</button>
     </div>
     <div class="ed-body">
@@ -449,6 +461,7 @@
       <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
+      <label class="verify-box" title="Checked: these cards are verified and go live on the next Publish. Unchecked: kept in the admin but hidden on phones."><input type="checkbox" id="cardVerified" checked> Verified · publish to phones</label>
       <button id="cardSaveBtn" class="primary">Save cards</button>
     </div>
     <div class="ed-body">
@@ -550,6 +563,38 @@ function isVerified(kind, key) { return state.verified[kind].has(key); }
 function verifiedOut() {
   return { images: [...state.verified.images].sort(), templates: [...state.verified.templates].sort() };
 }
+// Status of one background / template relative to phones:
+//   'unverified' — no editor has verified it (hidden on phones)
+//   'saved'      — verified here, but not published yet (or changed since publish)
+//   'published'  — verified, published, unchanged → live on phones
+function imageStatus(img) {
+  if (!isVerified('images', img)) return 'unverified';
+  const pub = state.published;
+  if (!pub || pub.config.hiddenImages.includes(img)) return 'saved';
+  if (JSON.stringify(pub.texts[img] || []) !== JSON.stringify(state.texts[img] || [])) return 'saved';
+  return 'published';
+}
+function templateStatus(t) {
+  if (!isVerified('templates', t.id)) return 'unverified';
+  const pub = state.published;
+  if (!pub || pub.config.hiddenTemplates.includes(t.id)) return 'saved';
+  const was = (pub.templates || []).find((x) => x.id === t.id);
+  if (!was || JSON.stringify(was) !== JSON.stringify(t)) return 'saved';
+  return 'published';
+}
+const STATUS_LABEL = { published: 'Published', saved: 'Saved', unverified: 'Unverified' };
+const STATUS_HINT = {
+  published: 'live on phones',
+  saved: 'verified in the editor — goes live on next Publish',
+  unverified: 'not yet verified in the editor — hidden on phones',
+};
+function sectionHeader(status, n) {
+  const h = document.createElement('div');
+  h.className = `grid-sec ${status}`;
+  h.innerHTML = `${STATUS_LABEL[status]} <span class="n">${n}</span> <span style="font-weight:600;text-transform:none;letter-spacing:0">· ${STATUS_HINT[status]}</span>`;
+  return h;
+}
+const openCats = new Set();   // category names whose grid is expanded (survives re-render)
 
 // localStorage throws in sandboxed contexts (e.g. data: previews) — degrade to
 // session-only token storage instead of killing the whole script.
@@ -1004,6 +1049,8 @@ function renderCats() {
       <div class="cat-head">
         <b>${name}</b>
         <span class="kind">${cat.kind} · group ${cat.group} · ${cat.images.length} files</span>
+        ${(() => { const c = { published: 0, saved: 0, unverified: 0 }; for (const img of cat.images) c[imageStatus(img)]++;
+          return `<span class="counts"><span class="published">${c.published} published</span><span class="saved">${c.saved} saved</span><span>${c.unverified} unverified</span></span>`; })()}
         ${catHidden ? '<span class="hidden-flag">HIDDEN IN APP</span>' : ''}
         <span style="flex:1"></span>
         <label class="muted" style="cursor:pointer">＋ add images<input type="file" multiple accept="image/*" hidden></label>
@@ -1013,6 +1060,7 @@ function renderCats() {
       </div>
       <div class="grid" style="display:none"></div>`;
     const grid = div.querySelector('.grid');
+    if (openCats.has(name)) { grid.style.display = 'grid'; div.querySelector('.expand').textContent = '▴'; fillGrid(grid, name, cat); }
 
     div.querySelector('.toggleCat').addEventListener('click', () => {
       const i = cfg.hiddenCategories.indexOf(name);
@@ -1023,6 +1071,7 @@ function renderCats() {
       const open = grid.style.display !== 'none';
       grid.style.display = open ? 'none' : 'grid';
       e.target.textContent = open ? '▾' : '▴';
+      if (open) openCats.delete(name); else openCats.add(name);
       if (!open && !grid.childElementCount) fillGrid(grid, name, cat);
     });
     const [picker, folderPicker] = div.querySelectorAll('input[type=file]');
@@ -1033,24 +1082,26 @@ function renderCats() {
 }
 
 function fillGrid(grid, catName, cat) {
-  for (const img of cat.images) {
-    const off = !isVerified('images', img);
+  grid.innerHTML = '';
+  const groups = { published: [], saved: [], unverified: [] };
+  for (const img of cat.images) groups[imageStatus(img)].push(img);
+  for (const status of ['published', 'saved', 'unverified']) {
+    if (!groups[status].length) continue;
+    grid.appendChild(sectionHeader(status, groups[status].length));
+    for (const img of groups[status]) fillImageCell(grid, img, status);
+  }
+}
+function fillImageCell(grid, img, status) {
+  {
+    const off = status === 'unverified';
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
     cell.innerHTML = `
       <img loading="lazy" src="${IMG}/all_images/${img}">
+      <span class="st ${status}">${STATUS_LABEL[status]}</span>
       <div class="bar"><span title="${img}">${img}</span>
       <button class="caps" title="Edit captions"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path></svg><b class="capn">${(state.texts[img] || []).length}</b></button>
-      <button class="design" title="Design caption cards">✎</button>
-      <button class="vis${off ? ' verify' : ''}" title="${off ? 'Unverified: hidden on phones. Verify to make it live on next publish.' : 'Verified: live on phones once published. Unverify to take it down.'}">${off ? '✓ Verify' : 'Unverify'}</button></div>`;
-    cell.querySelector('.vis').addEventListener('click', () => {
-      setVerified('images', img, !isVerified('images', img));
-      const now = !isVerified('images', img);
-      cell.classList.toggle('off', now);
-      const b = cell.querySelector('.vis');
-      b.textContent = now ? '✓ Verify' : 'Unverify';
-      b.classList.toggle('verify', now);
-    });
+      <button class="design" title="Design caption cards (verify here)">✎</button></div>`;
     cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img));
     cell.querySelector('.caps').addEventListener('click', () => openCaptionEditor(img, cell));
     grid.appendChild(cell);
@@ -1191,9 +1242,18 @@ function renderTemplates() {
   const grid = $('tplGrid');
   grid.innerHTML = '';
   const list = state.templates || [];
-  $('tplCount').textContent = `${list.length} templates`;
-  list.forEach((t, idx) => {
-    const off = !isVerified('templates', t.id) ||
+  const groups = { published: [], saved: [], unverified: [] };
+  list.forEach((t, idx) => groups[templateStatus(t)].push(idx));
+  $('tplCount').textContent = `${list.length} templates · ${groups.published.length} published · ${groups.saved.length} saved · ${groups.unverified.length} unverified`;
+  for (const status of ['published', 'saved', 'unverified']) {
+    if (!groups[status].length) continue;
+    grid.appendChild(sectionHeader(status, groups[status].length));
+    for (const idx of groups[status]) renderTemplateCell(grid, list[idx], idx, status);
+  }
+}
+function renderTemplateCell(grid, t, idx, status) {
+  {
+    const off = status === 'unverified' ||
                 state.config.hiddenCategories.includes(t.category || t.title || 'Other');
     const cell = document.createElement('div');
     cell.className = 'thumb' + (off ? ' off' : '');
@@ -1211,19 +1271,15 @@ function renderTemplates() {
     cell.innerHTML = `
       <img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}">
       ${overlay}
+      <span class="st ${status}">${STATUS_LABEL[status]}</span>
       <span class="tpl-badge">${t.category || ''}</span>
       <div class="bar"><span title="${t.id}">${t.id}</span>
         <span style="display:flex;gap:4px">
           <button class="edit">Edit</button>
-          <button class="tog${isVerified('templates', t.id) ? '' : ' verify'}">${isVerified('templates', t.id) ? 'Unverify' : '✓ Verify'}</button>
         </span></div>`;
-    cell.querySelector('.tog').addEventListener('click', () => {
-      setVerified('templates', t.id, !isVerified('templates', t.id));
-      renderTemplates();
-    });
     cell.querySelector('.edit').addEventListener('click', () => openTplEditor(idx));
     grid.appendChild(cell);
-  });
+  }
 }
 
 $('seedTplFile').addEventListener('change', async (e) => {
@@ -1295,6 +1351,7 @@ function openTplEditor(index) {
   tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
+  $('tplVerified').checked = index >= 0 ? isVerified('templates', state.templates[index].id) : true;
   $('tplModalBack').classList.add('open');
   applyTestPhoto();
   selectEl(null);
@@ -1613,7 +1670,7 @@ $('tplSaveBtn').addEventListener('click', () => {
   };
   if (ed.index >= 0) state.templates[ed.index] = tpl;
   else state.templates.push(tpl);
-  setVerified('templates', tpl.id, true);      // editor reviewed & saved -> verified
+  setVerified('templates', tpl.id, $('tplVerified').checked);   // editor decides here
   markDirty('templates_db.json');
   $('tplModalBack').classList.remove('open');
   renderTemplates();
@@ -1709,6 +1766,7 @@ function openCardDesigner(file) {
 
   $('cdLayers').innerHTML = '';
   $('cardTitle').textContent = `Design cards — ${file}`;
+  $('cardVerified').checked = true;   // saving from the designer verifies unless the editor unticks
   $('cardModalBack').classList.add('open');
   renderCapList();
   cdPick.setPalette([]);
@@ -2012,7 +2070,7 @@ $('cardSaveBtn').addEventListener('click', () => {
   state.positions[cd.file] = styleOut(cd.base, false);
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
-  setVerified('images', cd.file, true);        // editor reviewed & saved -> verified
+  setVerified('images', cd.file, $('cardVerified').checked);      // editor decides here
   renderCats();
   $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
@@ -2109,7 +2167,7 @@ $('publishBtn').addEventListener('click', async () => {
       refreshDirtyUI();
     }
     snapshotPublished();
-    renderReadiness();
+    renderAll();
     log('✅ Published. The app will see it on next launch (allow ~5 min for the CDN).');
   } catch (e) {
     log('❌ ' + e.message);
