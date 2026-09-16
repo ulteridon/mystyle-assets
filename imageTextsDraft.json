@@ -1586,22 +1586,47 @@
   "quotes_attitude_1.webp": [
     {
       "text": "I do not follow the crowd, I lead myself.",
-      "verified": false
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
+      "verified": true
     },
     {
       "text": "My vibe speaks before I do.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Built different, and proud of it.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "I am not lucky, I am relentless.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Doubt me. It fuels me.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     }
   ],
