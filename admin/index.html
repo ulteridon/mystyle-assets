@@ -492,10 +492,9 @@
       <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design · Alt+N = save &amp; next design</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
-      <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Only cards ticked <b>Verified</b> go to phones; the rest stay saved in the admin.</span>
-      <button id="cardSaveBtn" title="Keep in the admin draft; publish later from the Publish tab">Save cards</button>
-      <button id="cardSaveNextBtn" title="Save, then move to the next design; after the last design, opens the next background (Alt+N)">Save &amp; next design ›</button>
-      <button id="cardSavePublishBtn" class="primary" title="Save all cards, then publish: only the ticked (verified) designs reach phones">Save &amp; publish verified</button>
+      <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Saving keeps it here; only designs ticked <b>Verified</b> reach phones when you Publish from the Publish tab.</span>
+      <button id="cardSaveBtn" title="Save these cards in the admin (publish later from the Publish tab)">Save cards</button>
+      <button id="cardSaveNextBtn" class="primary" title="Save, then move to the next design; after the last design, opens the next background (Alt+N)">Save &amp; next design ›</button>
     </div>
     <div class="ed-body">
       <div class="ed-side left">
@@ -557,7 +556,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.9 · next design';
+const ADMIN_VERSION = '2026-09-16.10 · publish tab only';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -2286,11 +2285,6 @@ function saveCards(keepOpen = false) {
   $('cardModalBack').classList.remove('open');
 }
 $('cardSaveBtn').addEventListener('click', () => saveCards());
-$('cardSavePublishBtn').addEventListener('click', async () => {
-  saveCards();
-  showTab('publish');
-  await publishAll();
-});
 window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
 
 // ── Caption quick editor (Images tab) ────────────────────────────────────────
