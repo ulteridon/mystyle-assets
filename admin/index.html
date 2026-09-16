@@ -489,7 +489,7 @@
         <span id="cdDesignPos">1 / 1</span>
         <button id="cdNext" title="Next design (Alt+→)">›</button>
       </span>
-      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design · Alt+N = save &amp; next design</span>
+      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · click the background = deselect (see the real card) · Alt+←/→ = previous/next design · Alt+N = next design</span>
       <span style="flex:1"></span>
       <span class="muted" id="cdAutosaveNote" style="margin-right:auto;font-size:12px">Edits save automatically and appear on the Publish tab. Every design you edit goes to phones when you Publish; untouched designs stay hidden.</span>
       <button id="cardCancelBtn" title="Close the designer (everything is already saved)">Close</button>
@@ -551,7 +551,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-17.2 · real aspect';
+const ADMIN_VERSION = '2026-09-17.3 · click to deselect';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1967,7 +1967,7 @@ function renderCdText() {
     const dark = st.theme === 'dark';
     const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
     if (!body.isContentEditable) body.textContent = layer.text || '';
-    el.classList.toggle('sel', i === cd.layerIdx);
+    el.classList.toggle('sel', !cd.deselected && i === cd.layerIdx);
     Object.assign(el.style, {
       color: st.color || (dark ? '#141414' : '#ffffff'),
       background: st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
@@ -2019,7 +2019,7 @@ function cdGo(delta) {
   if (!cd || !cd.caps.length) return;
   saveCards(true);
   const n = cd.caps.length;
-  cd.capIdx = (cd.capIdx + delta + n) % n; cd.layerIdx = 0;
+  cd.capIdx = (cd.capIdx + delta + n) % n; cd.layerIdx = 0; cd.deselected = false;
   $('cdLayers').innerHTML = '';
   renderCapList(); syncCdControls(); renderCdText(); cdUpdatePos();
 }
@@ -2053,8 +2053,27 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'ArrowRight') { e.preventDefault(); cdGo(1); }
   else if (e.key.toLowerCase() === 'n') { e.preventDefault(); $('cardSaveNextBtn').click(); }
 });
+// Click on the background (not on a text) → hide outline + handles so the
+// editor sees the card exactly as the phone renders it. Any click on a text,
+// or Alt/arrow navigation, selects again.
+function cdDeselect() {
+  if (!cd) return;
+  cdStopEdit();
+  cd.deselected = true;
+  renderCdText();
+  $('cdStyleFor').textContent = 'nothing selected — click a text to edit it';
+}
+$('cdStage').addEventListener('pointerdown', (e) => {
+  if (e.target.closest('.cd-text')) return;
+  cdDeselect();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && cd && $('cardModalBack').classList.contains('open')
+      && !/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement?.tagName || '') && !cdEditingEl()) cdDeselect();
+});
 function cdSelect(capIdx, layerIdx) {
   const changedCard = capIdx !== cd.capIdx;
+  cd.deselected = false;
   cd.capIdx = capIdx; cd.layerIdx = layerIdx;
   if (changedCard) $('cdLayers').innerHTML = '';
   $('cdCapList').querySelectorAll('.cap-row').forEach((r) =>
