@@ -462,7 +462,8 @@
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
       <label class="verify-box" title="Checked: these cards are verified and go live on the next Publish. Unchecked: kept in the admin but hidden on phones."><input type="checkbox" id="cardVerified" checked> Verified · publish to phones</label>
-      <button id="cardSaveBtn" class="primary">Save cards</button>
+      <button id="cardSaveBtn" title="Keep in the admin draft; publish later from the Publish tab">Save cards</button>
+      <button id="cardSavePublishBtn" class="primary" title="Save these cards and publish every pending change to phones now">Save &amp; publish</button>
     </div>
     <div class="ed-body">
       <div class="ed-side left">
@@ -877,13 +878,11 @@ async function loadAll() {
 $('loadBtn').addEventListener('click', loadAll);
 
 // ── Tabs (sidebar nav) ───────────────────────────────────────────────────────
-document.querySelectorAll('.nav-item').forEach((b) =>
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item').forEach((x) => x.classList.remove('active'));
-    document.querySelectorAll('section.tab').forEach((x) => x.classList.remove('active'));
-    b.classList.add('active');
-    $('tab-' + b.dataset.tab).classList.add('active');
-  }));
+function showTab(name) {
+  document.querySelectorAll('.nav-item').forEach((x) => x.classList.toggle('active', x.dataset.tab === name));
+  document.querySelectorAll('section.tab').forEach((x) => x.classList.toggle('active', x.id === 'tab-' + name));
+}
+document.querySelectorAll('.nav-item').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
 
 function renderAll() { renderCats(); renderTemplates(); refreshDirtyUI(); }
 
@@ -2046,7 +2045,7 @@ function wireCdTextEl(el) {
 }
 
 $('cardCancelBtn').addEventListener('click', () => { $('cdLayers').innerHTML = ''; $('cardModalBack').classList.remove('open'); });
-$('cardSaveBtn').addEventListener('click', () => {
+function saveCards() {
   cdStopEdit();
   const styleOut = (st, full) => {
     const o = { x: +st.x.toFixed(4), y: +st.y.toFixed(4), theme: st.theme };
@@ -2074,6 +2073,12 @@ $('cardSaveBtn').addEventListener('click', () => {
   renderCats();
   $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
+}
+$('cardSaveBtn').addEventListener('click', saveCards);
+$('cardSavePublishBtn').addEventListener('click', async () => {
+  saveCards();
+  showTab('publish');
+  await publishAll();
 });
 window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList.contains('open')) layoutCdStage(); });
 
@@ -2136,9 +2141,10 @@ function log(msg) {
   el.scrollTop = el.scrollHeight;
 }
 
-$('publishBtn').addEventListener('click', async () => {
-  if (!tokenInput.value.trim()) return alert('Paste your GitHub token first (repo scope).');
+async function publishAll() {
+  if (!tokenInput.value.trim()) { alert('Paste your GitHub token first (repo scope).'); return false; }
   const btn = $('publishBtn');
+  let ok = false;
   btn.disabled = true;
   $('log').textContent = '';
   try {
@@ -2169,12 +2175,15 @@ $('publishBtn').addEventListener('click', async () => {
     snapshotPublished();
     renderAll();
     log('✅ Published. The app will see it on next launch (allow ~5 min for the CDN).');
+    ok = true;
   } catch (e) {
     log('❌ ' + e.message);
   } finally {
     btn.disabled = false;
   }
-});
+  return ok;
+}
+$('publishBtn').addEventListener('click', publishAll);
 
 refreshDirtyUI();
 
