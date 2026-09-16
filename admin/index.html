@@ -326,7 +326,7 @@
       <button id="newCatBtn">＋ Create category</button>
       <span style="flex:1"></span>
       <span class="filter-chips" id="designFilterChips" title="Show only designs in this state">
-        <button data-f="all" class="on">All</button><button data-f="unverified">Unverified</button><button data-f="saved">Saved</button><button data-f="published">Published</button>
+        <button data-f="all" class="on">All</button><button data-f="unverified">Not edited</button><button data-f="saved">Saved</button><button data-f="published">Published</button>
       </span>
       <button id="expandAllBtn" title="Open every category">Expand all</button>
       <button id="collapseAllBtn" title="Fold every category">Collapse all</button>
@@ -379,7 +379,6 @@
       </div>
       <button id="tplDeleteBtn" class="danger">Delete</button>
       <button id="tplCancelBtn">Cancel</button>
-      <label class="verify-box" title="Checked: this template is verified and goes live on the next Publish. Unchecked: kept in the admin but hidden on phones."><input type="checkbox" id="tplVerified" checked> Verified · publish to phones</label>
       <button id="tplSaveBtn" class="primary">Save template</button>
     </div>
     <div class="ed-body">
@@ -491,7 +490,7 @@
       </span>
       <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design · Alt+N = save &amp; next design</span>
       <span style="flex:1"></span>
-      <span class="muted" id="cdAutosaveNote" style="margin-right:auto;font-size:12px">Edits save automatically and appear on the Publish tab. Only designs ticked <b>Verified</b> reach phones when you Publish.</span>
+      <span class="muted" id="cdAutosaveNote" style="margin-right:auto;font-size:12px">Edits save automatically and appear on the Publish tab. Every design you edit goes to phones when you Publish; untouched designs stay hidden.</span>
       <button id="cardCancelBtn" title="Close the designer (everything is already saved)">Close</button>
       <button id="cardSaveNextBtn" class="primary" title="Next design; after the last design, opens the next background (Alt+N)">Next design ›</button>
     </div>
@@ -551,7 +550,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.12 · no dimming';
+const ADMIN_VERSION = '2026-09-17.1 · edit = verified';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -661,11 +660,11 @@ function templateStatus(t) {
   if (!was || JSON.stringify(was) !== JSON.stringify(t)) return 'saved';
   return 'published';
 }
-const STATUS_LABEL = { published: 'Published', saved: 'Saved', unverified: 'Unverified' };
+const STATUS_LABEL = { published: 'Published', saved: 'Saved', unverified: 'Not edited' };
 const STATUS_HINT = {
   published: 'live on phones',
-  saved: 'verified in the editor — goes live on next Publish',
-  unverified: 'not yet verified in the editor — hidden on phones',
+  saved: 'edited — goes live on next Publish',
+  unverified: 'never edited by an editor — hidden on phones',
 };
 function sectionHeader(status, n) {
   const h = document.createElement('div');
@@ -1069,7 +1068,7 @@ function renderReadiness() {
   $('readyStats').innerHTML = `
     <span><i class="dot" style="background:var(--green)"></i><b>${liveN}</b> live on phones</span>
     <span><i class="dot" style="background:#F5B942"></i><b>${pendingN}</b> saved, not published</span>
-    <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenDesigns}</b> unverified (hidden on phones)</span>
+    <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenDesigns}</b> not edited (hidden on phones)</span>
     ${retiringN ? `<span style="color:var(--red)"><b>${retiringN}</b> still on phones, removed on publish</span>` : ''}
     <span><b>${work.backgrounds}</b> backgrounds · <b>${avg}</b> designs each</span>
     ${work.noCaption ? `<span style="color:var(--red)"><b>${work.noCaption}</b> background${work.noCaption > 1 ? 's' : ''} with no captions</span>` : ''}`;
@@ -1093,7 +1092,7 @@ function renderReadiness() {
   $('readyStatsTpl').innerHTML = `
     <span><i class="dot" style="background:var(--green)"></i><b>${tLive}</b> live on phones</span>
     <span><i class="dot" style="background:#F5B942"></i><b>${tPending}</b> saved, not published</span>
-    <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenTemplates}</b> unverified (hidden on phones)</span>
+    <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenTemplates}</b> not edited (hidden on phones)</span>
     ${tRetiring ? `<span style="color:var(--red)"><b>${tRetiring}</b> still on phones, removed on publish</span>` : ''}
     <span><b>${work.tplFiles}</b> template backgrounds · <b>${work.templates}</b> layouts</span>
     ${work.tplNoLayout ? `<span style="color:var(--red)"><b>${work.tplNoLayout}</b> background${work.tplNoLayout > 1 ? 's' : ''} with no template yet</span>` : ''}`;
@@ -1143,7 +1142,7 @@ function renderCats() {
         <b>${name}</b>
         <span class="kind">${cat.kind} · group ${cat.group} · ${cat.images.length} files</span>
         ${(() => { const c = designCounts(cat.images);
-          return `<span class="counts" title="designs = backgrounds × captions"><span class="published">${c.published} published</span><span class="saved">${c.saved} saved</span><span>${c.unverified} unverified</span><span>${c.total} designs</span></span>`; })()}
+          return `<span class="counts" title="designs = backgrounds × captions"><span class="published">${c.published} published</span><span class="saved">${c.saved} saved</span><span>${c.unverified} not edited</span><span>${c.total} designs</span></span>`; })()}
         ${catHidden ? '<span class="hidden-flag">HIDDEN IN APP</span>' : ''}
         <span style="flex:1"></span>
         <label class="muted" style="cursor:pointer">＋ add images<input type="file" multiple accept="image/*" hidden></label>
@@ -1243,18 +1242,9 @@ function fillDesignCell(grid, img, i, status) {
     <img loading="lazy" src="${IMG}/all_images/${img}">
     ${cap ? captionOverlay(img, cap) : ''}
     <span class="st ${status}">${STATUS_LABEL[status]}</span>
-    ${cap ? `<label class="ver" title="Tick = verified: goes to phones on the next publish"><input type="checkbox" ${capVerified(cap) ? 'checked' : ''}> Verified</label>` : ''}
     <div class="bar"><span title="${label}">${label}</span>
     <button class="design" title="Open in the card designer">✎</button></div>`;
   cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img, Math.max(0, i)));
-  const ver = cell.querySelector('.ver input');
-  if (ver) ver.addEventListener('change', (e) => {
-    caps[i] = { ...(typeof caps[i] === 'string' ? { text: caps[i] } : caps[i]), verified: e.target.checked };
-    state.drafts[img] = caps;
-    syncHiddenFromVerified();
-    markDirty('imageTextsDraft.json'); markDirty('imageTexts.json'); markDirty('app_config.json'); markDirty('verified.json');
-    renderCats();
-  });
   grid.appendChild(cell);
 }
 
@@ -1501,7 +1491,6 @@ function openTplEditor(index) {
   tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
-  $('tplVerified').checked = index >= 0 ? isVerified('templates', state.templates[index].id) : true;
   $('tplModalBack').classList.add('open');
   applyTestPhoto();
   selectEl(null);
@@ -1820,7 +1809,7 @@ $('tplSaveBtn').addEventListener('click', () => {
   };
   if (ed.index >= 0) state.templates[ed.index] = tpl;
   else state.templates.push(tpl);
-  setVerified('templates', tpl.id, $('tplVerified').checked);   // editor decides here
+  setVerified('templates', tpl.id, true);   // saved by an editor → goes to phones on Publish
   markDirty('templates_db.json');
   $('tplModalBack').classList.remove('open');
   renderTemplates();
@@ -1914,6 +1903,7 @@ function openCardDesigner(file, capIdx = 0) {
   Object.defineProperty(cd, 'pos', { get: () => (cd.layer && cd.layer.style) || cd.base });
   if (!cd.caps.length) cd.caps = [{ layers: [{ text: '', style: { ...base } }], verified: false }];
   cd.baseline = JSON.stringify(buildCards());   // autosave compares against this, so opening never dirties
+  cd.caps.forEach((c) => { c._key = cardKey(c); }); // per-card fingerprint: an edited card is auto-verified
 
   $('cdLayers').innerHTML = '';
   $('cardTitle').textContent = `Design cards — ${file}`;
@@ -2085,8 +2075,7 @@ function renderCapList() {
     const head = document.createElement('div');
     head.className = 'cap-head';
     head.innerHTML = `<span class="cap-n">Design ${i + 1}</span>
-      <label class="cap-ver" title="Verified designs go live with Save &amp; publish verified; unverified ones stay hidden on phones"><input type="checkbox" ${card.verified ? 'checked' : ''}> Verified</label>`;
-    head.querySelector('input').addEventListener('change', (e) => { card.verified = e.target.checked; box.classList.toggle('verified', card.verified); cdScheduleAutosave(); });
+      <span class="cap-ver" title="Any edit marks the design ready for phones">${card.verified ? '✓ goes to phones on Publish' : 'not edited yet — hidden on phones'}</span>`;
     box.appendChild(head);
     card.layers.forEach((layer, j) => {
       const row = document.createElement('div');
@@ -2249,6 +2238,7 @@ function wireCdTextEl(el) {
 }
 
 $('cardCancelBtn').addEventListener('click', () => saveCards());
+const cardKey = (card) => JSON.stringify(card.layers.map((l) => ({ t: l.text.trim(), s: l.style })));
 function buildCards() {
   const styleOut = (st, full) => {
     const o = { x: +st.x.toFixed(4), y: +st.y.toFixed(4), theme: st.theme };
@@ -2282,6 +2272,9 @@ function saveCards(keepOpen = false) {
   clearTimeout(cdAutosaveTimer);
   if (!cd) return;
   cdStopEdit();
+  // Whatever the editor edits is verified: a card whose text or style differs
+  // from when the designer opened (or a new card) goes to phones on Publish.
+  cd.caps.forEach((c) => { if (c._key === undefined || c._key !== cardKey(c)) { c.verified = true; c._key = cardKey(c); } });
   const built = buildCards();
   const { caps, pos } = built;
   const now = JSON.stringify(built);
@@ -2298,8 +2291,9 @@ function saveCards(keepOpen = false) {
     markDirty('app_config.json');
     markDirty('verified.json');
     renderCats();
+    renderCapList();
     const note = $('cdAutosaveNote');
-    if (note) { note.textContent = `Saved ${new Date().toLocaleTimeString()} · appears on the Publish tab. Only designs ticked Verified reach phones.`; }
+    if (note) { note.textContent = `Saved ${new Date().toLocaleTimeString()} · appears on the Publish tab. Edited designs go to phones on Publish.`; }
   }
   if (keepOpen) return;
   $('cdLayers').innerHTML = '';
