@@ -92,7 +92,8 @@
   .grid-sec.saved { color: #B9791A; }          .grid-sec.saved .n { background: #FFF4DE; color: #B9791A; }
   .grid-sec.unverified .n { background: #F0EAF6; color: var(--muted); }
   .thumb.design-cell { container-type: inline-size; }
-  .thumb.design-cell img { aspect-ratio: 1 / 1; }
+  .thumb.design-cell img { aspect-ratio: auto; height: auto; object-fit: contain; }   /* real resolution, no crop */
+  .grid { align-items: start; }
   .thumb .cap-ov { position: absolute; transform: translate(-50%, -50%); display: inline-block; text-align: center; line-height: 1.25; font-weight: 700; border-radius: .7em; padding: .5em .7em; box-sizing: border-box; white-space: pre-wrap; word-break: break-word; pointer-events: none; font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif; }
   .thumb.off .cap-ov { opacity: 1; }
   .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
@@ -550,7 +551,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-17.1 · edit = verified';
+const ADMIN_VERSION = '2026-09-17.2 · real aspect';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
