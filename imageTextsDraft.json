@@ -1591,7 +1591,7 @@
       "theme": "light",
       "fontSize": 0.058,
       "noBg": false,
-      "verified": true
+      "verified": false
     },
     {
       "text": "My vibe speaks before I do.",
@@ -1633,23 +1633,23 @@
   "quotes_attitude_2.webp": [
     {
       "text": "Class is Permanent, Hype is Temporary.",
-      "verified": true
+      "verified": false
     },
     {
       "text": "I move in silence and let results talk.",
-      "verified": true
+      "verified": false
     },
     {
       "text": "Not arrogant, just certain.",
-      "verified": true
+      "verified": false
     },
     {
       "text": "Standards high, patience low.",
-      "verified": true
+      "verified": false
     },
     {
       "text": "I create my own weather.",
-      "verified": true
+      "verified": false
     }
   ],
   "quotes_attitude_3.webp": [
