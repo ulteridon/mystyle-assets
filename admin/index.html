@@ -269,9 +269,10 @@
     <span class="nav-badge" id="navBadge" style="display:none">0</span>
   </div>
 
-  <div class="side-foot">
+  <div class="side-foot" style="flex-wrap:wrap">
     <span class="dot"></span>
     <span id="repoPill">…</span>
+    <span id="adminVersion" style="flex-basis:100%;font-size:11px;font-weight:600;color:var(--muted)" title="If this does not match what was just deployed, hard-refresh (Ctrl+Shift+R)"></span>
   </div>
 </aside>
 
@@ -527,6 +528,8 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
+const ADMIN_VERSION = '2026-09-16.6 · per-design publish';
+document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 // Thumbnails: when hosted on the repo's own GitHub Pages site, images are
