@@ -94,7 +94,7 @@
   .thumb.design-cell { container-type: inline-size; }
   .thumb.design-cell img { aspect-ratio: auto; height: auto; object-fit: contain; }   /* real resolution, no crop */
   .grid { align-items: start; }
-  .thumb .cap-ov { position: absolute; transform: translate(-50%, -50%); display: inline-block; text-align: center; line-height: 1.25; font-weight: 700; border-radius: .7em; padding: .5em .7em; box-sizing: border-box; white-space: pre-wrap; word-break: break-word; pointer-events: none; font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif; }
+  .thumb .cap-ov { position: absolute; transform: translate(-50%, -50%); display: inline-block; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; pointer-events: none; }
   .thumb.off .cap-ov { opacity: 1; }
   .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
   .thumb .ver input { width: 13px; height: 13px; margin: 0; accent-color: var(--green); }
@@ -570,7 +570,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-17.5 · visual publish';
+const ADMIN_VERSION = '2026-09-17.6 · same text render';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -777,6 +777,7 @@ function pubDesignCell(grid, { img, cap }, kind, label) {
     <span class="st ${kind}">${label}</span>
     <div class="bar"><span title="${img}">${cat} · ${img}</span>
     <button class="design" title="Open in the card designer">✎</button></div>`;
+  watchOverlayClamp(cell);
   cell.querySelector('.design').addEventListener('click', () => {
     const i = (state.drafts[img] || []).findIndex((c) => c.text === cap.text);
     showTab('images'); openCardDesigner(img, Math.max(0, i));
@@ -1349,6 +1350,8 @@ function fillGrid(grid, catName, cat) {
 // Approximate the phone's caption rendering on a thumbnail (same rules as the
 // designer: theme colours, pill background, fraction-of-width font size).
 function captionOverlay(img, cap) {
+  // Mirrors renderCdText() exactly, with 1cqw = 1% of the thumbnail width in
+  // place of stage pixels, so a card looks the same here and in the designer.
   const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
   const p = state.positions[img] || {};
   const base = { x: num(p.x, 0.5), y: num(p.y, 0.5), theme: p.theme === 'dark' ? 'dark' : 'light', fontFamily: p.fontFamily || '',
@@ -1360,21 +1363,49 @@ function captionOverlay(img, cap) {
     fontSize: num(e.fontSize, from.fontSize), noBg: typeof e.noBg === 'boolean' ? e.noBg : from.noBg,
     width: num(e.width, from.width), color: /^#[0-9a-f]{6}$/i.test(e.color || '') ? e.color : from.color,
   });
-  const st = hasOwnStyle(cap) ? styleFrom(cap, base) : base;
-  const dark = st.theme === 'dark';
-  const fs = (st.fontSize || 0.058) * 100;   // cqw units = % of thumbnail width
-  const color = st.color || (dark ? '#141414' : '#ffffff');
-  const bg = st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)';
-  const shadow = st.noBg ? `0 1px ${(fs * 0.18).toFixed(2)}cqw ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none';
-  const width = st.width ? `width:${(st.width * 100).toFixed(1)}%;` : `max-width:${CD_AUTO_WIDTH * 100}%;`;
-  const fnt = fontCss(st.fontFamily || 'Poppins_700Bold');
-  const font = `font-family:${fnt[2]};font-weight:${fnt[3]};`;
-  const layers = [cap, ...((cap && cap.layers) || [])];
-  return layers.map((l, k) => {
-    const ls = k === 0 ? st : styleFrom(l || {}, st);
-    const lfs = (ls.fontSize || 0.058) * 100;
-    return `<span class="cap-ov" style="left:${(ls.x ?? 0.5) * 100}%;top:${(ls.y ?? 0.5) * 100}%;font-size:${lfs.toFixed(2)}cqw;color:${ls.color || color};background:${ls.noBg ? 'transparent' : bg};text-shadow:${shadow};${k === 0 ? width : ''}${font}">${escapeHtml(capText(l))}</span>`;
+  const main = hasOwnStyle(cap) ? styleFrom(cap, base) : base;
+  const layers = [{ text: capText(cap), st: main }, ...((cap && cap.layers) || []).map((l) => ({ text: capText(l), st: styleFrom(l || {}, main) }))];
+  return layers.map(({ text, st }) => {
+    const fs = Math.max(0.1, st.fontSize * 100);           // cqw
+    const dark = st.theme === 'dark';
+    const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
+    const style = [
+      `left:${(st.x * 100).toFixed(3)}%`, `top:${(st.y * 100).toFixed(3)}%`,
+      `font-size:${fs.toFixed(3)}cqw`, `font-family:${css}`, `font-weight:${weight}`,
+      `color:${st.color || (dark ? '#141414' : '#ffffff')}`,
+      `background:${st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)'}`,
+      `text-shadow:${st.noBg ? `0 1px ${(fs * 0.18).toFixed(3)}cqw ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none'}`,
+      `border-radius:${(fs * 0.7).toFixed(3)}cqw`, `padding:${(fs * 0.7).toFixed(3)}cqw ${(fs * 0.9).toFixed(3)}cqw`,
+      st.width ? `width:${(st.width * 100).toFixed(2)}%` : `max-width:${CD_AUTO_WIDTH * 100}%`,
+    ].join(';');
+    return `<span class="cap-ov" data-x="${st.x}" data-y="${st.y}" style="${style}">${escapeHtml(text)}</span>`;
   }).join('');
+}
+// The designer clamps a text box inside the image instead of letting it hang
+// over the edge; do the same once the thumbnail has a size.
+function clampOverlays(cell) {
+  const W = cell.clientWidth, H = cell.clientHeight;
+  if (!W || !H) return;
+  cell.querySelectorAll('.cap-ov').forEach((el) => {
+    // Measure at the origin with the natural (shrink-to-fit) width, exactly
+    // like the designer; a left offset would otherwise shrink the box.
+    el.style.transform = 'none';
+    el.style.left = '0px'; el.style.top = '0px';
+    el.style.width = el.dataset.w || '';
+    const bw = el.offsetWidth, bh = el.offsetHeight;
+    const x = +el.dataset.x, y = +el.dataset.y;
+    el.style.width = bw + 'px';
+    el.style.left = Math.min(Math.max(x * W - bw / 2, 0), Math.max(0, W - bw)) + 'px';
+    el.style.top = Math.min(Math.max(y * H - bh / 2, 0), Math.max(0, H - bh)) + 'px';
+  });
+}
+function watchOverlayClamp(cell) {
+  const img = cell.querySelector('img');
+  cell.querySelectorAll('.cap-ov').forEach((el) => { el.dataset.w = el.style.width || ''; });
+  const run = () => clampOverlays(cell);
+  if (img.complete && img.naturalWidth) requestAnimationFrame(run); else img.addEventListener('load', run, { once: true });
+  if (document.fonts?.ready) document.fonts.ready.then(run);
+  if (window.ResizeObserver) new ResizeObserver(run).observe(cell);
 }
 function escapeHtml(t) { return String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 function fillDesignCell(grid, img, i, status) {
@@ -1390,6 +1421,7 @@ function fillDesignCell(grid, img, i, status) {
     <span class="st ${status}">${STATUS_LABEL[status]}</span>
     <div class="bar"><span title="${label}">${label}</span>
     <button class="design" title="Open in the card designer">✎</button></div>`;
+  if (cap) watchOverlayClamp(cell);
   cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img, Math.max(0, i)));
   grid.appendChild(cell);
 }
