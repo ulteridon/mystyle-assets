@@ -85,7 +85,7 @@
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; padding: 0 16px 16px; }
   .thumb { position: relative; border-radius: 14px; overflow: hidden; background: #EFE9E4; box-shadow: 0 1px 2px rgba(36,30,46,.08); }
   .thumb img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
-  .thumb.off img { opacity: .25; }
+  .thumb.off img { opacity: 1; }        /* status is shown by the chip, not by dimming */
   .grid-sec { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-top: 6px; }
   .grid-sec .n { font-weight: 700; background: #F6F2FB; color: var(--accent); border-radius: 999px; padding: 1px 9px; text-transform: none; letter-spacing: 0; }
   .grid-sec.published { color: var(--green); }  .grid-sec.published .n { background: #E6F8EE; color: var(--green); }
@@ -94,7 +94,7 @@
   .thumb.design-cell { container-type: inline-size; }
   .thumb.design-cell img { aspect-ratio: 1 / 1; }
   .thumb .cap-ov { position: absolute; transform: translate(-50%, -50%); display: inline-block; text-align: center; line-height: 1.25; font-weight: 700; border-radius: .7em; padding: .5em .7em; box-sizing: border-box; white-space: pre-wrap; word-break: break-word; pointer-events: none; font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif; }
-  .thumb.off .cap-ov { opacity: .35; }
+  .thumb.off .cap-ov { opacity: 1; }
   .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
   .thumb .ver input { width: 13px; height: 13px; margin: 0; accent-color: var(--green); }
   .thumb .st { position: absolute; top: 8px; left: 8px; font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; color: #fff; background: rgba(36,30,46,.55); letter-spacing: .3px; }
@@ -551,7 +551,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.11 · autosave';
+const ADMIN_VERSION = '2026-09-16.12 · no dimming';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
