@@ -1,4 +1,14 @@
 {
+  "quotes_attitude_1.webp": [
+    {
+      "text": "I do not follow the crowd, I lead myself.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false
+    }
+  ],
   "quotes_attitude_2.webp": [
     {
       "text": "Class is Permanent, Hype is Temporary."
