@@ -143,6 +143,13 @@
   .editor { display: flex; flex-direction: column; width: 100vw; height: 100vh; background: var(--bg); }
   .ed-top { display: flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--panel); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .ed-top b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 17px; }
+  .cd-nav { display: inline-flex; align-items: center; gap: 4px; }
+  .cd-nav button { padding: 4px 11px; font-size: 16px; line-height: 1; border-radius: 999px; }
+  .cd-nav #cdDesignPos { min-width: 52px; text-align: center; font-size: 12.5px; font-weight: 800; color: var(--muted); }
+  .filter-chips { display: inline-flex; border: 1.5px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .filter-chips button { border: none; border-radius: 0; padding: 7px 13px; font-size: 12.5px; color: var(--muted); background: #fff; }
+  .filter-chips button + button { border-left: 1.5px solid var(--border); }
+  .filter-chips button.on { background: var(--accent); color: #fff; }
   .zoombar { display: flex; align-items: center; gap: 2px; margin-right: 8px; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 3px; }
   .zoombar button { padding: 5px 11px; border: none; background: transparent; border-radius: 9px; }
   .zoombar button:hover { background: #F6F2FB; }
@@ -318,6 +325,11 @@
       <input id="newCatGroup" type="number" value="2" min="1" max="9" style="width:64px" title="display group">
       <button id="newCatBtn">＋ Create category</button>
       <span style="flex:1"></span>
+      <span class="filter-chips" id="designFilterChips" title="Show only designs in this state">
+        <button data-f="all" class="on">All</button><button data-f="unverified">Unverified</button><button data-f="saved">Saved</button><button data-f="published">Published</button>
+      </span>
+      <button id="expandAllBtn" title="Open every category">Expand all</button>
+      <button id="collapseAllBtn" title="Fold every category">Collapse all</button>
       <label class="muted" style="cursor:pointer; display:inline-flex; align-items:center; gap:7px" title="Pick a folder — each subfolder becomes a category (or the folder itself if it has no subfolders), using the kind/group selected on the left"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Load folder<input type="file" id="folderUpload" webkitdirectory hidden></label>
     </div>
     <div id="catList"></div>
@@ -472,11 +484,17 @@
   <div class="editor">
     <div class="ed-top">
       <b id="cardTitle">Card designer</b>
-      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line</span>
+      <span class="cd-nav">
+        <button id="cdPrev" title="Previous design (Alt+←)">‹</button>
+        <span id="cdDesignPos">1 / 1</span>
+        <button id="cdNext" title="Next design (Alt+→)">›</button>
+      </span>
+      <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line · Alt+←/→ = previous/next design</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
       <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Only cards ticked <b>Verified</b> go to phones; the rest stay saved in the admin.</span>
       <button id="cardSaveBtn" title="Keep in the admin draft; publish later from the Publish tab">Save cards</button>
+      <button id="cardSaveNextBtn" title="Save these cards and open the next background in this category (Alt+N)">Save &amp; next image ›</button>
       <button id="cardSavePublishBtn" class="primary" title="Save all cards, then publish: only the ticked (verified) designs reach phones">Save &amp; publish verified</button>
     </div>
     <div class="ed-body">
@@ -516,7 +534,11 @@
           <h4>Captions — one card each</h4>
           <p class="muted" style="margin:0 0 6px;font-size:12px">The app turns this one background into a separate shareable card per caption. Click a caption to preview it. Use <b>＋ text layer</b> to put more than one text block on the same card (e.g. a title and a message).</p>
           <div id="cdCapList"></div>
-          <button id="cdAddCap" style="margin-top:6px">＋ add caption (new card)</button>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+            <button id="cdAddCap">＋ add caption (new card)</button>
+            <button id="cdVerifyAll" title="Tick Verified on every card of this background">✓ Verify all</button>
+            <button id="cdUnverifyAll" title="Untick Verified on every card">Untick all</button>
+          </div>
         </div>
       </div>
     </div>
@@ -534,7 +556,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-16.7 · design grid';
+const ADMIN_VERSION = '2026-09-16.8 · editor flow';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -656,7 +678,8 @@ function sectionHeader(status, n) {
   h.innerHTML = `${STATUS_LABEL[status]} <span class="n">${n}</span> <span style="font-weight:600;text-transform:none;letter-spacing:0">· ${STATUS_HINT[status]}</span>`;
   return h;
 }
-const openCats = new Set();   // category names whose grid is expanded (survives re-render)
+const collapsedCats = new Set();   // categories the editor collapsed (everything is open by default)
+let designFilter = 'all';          // 'all' | 'published' | 'saved' | 'unverified' — Images tab grid filter
 
 // localStorage throws in sandboxed contexts (e.g. data: previews) — degrade to
 // session-only token storage instead of killing the whole script.
@@ -1135,7 +1158,7 @@ function renderCats() {
       </div>
       <div class="grid" style="display:none"></div>`;
     const grid = div.querySelector('.grid');
-    if (openCats.has(name)) { grid.style.display = 'grid'; div.querySelector('.expand').textContent = '▴'; fillGrid(grid, name, cat); }
+    if (!collapsedCats.has(name)) { grid.style.display = 'grid'; div.querySelector('.expand').textContent = '▴'; fillGrid(grid, name, cat); }
 
     div.querySelector('.toggleCat').addEventListener('click', () => {
       const i = cfg.hiddenCategories.indexOf(name);
@@ -1146,7 +1169,7 @@ function renderCats() {
       const open = grid.style.display !== 'none';
       grid.style.display = open ? 'none' : 'grid';
       e.target.textContent = open ? '▾' : '▴';
-      if (open) openCats.delete(name); else openCats.add(name);
+      if (open) collapsedCats.add(name); else collapsedCats.delete(name);
       if (!open && !grid.childElementCount) fillGrid(grid, name, cat);
     });
     const [picker, folderPicker] = div.querySelectorAll('input[type=file]');
@@ -1156,6 +1179,14 @@ function renderCats() {
   }
 }
 
+$('expandAllBtn').addEventListener('click', () => { collapsedCats.clear(); renderCats(); });
+$('collapseAllBtn').addEventListener('click', () => { for (const n of Object.keys(state.manifest?.categories || {})) collapsedCats.add(n); renderCats(); });
+$('designFilterChips').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  designFilter = b.dataset.f;
+  $('designFilterChips').querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b));
+  renderCats();
+});
 function fillGrid(grid, catName, cat) {
   grid.innerHTML = '';
   // Every caption on every background is its own cell (a "design"), grouped
@@ -1166,11 +1197,14 @@ function fillGrid(grid, catName, cat) {
     if (!caps.length) { groups.unverified.push({ img, i: -1 }); continue; }
     caps.forEach((_, i) => groups[designStatus(img, i)].push({ img, i }));
   }
+  let shown = 0;
   for (const status of ['published', 'saved', 'unverified']) {
-    if (!groups[status].length) continue;
+    if (!groups[status].length || (designFilter !== 'all' && designFilter !== status)) continue;
     grid.appendChild(sectionHeader(status, groups[status].length));
     for (const { img, i } of groups[status]) fillDesignCell(grid, img, i, status);
+    shown += groups[status].length;
   }
+  if (!shown) grid.insertAdjacentHTML('beforeend', `<div class="grid-sec" style="color:var(--muted)">No ${designFilter === 'all' ? '' : designFilter + ' '}designs here</div>`);
 }
 // Approximate the phone's caption rendering on a thumbnail (same rules as the
 // designer: theme colours, pill background, fraction-of-width font size).
@@ -1889,6 +1923,7 @@ function openCardDesigner(file, capIdx = 0) {
   $('cardTitle').textContent = `Design cards — ${file}`;
   $('cardModalBack').classList.add('open');
   renderCapList();
+  cdUpdatePos();
   cdPick.setPalette([]);
   syncCdControls();
 
@@ -1988,6 +2023,39 @@ function syncCdControls() {
   $('cdFont').value = cd.pos.fontFamily || '';
 }
 
+function cdUpdatePos() {
+  if (!cd) return;
+  $('cdDesignPos').textContent = `${cd.capIdx + 1} / ${cd.caps.length}`;
+  $('cdCapList').querySelector('.cap-card.on')?.scrollIntoView({ block: 'nearest' });
+}
+function cdGo(delta) {
+  if (!cd || !cd.caps.length) return;
+  cdStopEdit();
+  const n = cd.caps.length;
+  cdSelect((cd.capIdx + delta + n) % n, 0);
+}
+// Next / previous background in the same manifest category (then the next category).
+function neighborImage(file, dir) {
+  const cats = Object.entries(state.manifest.categories).filter(([, c]) => c.kind !== 'template');
+  const order = cats.flatMap(([, c]) => c.images);
+  const i = order.indexOf(file);
+  return i < 0 ? null : order[i + dir] || null;
+}
+$('cdPrev').addEventListener('click', () => cdGo(-1));
+$('cdNext').addEventListener('click', () => cdGo(1));
+$('cdVerifyAll').addEventListener('click', () => { cd.caps.forEach((c) => { c.verified = true; }); renderCapList(); cdUpdatePos(); });
+$('cdUnverifyAll').addEventListener('click', () => { cd.caps.forEach((c) => { c.verified = false; }); renderCapList(); cdUpdatePos(); });
+$('cardSaveNextBtn').addEventListener('click', () => {
+  const next = neighborImage(cd.file, 1);
+  saveCards();
+  if (next) openCardDesigner(next, 0); else alert('That was the last background.');
+});
+document.addEventListener('keydown', (e) => {
+  if (!cd || !$('cardModalBack').classList.contains('open') || !e.altKey) return;
+  if (e.key === 'ArrowLeft') { e.preventDefault(); cdGo(-1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); cdGo(1); }
+  else if (e.key.toLowerCase() === 'n') { e.preventDefault(); $('cardSaveNextBtn').click(); }
+});
 function cdSelect(capIdx, layerIdx) {
   const changedCard = capIdx !== cd.capIdx;
   cd.capIdx = capIdx; cd.layerIdx = layerIdx;
@@ -1996,6 +2064,7 @@ function cdSelect(capIdx, layerIdx) {
     r.classList.toggle('on', +r.dataset.cap === capIdx && +r.dataset.layer === layerIdx));
   $('cdCapList').querySelectorAll('.cap-card').forEach((c) => c.classList.toggle('on', +c.dataset.cap === capIdx));
   syncCdControls(); renderCdText();
+  cdUpdatePos();
 }
 
 function renderCapList() {
