@@ -108,6 +108,20 @@
   .thumb .bar { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: center; gap: 4px; padding: 6px 8px; background: linear-gradient(180deg, rgba(20,16,28,0), rgba(20,16,28,.72)); font-size: 11px; }
   .thumb .bar span { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; opacity: .85; }
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
+  .pub-summary { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 12px; }
+  .pub-summary .tile { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 10px 16px; min-width: 120px; box-shadow: var(--shadow); }
+  .pub-summary .tile b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+  .pub-summary .tile span { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .pub-summary .tile.add b { color: var(--green); }  .pub-summary .tile.chg b { color: #B9791A; }  .pub-summary .tile.del b { color: var(--red); }
+  .pub-sec { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; margin: 12px 0; box-shadow: var(--shadow); }
+  .pub-sec .grid { padding: 12px 16px 16px; }
+  .pub-sec h3 { margin: 0; padding: 12px 18px; font-size: 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+  .pub-sec h3 .n { font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: #F6F2FB; color: var(--accent); }
+  .pub-sec.add h3 .n { background: #E6F8EE; color: var(--green); }  .pub-sec.chg h3 .n { background: #FFF4DE; color: #B9791A; }  .pub-sec.del h3 .n { background: #FDE8E1; color: var(--red); }
+  .pub-sec h3 small { font-weight: 600; color: var(--muted); font-size: 12px; }
+  .thumb .st.add { background: var(--green); }  .thumb .st.chg { background: #F5B942; color: #241E2E; }  .thumb .st.del { background: var(--red); }
+  .thumb.del img, .thumb.del .cap-ov { filter: grayscale(.6); opacity: .8; }
+  .pub-empty { padding: 26px; text-align: center; color: var(--muted); background: var(--panel); border: 1px dashed #D9CCF2; border-radius: 18px; }
   .tpl-badge { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,.92); font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; color: var(--text); }
   .thumb .ph-ov { position: absolute; object-fit: cover; }
   .thumb .bar .caps { display: inline-flex; align-items: center; gap: 3px; }
@@ -354,11 +368,16 @@
   <!-- ── PUBLISH ────────────────────────────────────────────────────────── -->
   <section class="tab" id="tab-publish">
     <h2 class="page-title">Publish</h2>
-    <p class="muted">Commits the changed files to <b id="repoLabel"></b>. The app picks them up on next launch (raw.githubusercontent caches for ~5 minutes).</p>
-    <ul class="filelist" id="dirtyList"></ul>
+    <p class="muted">This is exactly what changes on phones when you press Publish. The app picks it up on next launch (allow ~5 minutes).</p>
+    <div class="pub-summary" id="pubSummary"></div>
     <div class="row">
       <button id="publishBtn" class="primary">Publish changes</button>
+      <span class="muted" id="pubHint"></span>
     </div>
+    <div id="pubPreview"></div>
+    <details class="muted" style="margin-top:14px"><summary style="cursor:pointer;font-size:12px">Files that will be committed to <b id="repoLabel"></b></summary>
+      <ul class="filelist" id="dirtyList"></ul>
+    </details>
     <div id="log"></div>
   </section>
 </main>
@@ -551,7 +570,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-17.4 · deselect anywhere';
+const ADMIN_VERSION = '2026-09-17.5 · visual publish';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -695,6 +714,131 @@ function markDirty(path) {
   state.dirty.add(path);
   refreshDirtyUI();
 }
+// ── Publish preview: what actually changes on phones ─────────────────────────
+// Compares the designs/templates phones show now (published snapshot) with
+// what they will show after Publish (working copy), design by design.
+function effectiveLiveTexts(src) {
+  // src = { manifest, config, texts } — drop designs in hidden categories / hidden images
+  const out = {};
+  if (!src?.manifest) return out;
+  for (const [name, cat] of Object.entries(src.manifest.categories || {})) {
+    if (cat.kind === 'template' || src.config.hiddenCategories.includes(name)) continue;
+    for (const img of cat.images || []) {
+      if (src.config.hiddenImages.includes(img)) continue;
+      const caps = (src.texts || {})[img] || [];
+      if (caps.length) out[img] = caps.map((c) => (typeof c === 'string' ? { text: c } : c));
+    }
+  }
+  return out;
+}
+function effectiveLiveTemplates(src) {
+  const out = {};
+  if (!src?.templates) return out;
+  for (const t of src.templates) {
+    const cat = t.category || t.title || 'Other';
+    if (src.config.hiddenTemplates.includes(t.id) || src.config.hiddenCategories.includes(cat)) continue;
+    out[t.id] = t;
+  }
+  return out;
+}
+function publishDiff() {
+  syncHiddenFromVerified();
+  const now = effectiveLiveTexts(state.published || {});
+  const next = effectiveLiveTexts({ manifest: state.manifest, config: state.config, texts: state.texts });
+  const d = { add: [], chg: [], del: [], tplAdd: [], tplChg: [], tplDel: [], uploads: state.pendingUploads.slice() };
+  const files = new Set([...Object.keys(now), ...Object.keys(next)]);
+  for (const img of files) {
+    const a = now[img] || [], b = next[img] || [];
+    const aKeys = a.map((c) => JSON.stringify(c)), bKeys = b.map((c) => JSON.stringify(c));
+    const aByText = new Map(a.map((c, i) => [c.text, i]));
+    b.forEach((c, i) => {
+      if (aKeys.includes(bKeys[i])) return;                 // identical → unchanged
+      if (aByText.has(c.text)) d.chg.push({ img, cap: c, i }); // same text, new style → changed
+      else d.add.push({ img, cap: c, i });
+    });
+    const bTexts = new Set(b.map((c) => c.text));
+    a.forEach((c, i) => { if (!bKeys.includes(aKeys[i]) && !bTexts.has(c.text)) d.del.push({ img, cap: c, i }); });
+  }
+  const tNow = effectiveLiveTemplates(state.published || {}), tNext = effectiveLiveTemplates(state);
+  for (const [id, t] of Object.entries(tNext)) {
+    if (!tNow[id]) d.tplAdd.push(t);
+    else if (JSON.stringify(tNow[id]) !== JSON.stringify(t)) d.tplChg.push(t);
+  }
+  for (const [id, t] of Object.entries(tNow)) if (!tNext[id]) d.tplDel.push(t);
+  return d;
+}
+function pubDesignCell(grid, { img, cap }, kind, label) {
+  const cell = document.createElement('div');
+  cell.className = `thumb design-cell ${kind}`;
+  const cat = Object.entries(state.manifest.categories).find(([, c]) => (c.images || []).includes(img))?.[0] || '';
+  cell.innerHTML = `
+    <img loading="lazy" src="${IMG}/all_images/${img}">
+    ${captionOverlay(img, cap)}
+    <span class="st ${kind}">${label}</span>
+    <div class="bar"><span title="${img}">${cat} · ${img}</span>
+    <button class="design" title="Open in the card designer">✎</button></div>`;
+  cell.querySelector('.design').addEventListener('click', () => {
+    const i = (state.drafts[img] || []).findIndex((c) => c.text === cap.text);
+    showTab('images'); openCardDesigner(img, Math.max(0, i));
+  });
+  grid.appendChild(cell);
+}
+function pubTemplateCell(grid, t, kind, label) {
+  const cell = document.createElement('div');
+  cell.className = `thumb ${kind}`;
+  const src = t.remoteFile ? `${IMG}/all_images/${t.remoteFile}` : (t.templateUri || '');
+  const W = t.templateWidth || 1024, H = t.templateHeight || 1024;
+  cell.innerHTML = `<img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}">
+    <span class="st ${kind}">${label}</span><span class="tpl-badge" style="top:auto;bottom:34px">${t.category || ''}</span>
+    <div class="bar"><span title="${t.id}">${t.id}</span></div>`;
+  grid.appendChild(cell);
+}
+function pubSection(root, kind, title, hint, items, renderItem) {
+  if (!items.length) return;
+  const sec = document.createElement('div');
+  sec.className = `pub-sec ${kind}`;
+  sec.innerHTML = `<h3>${title} <span class="n">${items.length}</span> <small>${hint}</small></h3><div class="grid"></div>`;
+  const grid = sec.querySelector('.grid');
+  items.forEach((it) => renderItem(grid, it));
+  root.appendChild(sec);
+}
+function renderPublishPreview() {
+  const root = $('pubPreview'), sum = $('pubSummary');
+  if (!root || !state.manifest) return;
+  const d = publishDiff();
+  const nDesign = d.add.length + d.chg.length + d.del.length, nTpl = d.tplAdd.length + d.tplChg.length + d.tplDel.length;
+  const nothing = !nDesign && !nTpl && !d.uploads.length;
+  sum.innerHTML = nothing ? '' : `
+    <div class="tile add"><b>${d.add.length + d.tplAdd.length}</b><span>go live</span></div>
+    <div class="tile chg"><b>${d.chg.length + d.tplChg.length}</b><span>updated on phones</span></div>
+    <div class="tile del"><b>${d.del.length + d.tplDel.length}</b><span>removed from phones</span></div>
+    ${d.uploads.length ? `<div class="tile"><b>${d.uploads.length}</b><span>new image file${d.uploads.length > 1 ? 's' : ''}</span></div>` : ''}`;
+  $('pubHint').textContent = nothing
+    ? (hasUnpublished() ? 'Only admin-side drafts change; phones stay exactly as they are.' : '')
+    : `${nDesign} design${nDesign === 1 ? '' : 's'}${nTpl ? ` and ${nTpl} template${nTpl === 1 ? '' : 's'}` : ''} will change on phones.`;
+  root.innerHTML = '';
+  if (nothing) {
+    root.innerHTML = `<div class="pub-empty">${hasUnpublished() ? 'Nothing changes on phones. Your edits are saved as drafts and will be stored in the repo, but no design is added, updated or removed.' : 'Nothing to publish — phones already show the current content.'}</div>`;
+    return;
+  }
+  pubSection(root, 'add', 'Designs going live', 'new on phones after this publish', d.add, (g, it) => pubDesignCell(g, it, 'add', 'NEW'));
+  pubSection(root, 'chg', 'Designs updated', 'already on phones, text position/style changes', d.chg, (g, it) => pubDesignCell(g, it, 'chg', 'UPDATED'));
+  pubSection(root, 'del', 'Designs removed from phones', 'live now, gone after this publish', d.del, (g, it) => pubDesignCell(g, it, 'del', 'REMOVED'));
+  pubSection(root, 'add', 'Templates going live', '', d.tplAdd, (g, t) => pubTemplateCell(g, t, 'add', 'NEW'));
+  pubSection(root, 'chg', 'Templates updated', '', d.tplChg, (g, t) => pubTemplateCell(g, t, 'chg', 'UPDATED'));
+  pubSection(root, 'del', 'Templates removed from phones', '', d.tplDel, (g, t) => pubTemplateCell(g, t, 'del', 'REMOVED'));
+  if (d.uploads.length) {
+    const sec = document.createElement('div');
+    sec.className = 'pub-sec';
+    sec.innerHTML = `<h3>New image files <span class="n">${d.uploads.length}</span> <small>uploaded to the repo; they appear on phones once they carry a design</small></h3><div class="grid"></div>`;
+    const grid = sec.querySelector('.grid');
+    for (const u of d.uploads) {
+      const ext = (u.path.split('.').pop() || 'webp').toLowerCase();
+      grid.insertAdjacentHTML('beforeend', `<div class="thumb"><img src="data:image/${ext === 'jpg' ? 'jpeg' : ext};base64,${u.base64}"><div class="bar"><span title="${u.path}">${u.path.replace('all_images/', '')}</span></div></div>`);
+    }
+    root.appendChild(sec);
+  }
+}
 function refreshDirtyUI() {
   const n = state.dirty.size + state.pendingUploads.length;
   const pill = $('dirtyPill');
@@ -709,6 +853,7 @@ function refreshDirtyUI() {
   if (!n) ul.innerHTML = '<li class="muted">Nothing to publish.</li>';
   saveDraft();
   if (typeof renderReadiness === 'function') renderReadiness();
+  if (typeof renderPublishPreview === 'function') renderPublishPreview();
 }
 
 // ── Draft autosave ───────────────────────────────────────────────────────────
