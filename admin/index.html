@@ -198,6 +198,13 @@
   .cap-row textarea { flex: 1; min-width: 0; resize: none; overflow: hidden; line-height: 1.35; font-family: inherit; min-height: 34px; }
   .cap-row.on textarea { outline: 2px solid #E4D9FF; border-color: var(--accent); }
   .cap-row button { padding: 4px 9px; font-size: 12px; }
+  .cap-head { display: flex; align-items: center; gap: 8px; padding: 2px 2px 4px; font-size: 11.5px; }
+  .cap-head .cap-n { font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .cap-head .cap-ver { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-weight: 700; cursor: pointer; color: var(--muted); }
+  .cap-head .cap-ver input { width: 14px; height: 14px; accent-color: var(--green); }
+  .cap-card.verified .cap-ver { color: var(--green); }
+  .cap-card.verified { border-left: 3px solid var(--green); }
+  .cap-head .cap-pub { padding: 3px 9px; font-size: 11px; background: var(--green); color: #fff; border-color: transparent; }
   .cap-addlayer { display: none; font-size: 11px; padding: 3px 8px; margin: 2px 0 2px; }
   .cap-card.on .cap-addlayer { display: inline-block; }
   /* colour picker: default swatches · document colours · custom */
@@ -461,9 +468,9 @@
       <span class="muted">click a text to select · drag to move · side handles = box width · corners = text size · double-click to edit · Enter = new line</span>
       <span style="flex:1"></span>
       <button id="cardCancelBtn">Cancel</button>
-      <label class="verify-box" title="Checked: these cards are verified and go live on the next Publish. Unchecked: kept in the admin but hidden on phones."><input type="checkbox" id="cardVerified" checked> Verified · publish to phones</label>
+      <span class="muted" style="margin-right:auto;font-size:12px">Each caption card is one design. Tick <b>Verified</b> on a card, or press its <b>Publish</b>, to send just that design to phones.</span>
       <button id="cardSaveBtn" title="Keep in the admin draft; publish later from the Publish tab">Save cards</button>
-      <button id="cardSavePublishBtn" class="primary" title="Save these cards and publish every pending change to phones now">Save &amp; publish</button>
+      <button id="cardSavePublishBtn" class="primary" title="Save all cards and publish every verified design to phones now">Save &amp; publish verified</button>
     </div>
     <div class="ed-body">
       <div class="ed-side left">
@@ -536,7 +543,8 @@ const state = {
   shas: {},                    // path → blob sha (needed to update)
   dirty: new Set(),            // paths with unsaved changes
   pendingUploads: [],          // {path, base64, label} — new image binaries
-  verified: { images: new Set(), templates: new Set() },   // verified.json — only these go live
+  verified: { images: new Set(), templates: new Set() },   // images: derived (≥1 verified caption); templates: verified.json
+  drafts: {},                  // imageTextsDraft.json — ALL captions, each with verified:true|false
 };
 
 // ── Verification model ───────────────────────────────────────────────────────
@@ -545,11 +553,31 @@ const state = {
 // and every template that is not in verified.json is hidden. New uploads and
 // new templates start unverified. Saving in the card designer / template
 // editor, or pressing "Verify", marks the item verified; Publish makes it live.
+// Per-caption verification. The admin works on state.drafts (every caption,
+// flagged). imageTexts.json — the file phones read — is derived: only the
+// verified captions, flag stripped. A background with no verified caption is
+// hidden entirely, otherwise the phone would show it as one plain card.
+const capVerified = (c) => !!c && typeof c === 'object' && c.verified === true;
+const stripVerified = (c) => { if (!c || typeof c !== 'object') return c; const { verified, ...rest } = c; return rest; };
+function publishedTexts() {
+  const out = {};
+  for (const [f, caps] of Object.entries(state.drafts || {})) {
+    const v = (caps || []).filter(capVerified).map(stripVerified);
+    if (v.length) out[f] = v;
+  }
+  return out;
+}
+function imageCounts(f) {
+  const caps = state.drafts?.[f] || [];
+  return { total: caps.length, verified: caps.filter(capVerified).length, published: (state.published?.texts?.[f] || []).length };
+}
 function allImageFiles() {
   return Object.values(state.manifest?.categories || {}).filter((c) => c.kind !== 'template').flatMap((c) => c.images || []);
 }
 function syncHiddenFromVerified() {
   if (!state.manifest || !state.config) return;
+  state.texts = publishedTexts();
+  state.verified.images = new Set(Object.keys(state.texts));
   state.config.hiddenImages = allImageFiles().filter((f) => !state.verified.images.has(f));
   state.config.hiddenTemplates = (state.templates || []).map((t) => t.id).filter((id) => !state.verified.templates.has(id));
 }
@@ -569,11 +597,18 @@ function verifiedOut() {
 //   'saved'      — verified here, but not published yet (or changed since publish)
 //   'published'  — verified, published, unchanged → live on phones
 function imageStatus(img) {
-  if (!isVerified('images', img)) return 'unverified';
+  const c = imageCounts(img);
+  if (!c.verified) return 'unverified';
   const pub = state.published;
   if (!pub || pub.config.hiddenImages.includes(img)) return 'saved';
   if (JSON.stringify(pub.texts[img] || []) !== JSON.stringify(state.texts[img] || [])) return 'saved';
   return 'published';
+}
+function imageChip(img) {
+  const c = imageCounts(img), st = imageStatus(img);
+  if (st === 'published') return `${c.published}/${c.total} live`;
+  if (st === 'saved') return `${c.verified}/${c.total} saved`;
+  return c.total ? `${c.total} unverified` : 'no captions';
 }
 function templateStatus(t) {
   if (!isVerified('templates', t.id)) return 'unverified';
@@ -645,7 +680,7 @@ function saveDraft() {
     savedAt: new Date().toISOString(),
     dirty: [...state.dirty],
     manifest: state.manifest, config: state.config, templates: state.templates,
-    texts: state.texts, positions: state.positions,
+    texts: state.texts, positions: state.positions, drafts: state.drafts,
     pendingUploads: state.pendingUploads,
     verified: verifiedOut(),
   };
@@ -674,6 +709,7 @@ function offerDraftRestore() {
   if (d.dirty.includes('app_config.json') && d.config) state.config = d.config;
   if (d.dirty.includes('templates_db.json') && d.templates) state.templates = d.templates;
   if (d.dirty.includes('imageTexts.json') && d.texts) state.texts = d.texts;
+  if (d.dirty.includes('imageTextsDraft.json') && d.drafts) state.drafts = d.drafts;
   if (d.dirty.includes('imagePositions.json') && d.positions) state.positions = d.positions;
   if (d.verified) state.verified = { images: new Set(d.verified.images || []), templates: new Set(d.verified.templates || []) };
   state.dirty = new Set(d.dirty);
@@ -836,13 +872,14 @@ async function loadAll() {
   const btn = $('loadBtn');
   btn.disabled = true; btn.textContent = 'Loading…';
   try {
-    const [man, cfg, tpl, txt, pos, ver] = await Promise.all([
+    const [man, cfg, tpl, txt, pos, ver, dft] = await Promise.all([
       ghGetJson('manifest.json', null),
       ghGetJson('app_config.json', { hiddenCategories: [], hiddenTemplates: [], hiddenImages: [] }),
       ghGetJson('templates_db.json', null),
       ghGetJson('imageTexts.json', {}),
       ghGetJson('imagePositions.json', {}),
       ghGetJson('verified.json', null),
+      ghGetJson('imageTextsDraft.json', null),
     ]);
     if (!man.data) throw new Error('manifest.json not found in the repo');
     state.manifest = man.data;  state.shas['manifest.json'] = man.sha;
@@ -852,14 +889,25 @@ async function loadAll() {
     state.texts = txt.data;      state.shas['imageTexts.json'] = txt.sha;
     state.positions = pos.data;  state.shas['imagePositions.json'] = pos.sha;
     state.shas['verified.json'] = ver.sha;
-    if (ver.data) {
-      state.verified = { images: new Set(ver.data.images || []), templates: new Set(ver.data.templates || []) };
+    state.shas['imageTextsDraft.json'] = dft.sha;
+    const legacyVerifiedImages = new Set(
+      ver.data ? (Array.isArray(ver.data.images) ? ver.data.images : Object.keys(ver.data.images || {}))
+               : allImageFiles().filter((f) => !state.config.hiddenImages.includes(f)));
+    state.verified = {
+      images: legacyVerifiedImages,
+      templates: new Set(ver.data ? (ver.data.templates || [])
+        : (tpl.data || []).map((t) => t.id).filter((id) => !state.config.hiddenTemplates.includes(id))),
+    };
+    if (dft.data) {
+      state.drafts = dft.data;
     } else {
-      // First run without verified.json: whatever is visible today counts as verified.
-      state.verified = {
-        images: new Set(allImageFiles().filter((f) => !state.config.hiddenImages.includes(f))),
-        templates: new Set((tpl.data || []).map((t) => t.id).filter((id) => !state.config.hiddenTemplates.includes(id))),
-      };
+      // First run without a draft file: the published captions become the
+      // draft; those on a verified background are flagged verified.
+      state.drafts = {};
+      for (const [f, caps] of Object.entries(state.texts || {})) {
+        const ok = legacyVerifiedImages.has(f);
+        state.drafts[f] = (caps || []).map((c) => ({ ...(typeof c === 'string' ? { text: c } : c), verified: ok }));
+      }
     }
     if (!state.templates) {
       state.templates = [];
@@ -894,7 +942,7 @@ function renderAll() { renderCats(); renderTemplates(); refreshDirtyUI(); }
 function snapshotPublished() {
   syncHiddenFromVerified();
   state.published = JSON.parse(JSON.stringify({
-    manifest: state.manifest, config: state.config, texts: state.texts, templates: state.templates,
+    manifest: state.manifest, config: state.config, texts: state.texts, templates: state.templates, allVerified: true,
   }));
 }
 function countDesigns(src) {
@@ -908,13 +956,15 @@ function countDesigns(src) {
     const catHidden = cfg.hiddenCategories.includes(name);
     const row = { backgrounds: 0, captions: 0, designs: 0, visible: 0, noCaption: 0, hidden: catHidden };
     for (const img of cat.images || []) {
-      const n = (texts[img] || []).length;
+      const caps = texts[img] || [];
+      const n = caps.length;
       const d = Math.max(n, 1);
+      const nv = src.allVerified ? n : caps.filter(capVerified).length;   // verified designs
       row.backgrounds++; row.captions += n; row.designs += d;
       if (!n) row.noCaption++;
-      const vis = catHidden || cfg.hiddenImages.includes(img) ? 0 : d;
+      const vis = catHidden || cfg.hiddenImages.includes(img) ? 0 : nv;
       out.imgs[img] = vis;
-      if (vis) row.visible += d; else out.hiddenDesigns += d;
+      row.visible += vis; out.hiddenDesigns += d - vis;
     }
     out.cats[name] = row;
     out.backgrounds += row.backgrounds; out.designs += row.designs; out.noCaption += row.noCaption;
@@ -950,7 +1000,7 @@ function countDesigns(src) {
 function renderReadiness() {
   if (!state.manifest || !$('readyBig')) return;
   syncHiddenFromVerified();
-  const work = countDesigns(state);
+  const work = countDesigns({ ...state, texts: state.drafts });
   const live = countDesigns(state.published || {});
   const total = work.designs;
   // Per background: live = designs that are published AND still visible in the
@@ -1097,9 +1147,9 @@ function fillImageCell(grid, img, status) {
     cell.className = 'thumb' + (off ? ' off' : '');
     cell.innerHTML = `
       <img loading="lazy" src="${IMG}/all_images/${img}">
-      <span class="st ${status}">${STATUS_LABEL[status]}</span>
+      <span class="st ${status}">${imageChip(img)}</span>
       <div class="bar"><span title="${img}">${img}</span>
-      <button class="caps" title="Edit captions"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path></svg><b class="capn">${(state.texts[img] || []).length}</b></button>
+      <button class="caps" title="Edit captions"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"></path></svg><b class="capn">${(state.drafts[img] || []).length}</b></button>
       <button class="design" title="Design caption cards (verify here)">✎</button></div>`;
     cell.querySelector('.design').addEventListener('click', () => openCardDesigner(img));
     cell.querySelector('.caps').addEventListener('click', () => openCaptionEditor(img, cell));
@@ -1748,13 +1798,13 @@ function openCardDesigner(file) {
     const main = { text: capText(e), style: hasOwnStyle(e) ? styleFrom(e, base) : { ...base } };
     const extra = (e && typeof e === 'object' && Array.isArray(e.layers) ? e.layers : [])
       .map((l) => ({ text: capText(l), style: styleFrom(l || {}, main.style) }));
-    return { layers: [main, ...extra] };
+    return { layers: [main, ...extra], verified: capVerified(e) };
   };
   cd = {
     file,
     imgW: 1080, imgH: 1080, stageW: 400,
     base,
-    caps: (state.texts[file] || []).map(cardFrom),
+    caps: (state.drafts[file] || []).map(cardFrom),
     capIdx: 0,
     layerIdx: 0,
   };
@@ -1765,7 +1815,6 @@ function openCardDesigner(file) {
 
   $('cdLayers').innerHTML = '';
   $('cardTitle').textContent = `Design cards — ${file}`;
-  $('cardVerified').checked = true;   // saving from the designer verifies unless the editor unticks
   $('cardModalBack').classList.add('open');
   renderCapList();
   cdPick.setPalette([]);
@@ -1882,8 +1931,21 @@ function renderCapList() {
   root.innerHTML = '';
   cd.caps.forEach((card, i) => {
     const box = document.createElement('div');
-    box.className = 'cap-card' + (i === cd.capIdx ? ' on' : '');
+    box.className = 'cap-card' + (i === cd.capIdx ? ' on' : '') + (card.verified ? ' verified' : '');
     box.dataset.cap = i;
+    const head = document.createElement('div');
+    head.className = 'cap-head';
+    head.innerHTML = `<span class="cap-n">Design ${i + 1}</span>
+      <label class="cap-ver" title="Verified designs go live on the next Publish; unverified ones stay hidden on phones"><input type="checkbox" ${card.verified ? 'checked' : ''}> Verified</label>
+      <button class="cap-pub" title="Verify this design, save, and publish it to phones now">Publish</button>`;
+    head.querySelector('input').addEventListener('change', (e) => { card.verified = e.target.checked; box.classList.toggle('verified', card.verified); });
+    head.querySelector('.cap-pub').addEventListener('click', async () => {
+      card.verified = true;
+      saveCards();
+      showTab('publish');
+      await publishAll();
+    });
+    box.appendChild(head);
     card.layers.forEach((layer, j) => {
       const row = document.createElement('div');
       row.className = 'cap-row' + (j > 0 ? ' layer' : '') + (i === cd.capIdx && j === cd.layerIdx ? ' on' : '');
@@ -1930,7 +1992,7 @@ function renderCapList() {
   });
 }
 $('cdAddCap').addEventListener('click', () => {
-  cd.caps.push({ layers: [{ text: '', style: { ...cd.pos } }] });
+  cd.caps.push({ layers: [{ text: '', style: { ...cd.pos } }], verified: false });
   cd.capIdx = cd.caps.length - 1; cd.layerIdx = 0;
   $('cdLayers').innerHTML = '';
   renderCapList(); syncCdControls(); renderCdText();
@@ -2057,19 +2119,23 @@ function saveCards() {
     return o;
   };
   const caps = cd.caps
-    .map((card) => card.layers.map((l) => ({ text: l.text.trim(), style: l.style || cd.base })).filter((l) => l.text))
-    .filter((layers) => layers.length)
-    .map(([main, ...extra]) => {
+    .map((card) => ({ verified: !!card.verified, layers: card.layers.map((l) => ({ text: l.text.trim(), style: l.style || cd.base })).filter((l) => l.text) }))
+    .filter((c) => c.layers.length)
+    .map(({ verified, layers: [main, ...extra] }) => {
       const o = { text: main.text, ...styleOut(main.style, true) };
       if (extra.length) o.layers = extra.map((l) => ({ text: l.text, ...styleOut(l.style, true) }));
+      o.verified = verified;
       return o;
     });
-  state.texts[cd.file] = caps;
-  if (!caps.length) delete state.texts[cd.file];
+  state.drafts[cd.file] = caps;
+  if (!caps.length) delete state.drafts[cd.file];
   state.positions[cd.file] = styleOut(cd.base, false);
+  syncHiddenFromVerified();
+  markDirty('imageTextsDraft.json');
   markDirty('imageTexts.json');
   markDirty('imagePositions.json');
-  setVerified('images', cd.file, $('cardVerified').checked);      // editor decides here
+  markDirty('app_config.json');
+  markDirty('verified.json');
   renderCats();
   $('cdLayers').innerHTML = '';
   $('cardModalBack').classList.remove('open');
@@ -2086,7 +2152,7 @@ window.addEventListener('resize', () => { if (cd && $('cardModalBack').classList
 let capEd = null; // { file, caps, cell }
 
 function openCaptionEditor(file, cell) {
-  capEd = { file, caps: [...(state.texts[file] || [])], cell };
+  capEd = { file, caps: [...(state.drafts[file] || [])], cell };
   if (!capEd.caps.length) capEd.caps = [''];
   $('capTitle').textContent = file;
   $('capThumb').src = `${IMG}/all_images/${file}`;
@@ -2126,9 +2192,14 @@ $('capQuickAdd').addEventListener('click', () => {
 $('capCancelBtn').addEventListener('click', () => $('capModalBack').classList.remove('open'));
 $('capModalBack').addEventListener('pointerdown', (e) => { if (e.target === $('capModalBack')) $('capModalBack').classList.remove('open'); });
 $('capSaveBtn').addEventListener('click', () => {
-  const caps = capEd.caps.map((e) => withText(e, capText(e).trim())).filter((e) => capText(e));
-  if (caps.length) state.texts[capEd.file] = caps; else delete state.texts[capEd.file];
+  const caps = capEd.caps.map((e) => withText(e, capText(e).trim())).filter((e) => capText(e))
+    .map((e) => (typeof e === 'string' ? { text: e, verified: false } : { ...e, verified: capVerified(e) }));
+  if (caps.length) state.drafts[capEd.file] = caps; else delete state.drafts[capEd.file];
+  syncHiddenFromVerified();
+  markDirty('imageTextsDraft.json');
   markDirty('imageTexts.json');
+  markDirty('app_config.json');
+  markDirty('verified.json');
   const n = capEd.cell?.querySelector('.capn');
   if (n) n.textContent = caps.length;
   $('capModalBack').classList.remove('open');
@@ -2159,7 +2230,8 @@ async function publishAll() {
       'manifest.json': () => state.manifest,
       'app_config.json': () => state.config,
       'templates_db.json': () => state.templates,
-      'imageTexts.json': () => state.texts,
+      'imageTextsDraft.json': () => state.drafts,
+      'imageTexts.json': () => publishedTexts(),
       'imagePositions.json': () => state.positions,
       'verified.json': () => verifiedOut(),
     };
