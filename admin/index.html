@@ -94,7 +94,8 @@
   .thumb.design-cell { container-type: inline-size; }
   .thumb.design-cell img { aspect-ratio: auto; height: auto; object-fit: contain; }   /* real resolution, no crop */
   .grid { align-items: start; }
-  .thumb .cap-ov { position: absolute; transform: translate(-50%, -50%); display: inline-block; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; pointer-events: none; }
+  .thumb .cap-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; overflow: visible; }
+  .thumb .cap-ov { position: absolute; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; }
   .thumb.off .cap-ov { opacity: 1; }
   .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
   .thumb .ver input { width: 13px; height: 13px; margin: 0; accent-color: var(--green); }
@@ -570,7 +571,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-17.6 · same text render';
+const ADMIN_VERSION = '2026-09-17.7 · exact render';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1350,8 +1351,9 @@ function fillGrid(grid, catName, cat) {
 // Approximate the phone's caption rendering on a thumbnail (same rules as the
 // designer: theme colours, pill background, fraction-of-width font size).
 function captionOverlay(img, cap) {
-  // Mirrors renderCdText() exactly, with 1cqw = 1% of the thumbnail width in
-  // place of stage pixels, so a card looks the same here and in the designer.
+  // Resolves each layer's full style (same rules as the designer's cardFrom)
+  // and emits a scaled stage; layoutOverlay() does the real layout once the
+  // thumbnail knows the image's native size.
   const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
   const p = state.positions[img] || {};
   const base = { x: num(p.x, 0.5), y: num(p.y, 0.5), theme: p.theme === 'dark' ? 'dark' : 'light', fontFamily: p.fontFamily || '',
@@ -1365,44 +1367,24 @@ function captionOverlay(img, cap) {
   });
   const main = hasOwnStyle(cap) ? styleFrom(cap, base) : base;
   const layers = [{ text: capText(cap), st: main }, ...((cap && cap.layers) || []).map((l) => ({ text: capText(l), st: styleFrom(l || {}, main) }))];
-  return layers.map(({ text, st }) => {
-    const fs = Math.max(0.1, st.fontSize * 100);           // cqw
-    const dark = st.theme === 'dark';
-    const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
-    const style = [
-      `left:${(st.x * 100).toFixed(3)}%`, `top:${(st.y * 100).toFixed(3)}%`,
-      `font-size:${fs.toFixed(3)}cqw`, `font-family:${css}`, `font-weight:${weight}`,
-      `color:${st.color || (dark ? '#141414' : '#ffffff')}`,
-      `background:${st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)'}`,
-      `text-shadow:${st.noBg ? `0 1px ${(fs * 0.18).toFixed(3)}cqw ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none'}`,
-      `border-radius:${(fs * 0.7).toFixed(3)}cqw`, `padding:${(fs * 0.7).toFixed(3)}cqw ${(fs * 0.9).toFixed(3)}cqw`,
-      st.width ? `width:${(st.width * 100).toFixed(2)}%` : `max-width:${CD_AUTO_WIDTH * 100}%`,
-    ].join(';');
-    return `<span class="cap-ov" data-x="${st.x}" data-y="${st.y}" style="${style}">${escapeHtml(text)}</span>`;
-  }).join('');
+  return `<div class="cap-stage">${layers.map(({ text, st }) =>
+    `<span class="cap-ov" data-st="${escapeHtml(JSON.stringify(st))}">${escapeHtml(text)}</span>`).join('')}</div>`;
 }
-// The designer clamps a text box inside the image instead of letting it hang
-// over the edge; do the same once the thumbnail has a size.
-function clampOverlays(cell) {
-  const W = cell.clientWidth, H = cell.clientHeight;
-  if (!W || !H) return;
-  cell.querySelectorAll('.cap-ov').forEach((el) => {
-    // Measure at the origin with the natural (shrink-to-fit) width, exactly
-    // like the designer; a left offset would otherwise shrink the box.
-    el.style.transform = 'none';
-    el.style.left = '0px'; el.style.top = '0px';
-    el.style.width = el.dataset.w || '';
-    const bw = el.offsetWidth, bh = el.offsetHeight;
-    const x = +el.dataset.x, y = +el.dataset.y;
-    el.style.width = bw + 'px';
-    el.style.left = Math.min(Math.max(x * W - bw / 2, 0), Math.max(0, W - bw)) + 'px';
-    el.style.top = Math.min(Math.max(y * H - bh / 2, 0), Math.max(0, H - bh)) + 'px';
-  });
+// Lay the caption out at the image's native pixel size with the designer's
+// renderer, then scale the whole layer to the thumbnail: identical geometry.
+function layoutOverlay(cell) {
+  const img = cell.querySelector('img'), stage = cell.querySelector('.cap-stage');
+  if (!img || !stage || !img.naturalWidth) return;
+  const W0 = img.naturalWidth, H0 = img.naturalHeight, w = img.getBoundingClientRect().width;
+  if (!w) return;
+  stage.style.width = W0 + 'px'; stage.style.height = H0 + 'px';
+  stage.style.transform = 'none';                 // measure unscaled, like the designer
+  stage.querySelectorAll('.cap-ov').forEach((el) => styleCaptionEl(el, JSON.parse(el.dataset.st), W0, H0));
+  stage.style.transform = `scale(${w / W0})`;
 }
 function watchOverlayClamp(cell) {
   const img = cell.querySelector('img');
-  cell.querySelectorAll('.cap-ov').forEach((el) => { el.dataset.w = el.style.width || ''; });
-  const run = () => clampOverlays(cell);
+  const run = () => layoutOverlay(cell);
   if (img.complete && img.naturalWidth) requestAnimationFrame(run); else img.addEventListener('load', run, { once: true });
   if (document.fonts?.ready) document.fonts.ready.then(run);
   if (window.ResizeObserver) new ResizeObserver(run).observe(cell);
@@ -2106,10 +2088,12 @@ function openCardDesigner(file, capIdx = 0) {
 function layoutCdStage() {
   const c = $('cdCanvas');
   const ratio = cd.imgH / cd.imgW;
-  cd.stageW = Math.min(c.clientWidth - 60, (c.clientHeight - 60) / ratio, cd.imgW);
+  // Whole pixels, so text maths and the DOM box agree exactly (thumbnails
+  // lay out at native size and scale, so they match to the sub-pixel).
+  cd.stageW = Math.round(Math.min(c.clientWidth - 60, (c.clientHeight - 60) / ratio, cd.imgW));
   const stage = $('cdStage');
-  stage.style.width = Math.round(cd.stageW) + 'px';
-  stage.style.height = Math.round(cd.stageW * ratio) + 'px';
+  stage.style.width = cd.stageW + 'px';
+  stage.style.height = (cd.stageW * ratio) + 'px';
   renderCdText();
 }
 
@@ -2134,36 +2118,44 @@ function makeCdTextEl() {
 }
 
 // Mirrors the app's ImageComposite: block centred on (x,y), clamped inside.
+// THE caption renderer. Used by the designer stage and by every thumbnail
+// (which lays out at the image's native width and scales down), so a card
+// looks identical everywhere. `el` must be in the DOM (it is measured).
+function styleCaptionEl(el, st, W, H) {
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const fontSize = Math.max(1, W * st.fontSize);
+  const dark = st.theme === 'dark';
+  const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
+  Object.assign(el.style, {
+    color: st.color || (dark ? '#141414' : '#ffffff'),
+    background: st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
+    textShadow: st.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
+    fontSize: fontSize + 'px',
+    fontFamily: css,
+    fontWeight: weight,
+    borderRadius: fontSize * 0.7 + 'px',
+    padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
+    // Fixed width when set (Canva-style box), otherwise shrink-to-fit up to 86 %.
+    width: st.width ? W * st.width + 'px' : 'auto',
+    maxWidth: st.width ? 'none' : W * CD_AUTO_WIDTH + 'px',
+    whiteSpace: 'pre-wrap',
+    left: '0px', top: '0px',
+  });
+  // measure (sub-pixel), then centre on the anchor, clamped like the app does
+  const r = el.getBoundingClientRect();
+  const bw = r.width, bh = r.height;
+  el.style.left = clamp(st.x * W - bw / 2, 0, Math.max(0, W - bw)) + 'px';
+  el.style.top = clamp(st.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
+}
 function renderCdText() {
   const W = cd.stageW, H = W * (cd.imgH / cd.imgW);
-  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const els = cdLayerEls();
   cd.caps[cd.capIdx].layers.forEach((layer, i) => {
     const el = els[i], st = layer.style, body = el.querySelector('.cd-body');
-    const fontSize = Math.max(1, W * st.fontSize);
-    const dark = st.theme === 'dark';
-    const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
     if (!body.isContentEditable) body.textContent = layer.text || '';
     el.classList.toggle('sel', !cd.deselected && i === cd.layerIdx);
-    Object.assign(el.style, {
-      color: st.color || (dark ? '#141414' : '#ffffff'),
-      background: st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
-      textShadow: st.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
-      fontSize: fontSize + 'px',
-      fontFamily: css,
-      fontWeight: weight,
-      borderRadius: fontSize * 0.7 + 'px',
-      padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
-      // Fixed width when set (Canva-style box), otherwise shrink-to-fit up to 86 %.
-      width: st.width ? W * st.width + 'px' : 'auto',
-      maxWidth: st.width ? 'none' : W * CD_AUTO_WIDTH + 'px',
-      whiteSpace: 'pre-wrap',
-      zIndex: i === cd.layerIdx ? 5 : 4,
-    });
-    // measure, then centre on the anchor, clamped like the app does
-    const bw = el.offsetWidth, bh = el.offsetHeight;
-    el.style.left = clamp(st.x * W - bw / 2, 0, Math.max(0, W - bw)) + 'px';
-    el.style.top = clamp(st.y * H - bh / 2, 0, Math.max(0, H - bh)) + 'px';
+    el.style.zIndex = i === cd.layerIdx ? 5 : 4;
+    styleCaptionEl(el, st, W, H);
   });
   $('cdPos').textContent = `x ${cd.pos.x.toFixed(3)} · y ${cd.pos.y.toFixed(3)}`;
   // Font size is shown in pixels at the image's native width (what the app renders at).
