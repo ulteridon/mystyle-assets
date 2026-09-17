@@ -334,7 +334,8 @@
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.131,
           "noBg": true,
-          "width": 0.6462
+          "width": 0.6462,
+          "color": "#c61908"
         },
         {
           "text": "Where They Left Me",
@@ -354,7 +355,8 @@
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.1248,
           "noBg": true,
-          "width": 0.6462
+          "width": 0.6462,
+          "color": "#c61908"
         }
       ]
     },
@@ -441,13 +443,23 @@
       "noBg": false,
       "layers": [
         {
-          "text": "Never My Spine",
-          "x": 0.5058,
-          "y": 0.413,
+          "text": "Never My",
+          "x": 0.3776,
+          "y": 0.4052,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.105,
-          "noBg": false
+          "noBg": true
+        },
+        {
+          "text": "SPINE",
+          "x": 0.7058,
+          "y": 0.4092,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.1125,
+          "noBg": true,
+          "color": "#c61908"
         }
       ]
     },
