@@ -2169,23 +2169,134 @@
   ],
   "quotes_love_1.webp": [
     {
-      "text": "You are my favorite hello and hardest goodbye.",
-      "verified": false
+      "text": "You're My Favorite Hello",
+      "x": 0.5032,
+      "y": 0.28,
+      "theme": "light",
+      "fontFamily": "Lobster_400Regular",
+      "fontSize": 0.0879,
+      "noBg": true,
+      "width": 1,
+      "layers": [
+        {
+          "text": "&",
+          "x": 0.2364,
+          "y": 0.4005,
+          "theme": "light",
+          "fontFamily": "Lobster_400Regular",
+          "fontSize": 0.29,
+          "noBg": true
+        },
+        {
+          "text": "Hardest Good Bye!",
+          "x": 0.7332,
+          "y": 0.5085,
+          "theme": "light",
+          "fontFamily": "Lobster_400Regular",
+          "fontSize": 0.0942,
+          "noBg": true
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "In a room full of art, I would still stare at you.",
-      "verified": false
+      "text": "n a room\n full of art",
+      "x": 0.5222,
+      "y": 0.2194,
+      "theme": "light",
+      "fontFamily": "DancingScript_700Bold",
+      "fontSize": 0.0889,
+      "noBg": true,
+      "width": 0.6904,
+      "layers": [
+        {
+          "text": "would still stare at you!",
+          "x": 0.5,
+          "y": 0.4362,
+          "theme": "light",
+          "fontFamily": "DancingScript_700Bold",
+          "fontSize": 0.0889,
+          "noBg": true,
+          "width": 0.6175
+        },
+        {
+          "text": "I",
+          "x": 0.1679,
+          "y": 0.3779,
+          "theme": "light",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.1793,
+          "noBg": true,
+          "width": 0.15
+        },
+        {
+          "text": "I",
+          "x": 0.2122,
+          "y": 0.122,
+          "theme": "light",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.1793,
+          "noBg": true,
+          "width": 0.15
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "Home is not a place, it is you.",
-      "verified": false
+      "text": "is not a place",
+      "x": 0.5886,
+      "y": 0.21,
+      "theme": "light",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0625,
+      "noBg": true,
+      "layers": [
+        {
+          "text": "Home",
+          "x": 0.3181,
+          "y": 0.1548,
+          "theme": "light",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.1297,
+          "noBg": true
+        },
+        {
+          "text": "It is",
+          "x": 0.381,
+          "y": 0.3514,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.0625,
+          "noBg": true
+        },
+        {
+          "text": "You",
+          "x": 0.577,
+          "y": 0.3926,
+          "theme": "light",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.1299,
+          "noBg": true
+        }
+      ],
+      "verified": true
     },
     {
       "text": "I found forever in the way you smile.",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "You are the poem I never knew how to write.",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     }
   ],
