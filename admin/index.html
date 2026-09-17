@@ -95,7 +95,8 @@
   .thumb.design-cell img { aspect-ratio: auto; height: auto; object-fit: contain; }   /* real resolution, no crop */
   .grid { align-items: start; }
   .thumb .cap-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; overflow: visible; }
-  .thumb .cap-ov { position: absolute; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; }
+  /* overflow-wrap: anywhere — the phone (React Native) breaks a word that does not fit its box, so show that here too */
+  .thumb .cap-ov { position: absolute; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; overflow-wrap: anywhere; }
   .thumb.off .cap-ov { opacity: 1; }
   .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
   .thumb .ver input { width: 13px; height: 13px; margin: 0; accent-color: var(--green); }
@@ -204,7 +205,7 @@
   #cdStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 14px; box-shadow: 0 20px 60px rgba(36,30,46,.22); }
   #cdStage img.bg { display: block; width: 100%; height: 100%; }
   #cdLayers { position: absolute; inset: 0; }
-  .cd-text { position: absolute; cursor: move; text-align: center; line-height: 1.32; z-index: 4; box-sizing: border-box; white-space: pre-wrap; }
+  .cd-text { position: absolute; cursor: move; text-align: center; line-height: 1.32; z-index: 4; box-sizing: border-box; white-space: pre-wrap; overflow-wrap: anywhere; }
   .cd-text:hover { outline: 1.5px dashed rgba(124,92,252,.6); }
   .cd-text.sel { outline: 1.5px solid var(--accent); }
   .cd-body { display: block; min-width: 1ch; outline: none; }
@@ -249,8 +250,19 @@
   .cpick-custom { display: flex; align-items: center; gap: 6px; }
   .cpick-custom input[type=color] { width: 34px; height: 26px; padding: 0; border: 1px solid var(--border); border-radius: 6px; background: none; cursor: pointer; }
   .cpick-custom input.hex { width: 84px; font-family: ui-monospace, monospace; font-size: 12px; }
+  /* compact picker: one wrapped row (swatches · document colours · custom) */
+  .cpick.compact { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 6px 8px; }
+  .cpick.compact .cpick-sec > span, .cpick.compact .cpick-empty { display: none; }
+  .cpick.compact .cpick-custom input.hex { width: 70px; }
   .seg-mini { font-size: 11px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
   .seg-mini.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  /* designer: slider rows and collapsible option groups */
+  .ed-sec .opt { display: none; margin: 2px 0 6px 0; padding: 6px 10px 2px; border-left: 2px solid #E4D9FF; }
+  .ed-sec .opt.show { display: block; }
+  .ed-sec .opt label:first-child { margin-top: 2px; }
+  .ed-sec input[type=range] { width: 100%; }
+  .ed-sec .val { font-family: ui-monospace, monospace; font-size: 11px; color: var(--text); }
+  .ed-sec .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
   .fields label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
   #log { background: #241E2E; color: #F5EFE7; border-radius: 14px; padding: 12px 14px; font: 12px/1.6 ui-monospace, monospace; white-space: pre-wrap; max-height: 320px; overflow: auto; }
@@ -527,15 +539,51 @@
           </div>
           <label>Behind the text</label>
           <div class="seg" id="cdBgSeg">
-            <button data-nobg="0">▣ Soft scrim</button>
-            <button data-nobg="1">▢ None (shadow only)</button>
+            <button data-nobg="0">▣ Scrim</button>
+            <button data-nobg="1">▢ None</button>
+          </div>
+          <div class="opt" id="cdScrimOpts">
+            <label>Scrim colour</label>
+            <div id="cdScrimPicker"></div>
+            <label>Scrim transparency — <span class="val" id="cdScrimOpVal"></span> <span class="muted">(0 % = invisible)</span></label>
+            <input id="cdScrimOp" type="range" min="0" max="100" step="1" title="Scrim opacity">
           </div>
           <label>Font</label>
           <select id="cdFont"><option value="">Category default</option></select>
+          <div class="seg" id="cdWeightSeg" style="margin-top:6px">
+            <button data-k="bold" title="Bold (synthesised when the font has no bold face)"><b>B</b> Bold</button>
+            <button data-k="italic" title="Italic (synthesised when the font has no italic face)"><i>I</i> Italic</button>
+          </div>
+          <div class="muted" id="cdWeightNote" style="font-size:11px;margin:3px 0 0"></div>
           <label>Text colour</label>
           <div id="cdColorPicker"></div>
           <label>Font size — <input id="cdSizeNum" type="number" min="1" step="1" style="width:64px"> px <span class="muted" id="cdSizeNote"></span></label>
           <input id="cdSize" type="range" min="1" step="1" style="width:100%">
+          <label>Text shadow</label>
+          <div class="seg" id="cdShadowSeg">
+            <button data-shadow="auto" title="Shadow only when there is no scrim (the original behaviour)">Auto</button>
+            <button data-shadow="1">On</button>
+            <button data-shadow="0">Off</button>
+          </div>
+          <div class="opt" id="cdShadowOpts">
+            <label>Shadow colour</label>
+            <div id="cdShadowPicker"></div>
+            <div class="row2">
+              <div><label>Blur — <span class="val" id="cdShBlurVal"></span></label><input id="cdShBlur" type="range" min="0" max="100" step="1"></div>
+              <div><label>Opacity — <span class="val" id="cdShOpVal"></span></label><input id="cdShOp" type="range" min="0" max="100" step="1"></div>
+            </div>
+            <div class="row2">
+              <div><label>Offset x — <span class="val" id="cdShDxVal"></span></label><input id="cdShDx" type="range" min="-50" max="50" step="1"></div>
+              <div><label>Offset y — <span class="val" id="cdShDyVal"></span></label><input id="cdShDy" type="range" min="-50" max="50" step="1"></div>
+            </div>
+            <div class="muted" style="font-size:11px">Blur and offsets are % of the font size, so they scale with the card.</div>
+          </div>
+          <label>Text outline — <span class="val" id="cdStrokeVal"></span></label>
+          <input id="cdStroke" type="range" min="0" max="12" step="0.5" title="Outline thickness, % of font size (0 = none)">
+          <div class="opt" id="cdStrokeOpts">
+            <label>Outline colour</label>
+            <div id="cdStrokePicker"></div>
+          </div>
           <p class="muted" style="margin:0 0 4px;font-size:12px">On the canvas: drag the side handles to change the text box width (text wraps inside), or the corners to scale the text.</p>
           <label>Position (fractions of image)</label>
           <div class="muted" style="font-size:12px" id="cdPos"></div>
@@ -982,6 +1030,7 @@ function imagePalette(img, n = 5) {
 // api.setPalette(colors) fills the "Document colours" row (the image's top colours).
 function makeColorPicker(root, opts = {}) {
   root.classList.add('cpick');
+  if (opts.compact) root.classList.add('compact');
   root.innerHTML = `
     <div class="cpick-sec"><span>Default colours</span><div class="swatches" data-k="def"></div></div>
     <div class="cpick-sec"><span>Document colours <small>· from the image</small></span><div class="swatches" data-k="doc"></div><i class="cpick-empty">no image loaded</i></div>
@@ -1354,19 +1403,9 @@ function captionOverlay(img, cap) {
   // Resolves each layer's full style (same rules as the designer's cardFrom)
   // and emits a scaled stage; layoutOverlay() does the real layout once the
   // thumbnail knows the image's native size.
-  const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
-  const p = state.positions[img] || {};
-  const base = { x: num(p.x, 0.5), y: num(p.y, 0.5), theme: p.theme === 'dark' ? 'dark' : 'light', fontFamily: p.fontFamily || '',
-    fontSize: num(p.fontSize, 0.058), noBg: !!p.noBg, width: num(p.width, null), color: /^#[0-9a-f]{6}$/i.test(p.color || '') ? p.color : null };
-  const styleFrom = (e, from) => ({
-    x: num(e.x, from.x), y: num(e.y, from.y),
-    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : from.theme,
-    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : from.fontFamily,
-    fontSize: num(e.fontSize, from.fontSize), noBg: typeof e.noBg === 'boolean' ? e.noBg : from.noBg,
-    width: num(e.width, from.width), color: /^#[0-9a-f]{6}$/i.test(e.color || '') ? e.color : from.color,
-  });
-  const main = hasOwnStyle(cap) ? styleFrom(cap, base) : base;
-  const layers = [{ text: capText(cap), st: main }, ...((cap && cap.layers) || []).map((l) => ({ text: capText(l), st: styleFrom(l || {}, main) }))];
+  const base = baseStyle(state.positions[img], img);
+  const main = hasOwnStyle(cap) ? resolveStyle(cap, base) : base;
+  const layers = [{ text: capText(cap), st: main }, ...((cap && cap.layers) || []).map((l) => ({ text: capText(l), st: resolveStyle(l, main) }))];
   return `<div class="cap-stage">${layers.map(({ text, st }) =>
     `<span class="cap-ov" data-st="${escapeHtml(JSON.stringify(st))}">${escapeHtml(text)}</span>`).join('')}</div>`;
 }
@@ -1978,9 +2017,95 @@ $('tplSaveBtn').addEventListener('click', () => {
 // ── Caption entries ──────────────────────────────────────────────────────────
 // imageTexts.json entries are either a plain string (uses the image's shared
 // style from imagePositions.json) or { text, x, y, theme, fontFamily, fontSize,
-// noBg } carrying the caption's own style.
-const STYLE_KEYS = ['x', 'y', 'theme', 'fontFamily', 'fontSize', 'noBg'];
+// noBg, … } carrying the caption's own style (see resolveStyle for every key).
+const STYLE_KEYS = ['x', 'y', 'theme', 'fontFamily', 'fontSize', 'noBg', 'width', 'color',
+  'bold', 'italic', 'scrimColor', 'scrimOpacity', 'shadow', 'shadowColor', 'shadowOpacity', 'shadowBlur', 'shadowDx', 'shadowDy', 'stroke', 'strokeColor'];
 const capText = (e) => (typeof e === 'string' ? e : (e && e.text) || '');
+
+// ── Style resolution (shared by the designer, thumbnails and publish preview) ─
+// Every renderer resolves a layer through these two so a card looks the same
+// everywhere. Mirrors cardLayers()/TextLayerView in the app's feed.tsx.
+//   bold / italic           synthesised when the font file has no such face
+//   scrimColor/scrimOpacity pill behind the text (null colour = theme default)
+//   shadow                  true/false, or null = auto (only when there is no scrim)
+//   shadowColor/Opacity/Blur/Dx/Dy — blur & offsets are fractions of the font size
+//   stroke / strokeColor    outline thickness as a fraction of the font size (0 = none)
+// Category → default font, a mirror of CATEGORY_FONT in the app's lib/fonts.ts.
+// "Category default" in the designer must show the font the phone will use.
+const CATEGORY_FONT = {
+  birthday: 'Lobster_400Regular', christmas: 'Lobster_400Regular', anniversary: 'DancingScript_700Bold',
+  rakhi: 'Pacifico_400Regular', rakhi_d: 'Pacifico_400Regular', rakhi_hindi: 'NotoSansDevanagari_700Bold',
+  diwali: 'PlayfairDisplay_700Bold', independence_day: 'Anton_400Regular', good_wishes: 'Pacifico_400Regular',
+  jokes: 'Lobster_400Regular', mantras: 'PlayfairDisplay_700Bold', poems: 'PlayfairDisplay_700Bold',
+  quotes_krishna_gita: 'PlayfairDisplay_700Bold', quotes_good_morning_night: 'PlayfairDisplay_600SemiBold',
+  quotes_love: 'DancingScript_700Bold', quotes_self_love: 'DancingScript_700Bold',
+  quotes_shayari: 'PlayfairDisplay_600SemiBold', shayari: 'PlayfairDisplay_600SemiBold', quotes_sad: 'PlayfairDisplay_600SemiBold',
+  quotes_attitude: 'Anton_400Regular', quotes_sigma: 'Anton_400Regular', quotes_motivational: 'Anton_400Regular',
+  quotes_money: 'Rajdhani_700Bold',
+};
+const DEFAULT_FONT = 'Poppins_700Bold';
+const HINDI_FONT = 'NotoSansDevanagari_700Bold';
+const fontForCategory = (cat) => CATEGORY_FONT[(cat || '').trim().toLowerCase().replace(/[\s-]+/g, '_')] || DEFAULT_FONT;
+const categoryOf = (img) => Object.entries(state.manifest?.categories || {}).find(([, c]) => (c.images || []).includes(img))?.[0] || '';
+const hasDevanagari = (t) => /[ऀ-ॿ]/.test(t || '');
+// The family actually drawn: Hindi always uses the Devanagari face (like the
+// app's resolveFont), else the layer's font, else the category default.
+const drawnFont = (st, text) => (hasDevanagari(text) ? HINDI_FONT : st.fontFamily || st.defaultFont || DEFAULT_FONT);
+const STYLE_DEFAULTS = { fontSize: 0.058, scrimOpacity: null, shadowOpacity: 0.75, shadowBlur: 0.18, shadowDx: 0, shadowDy: 0.016, stroke: 0 };
+function baseStyle(p, img) {
+  p = p || {};
+  const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
+  const hex = (v) => (isHex(v) ? v.toLowerCase() : null);
+  return {
+    x: num(p.x, 0.5), y: num(p.y, 0.5),
+    theme: p.theme === 'dark' ? 'dark' : 'light',
+    fontFamily: p.fontFamily || '',
+    defaultFont: fontForCategory(categoryOf(img)),   // what '' resolves to on the phone
+    fontSize: num(p.fontSize, STYLE_DEFAULTS.fontSize),
+    noBg: !!p.noBg,
+    width: num(p.width, null),
+    color: hex(p.color),
+    bold: !!p.bold, italic: !!p.italic,
+    scrimColor: hex(p.scrimColor), scrimOpacity: num(p.scrimOpacity, null),
+    shadow: typeof p.shadow === 'boolean' ? p.shadow : null,
+    shadowColor: hex(p.shadowColor), shadowOpacity: num(p.shadowOpacity, STYLE_DEFAULTS.shadowOpacity),
+    shadowBlur: num(p.shadowBlur, STYLE_DEFAULTS.shadowBlur), shadowDx: num(p.shadowDx, STYLE_DEFAULTS.shadowDx), shadowDy: num(p.shadowDy, STYLE_DEFAULTS.shadowDy),
+    stroke: num(p.stroke, 0), strokeColor: hex(p.strokeColor),
+  };
+}
+// A layer's own style over `from` (the image's shared style, or the card's
+// main style for extra layers): any field it omits falls back.
+function resolveStyle(e, from) {
+  e = e || {};
+  const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
+  const hex = (v, d) => (isHex(v) ? v.toLowerCase() : d);
+  const bool = (v, d) => (typeof v === 'boolean' ? v : d);
+  return {
+    x: num(e.x, from.x), y: num(e.y, from.y),
+    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : from.theme,
+    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : from.fontFamily,
+    defaultFont: from.defaultFont,
+    fontSize: num(e.fontSize, from.fontSize),
+    noBg: bool(e.noBg, from.noBg),
+    width: num(e.width, from.width),
+    color: hex(e.color, from.color),
+    bold: bool(e.bold, from.bold), italic: bool(e.italic, from.italic),
+    scrimColor: hex(e.scrimColor, from.scrimColor), scrimOpacity: num(e.scrimOpacity, from.scrimOpacity),
+    shadow: bool(e.shadow, from.shadow),
+    shadowColor: hex(e.shadowColor, from.shadowColor), shadowOpacity: num(e.shadowOpacity, from.shadowOpacity),
+    shadowBlur: num(e.shadowBlur, from.shadowBlur), shadowDx: num(e.shadowDx, from.shadowDx), shadowDy: num(e.shadowDy, from.shadowDy),
+    stroke: num(e.stroke, from.stroke), strokeColor: hex(e.strokeColor, from.strokeColor),
+  };
+}
+// Theme defaults used when a colour is left on "Theme default".
+const themeScrim = (dark) => (dark ? '#ffffff' : '#000000');
+const themeScrimOpacity = (dark) => (dark ? 0.42 : 0.40);
+const themeShadow = (dark) => (dark ? '#ffffff' : '#000000');
+const themeText = (dark) => (dark ? '#141414' : '#ffffff');
+function rgba(hex, a) {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${Math.max(0, Math.min(1, a))})`;
+}
 const withText = (e, t) => (typeof e === 'string' || !e ? t : { ...e, text: t });
 const hasOwnStyle = (e) => !!e && typeof e === 'object' && STYLE_KEYS.some((k) => k in e);
 
@@ -2021,33 +2146,15 @@ let cd = null; // { file, imgW, imgH, stageW, base, caps [{ layers [{ text, styl
 }
 
 function openCardDesigner(file, capIdx = 0) {
-  const p = state.positions[file] || {};
-  const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
-  const base = {
-    x: num(p.x, 0.5), y: num(p.y, 0.5),
-    theme: p.theme === 'dark' ? 'dark' : 'light',
-    fontFamily: p.fontFamily || '',
-    fontSize: num(p.fontSize, 0.058),
-    noBg: !!p.noBg,
-    width: num(p.width, null),
-    color: /^#[0-9a-f]{6}$/i.test(p.color || '') ? p.color : null,
-  };
-  // A custom style is stored complete, so missing fields fall back to `from`.
-  const styleFrom = (e, from) => ({
-    x: num(e.x, from.x), y: num(e.y, from.y),
-    theme: e.theme === 'dark' || e.theme === 'light' ? e.theme : from.theme,
-    fontFamily: typeof e.fontFamily === 'string' ? e.fontFamily : from.fontFamily,
-    fontSize: num(e.fontSize, from.fontSize),
-    noBg: typeof e.noBg === 'boolean' ? e.noBg : from.noBg,
-    width: num(e.width, from.width),
-    color: /^#[0-9a-f]{6}$/i.test(e.color || '') ? e.color : from.color,
-  });
-  // Legacy plain-string captions inherit the image's shared style so nothing moves.
-  // Extra layers fall back to the card's main style, like the app does.
+  const base = baseStyle(state.positions[file], file);
+  // A custom style is stored complete, so missing fields fall back to `from`
+  // (resolveStyle). Legacy plain-string captions inherit the image's shared
+  // style so nothing moves. Extra layers fall back to the card's main style,
+  // like the app does.
   const cardFrom = (e) => {
-    const main = { text: capText(e), style: hasOwnStyle(e) ? styleFrom(e, base) : { ...base } };
+    const main = { text: capText(e), style: hasOwnStyle(e) ? resolveStyle(e, base) : { ...base } };
     const extra = (e && typeof e === 'object' && Array.isArray(e.layers) ? e.layers : [])
-      .map((l) => ({ text: capText(l), style: styleFrom(l || {}, main.style) }));
+      .map((l) => ({ text: capText(l), style: resolveStyle(l, main.style) }));
     return { layers: [main, ...extra], verified: capVerified(e) };
   };
   cd = {
@@ -2070,7 +2177,7 @@ function openCardDesigner(file, capIdx = 0) {
   $('cardModalBack').classList.add('open');
   renderCapList();
   cdUpdatePos();
-  cdPick.setPalette([]);
+  for (const pk of [cdPick, cdScrimPick, cdShadowPick, cdStrokePick]) pk.setPalette([]);
   syncCdControls();
 
   const img = $('cdBg');
@@ -2078,7 +2185,7 @@ function openCardDesigner(file, capIdx = 0) {
   img.src = `${IMG}/all_images/${file}`;
   img.onload = () => {
     if (img.naturalWidth > 0) { cd.imgW = img.naturalWidth; cd.imgH = img.naturalHeight; }
-    cdPick.setPalette(imagePalette(img));
+    { const pal = imagePalette(img); for (const pk of [cdPick, cdScrimPick, cdShadowPick, cdStrokePick]) pk.setPalette(pal); }
     layoutCdStage();
   };
   img.onerror = () => layoutCdStage();
@@ -2121,18 +2228,38 @@ function makeCdTextEl() {
 // THE caption renderer. Used by the designer stage and by every thumbnail
 // (which lays out at the image's native width and scales down), so a card
 // looks identical everywhere. `el` must be in the DOM (it is measured).
+// Outline = the text repeated at 8 offsets around it (16 when thick), exactly
+// what the app does with stacked <Text>s, so the outline geometry matches.
+function strokeOffsets(stroke, fontSize) {
+  const s = fontSize * stroke;
+  if (!(s > 0)) return [];
+  const ring = (r, n, phase) => Array.from({ length: n }, (_, i) => {
+    const a = phase + (i * 2 * Math.PI) / n;
+    return [+(r * Math.cos(a)).toFixed(2), +(r * Math.sin(a)).toFixed(2)];
+  });
+  return stroke > 0.05 ? [...ring(s, 8, 0), ...ring(s / 2, 8, Math.PI / 8)] : ring(s, 8, 0);
+}
+const captionShadowOn = (st) => (typeof st.shadow === 'boolean' ? st.shadow : !!st.noBg);
+function captionShadowCss(st, fontSize) {
+  const dark = st.theme === 'dark';
+  const parts = strokeOffsets(st.stroke, fontSize).map(([dx, dy]) => `${dx}px ${dy}px 0 ${st.strokeColor || '#000000'}`);
+  if (captionShadowOn(st))
+    parts.push(`${(st.shadowDx * fontSize).toFixed(2)}px ${(st.shadowDy * fontSize).toFixed(2)}px ${(st.shadowBlur * fontSize).toFixed(2)}px ${rgba(st.shadowColor || themeShadow(dark), st.shadowOpacity)}`);
+  return parts.length ? parts.join(', ') : 'none';
+}
 function styleCaptionEl(el, st, W, H) {
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const fontSize = Math.max(1, W * st.fontSize);
   const dark = st.theme === 'dark';
-  const [, , css, weight] = fontCss(st.fontFamily || 'Poppins_700Bold');
+  const [, , css, weight] = fontCss(drawnFont(st, el.textContent));
   Object.assign(el.style, {
-    color: st.color || (dark ? '#141414' : '#ffffff'),
-    background: st.noBg ? 'transparent' : dark ? 'rgba(255,255,255,.42)' : 'rgba(0,0,0,.40)',
-    textShadow: st.noBg ? `0 1px ${fontSize * 0.18}px ${dark ? 'rgba(255,255,255,.75)' : 'rgba(0,0,0,.75)'}` : 'none',
+    color: st.color || themeText(dark),
+    background: st.noBg ? 'transparent' : rgba(st.scrimColor || themeScrim(dark), st.scrimOpacity ?? themeScrimOpacity(dark)),
+    textShadow: captionShadowCss(st, fontSize),
     fontSize: fontSize + 'px',
     fontFamily: css,
-    fontWeight: weight,
+    fontWeight: st.bold ? 700 : weight,
+    fontStyle: st.italic ? 'italic' : 'normal',
     borderRadius: fontSize * 0.7 + 'px',
     padding: `${fontSize * 0.7}px ${fontSize * 0.9}px`,
     // Fixed width when set (Canva-style box), otherwise shrink-to-fit up to 86 %.
@@ -2164,7 +2291,32 @@ function renderCdText() {
     $(id).min = 1; $(id).max = Math.round(0.4 * cd.imgW); $(id).value = px;
   }
   $('cdSizeNote').textContent = `(image is ${cd.imgW} px wide)`;
-  cdPick.set(cd.pos.color, { silent: true, fallback: cd.pos.theme === 'dark' ? '#141414' : '#ffffff' });
+  const st = cd.pos, dark = st.theme === 'dark';
+  cdPick.set(st.color, { silent: true, fallback: themeText(dark) });
+  // scrim
+  $('cdScrimOpts').classList.toggle('show', !st.noBg);
+  cdScrimPick.set(st.scrimColor, { silent: true, fallback: themeScrim(dark) });
+  const so = Math.round((st.scrimOpacity ?? themeScrimOpacity(dark)) * 100);
+  $('cdScrimOp').value = so; $('cdScrimOpVal').textContent = `${so} %`;
+  // bold / italic
+  document.querySelectorAll('#cdWeightSeg button').forEach((b) => b.classList.toggle('on', !!st[b.dataset.k]));
+  const fw = fontCss(drawnFont(st, cd.layer ? cd.layer.text : ''))[3];
+  $('cdWeightNote').textContent = st.bold && fw >= 700 ? 'This font is already bold, so Bold makes no visible difference.' : '';
+  // shadow
+  const shadowMode = typeof st.shadow === 'boolean' ? (st.shadow ? '1' : '0') : 'auto';
+  document.querySelectorAll('#cdShadowSeg button').forEach((b) => b.classList.toggle('on', b.dataset.shadow === shadowMode));
+  $('cdShadowOpts').classList.toggle('show', captionShadowOn(st));
+  cdShadowPick.set(st.shadowColor, { silent: true, fallback: themeShadow(dark) });
+  const pct = (v) => Math.round(v * 100);
+  $('cdShBlur').value = pct(st.shadowBlur); $('cdShBlurVal').textContent = `${pct(st.shadowBlur)} %`;
+  $('cdShOp').value = pct(st.shadowOpacity); $('cdShOpVal').textContent = `${pct(st.shadowOpacity)} %`;
+  $('cdShDx').value = pct(st.shadowDx); $('cdShDxVal').textContent = `${pct(st.shadowDx)} %`;
+  $('cdShDy').value = pct(st.shadowDy); $('cdShDyVal').textContent = `${pct(st.shadowDy)} %`;
+  // outline
+  $('cdStroke').value = +(st.stroke * 100).toFixed(1);
+  $('cdStrokeVal').textContent = st.stroke > 0 ? `${+(st.stroke * 100).toFixed(1)} % of font size` : 'none';
+  $('cdStrokeOpts').classList.toggle('show', st.stroke > 0);
+  cdStrokePick.set(st.strokeColor, { silent: true, fallback: '#000000' });
 }
 
 function syncCdTheme() {
@@ -2177,6 +2329,7 @@ function syncCdControls() {
   syncCdTheme();
   $('cdStyleFor').textContent = cd.layerIdx === 0 ? `caption ${cd.capIdx + 1}` : `caption ${cd.capIdx + 1} · layer ${cd.layerIdx + 1}`;
   $('cdFont').value = cd.pos.fontFamily || '';
+  $('cdFont').options[0].textContent = `Category default (${fontCss(cd.base.defaultFont)[1]})`;
 }
 
 function cdUpdatePos() {
@@ -2331,6 +2484,27 @@ const cdPick = makeColorPicker($('cdColorPicker'), {
   defaultLabel: 'Theme default',
   onChange: (c) => { if (!cd) return; cd.pos.color = c; renderCdText(); },
 });
+// Scrim colour + transparency, bold/italic, shadow, outline — all per layer (cd.pos).
+const cdScrimPick = makeColorPicker($('cdScrimPicker'), {
+  compact: true, defaultLabel: 'Theme default',
+  onChange: (c) => { if (!cd) return; cd.pos.scrimColor = c; renderCdText(); },
+});
+$('cdScrimOp').addEventListener('input', (e) => { cd.pos.scrimOpacity = Math.max(0, Math.min(1, parseInt(e.target.value, 10) / 100)); renderCdText(); });
+document.querySelectorAll('#cdWeightSeg button').forEach((b) =>
+  b.addEventListener('click', () => { cd.pos[b.dataset.k] = !cd.pos[b.dataset.k]; renderCdText(); }));
+document.querySelectorAll('#cdShadowSeg button').forEach((b) =>
+  b.addEventListener('click', () => { cd.pos.shadow = b.dataset.shadow === 'auto' ? null : b.dataset.shadow === '1'; renderCdText(); }));
+const cdShadowPick = makeColorPicker($('cdShadowPicker'), {
+  compact: true, defaultLabel: 'Theme default',
+  onChange: (c) => { if (!cd) return; cd.pos.shadowColor = c; renderCdText(); },
+});
+for (const [id, key] of [['cdShBlur', 'shadowBlur'], ['cdShOp', 'shadowOpacity'], ['cdShDx', 'shadowDx'], ['cdShDy', 'shadowDy']])
+  $(id).addEventListener('input', (e) => { cd.pos[key] = parseInt(e.target.value, 10) / 100; renderCdText(); });
+$('cdStroke').addEventListener('input', (e) => { cd.pos.stroke = Math.max(0, parseFloat(e.target.value) / 100); renderCdText(); });
+const cdStrokePick = makeColorPicker($('cdStrokePicker'), {
+  compact: true, defaultLabel: 'Black',
+  onChange: (c) => { if (!cd) return; cd.pos.strokeColor = c; renderCdText(); },
+});
 // Font size: the field is in pixels at the image's native width; stored as a fraction.
 function setCdSize(px) {
   if (!Number.isFinite(px)) return;
@@ -2438,6 +2612,15 @@ function buildCards() {
     if (full || st.noBg) o.noBg = !!st.noBg;
     if (st.width) o.width = +st.width.toFixed(4);
     if (st.color) o.color = st.color.toLowerCase();
+    if (st.bold) o.bold = true;
+    if (st.italic) o.italic = true;
+    if (st.scrimColor) o.scrimColor = st.scrimColor;
+    if (typeof st.scrimOpacity === 'number') o.scrimOpacity = +st.scrimOpacity.toFixed(2);
+    if (typeof st.shadow === 'boolean') o.shadow = st.shadow;
+    if (st.shadowColor) o.shadowColor = st.shadowColor;
+    for (const k of ['shadowOpacity', 'shadowBlur', 'shadowDx', 'shadowDy'])
+      if (Math.abs(st[k] - STYLE_DEFAULTS[k]) > 0.0005) o[k] = +st[k].toFixed(3);
+    if (st.stroke > 0) { o.stroke = +st.stroke.toFixed(3); if (st.strokeColor) o.strokeColor = st.strokeColor; }
     return o;
   };
   const caps = cd.caps
