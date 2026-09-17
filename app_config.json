@@ -1,5 +1,8 @@
 {
-  "hiddenCategories": [],
+  "hiddenCategories": [
+    "quotes_good_morning_night",
+    "quotes_krishna_gita"
+  ],
   "hiddenTemplates": [
     "anniversary_bottomcenter_5",
     "anniversary_bottomcenter_6",
@@ -138,7 +141,6 @@
     "quotes_krishna_gita_1.webp",
     "quotes_krishna_gita_2.webp",
     "quotes_krishna_gita_3.webp",
-    "quotes_love_1.webp",
     "quotes_love_2.webp",
     "quotes_love_3.webp",
     "quotes_love_4.webp",
