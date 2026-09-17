@@ -208,8 +208,8 @@
     },
     {
       "text": "Not Arrogant",
-      "x": 0.442,
-      "y": 0.7431,
+      "x": 0.5138,
+      "y": 0.6468,
       "theme": "light",
       "fontFamily": "Anton_400Regular",
       "fontSize": 0.0796,
@@ -218,70 +218,99 @@
       "layers": [
         {
           "text": "Just Certain",
-          "x": 0.4924,
-          "y": 0.82,
+          "x": 0.5157,
+          "y": 0.7672,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.1231,
-          "noBg": true
+          "noBg": true,
+          "width": 0.8868
         }
       ]
     },
     {
       "text": "Standards",
-      "x": 0.4653,
+      "x": 0.376,
       "y": 0.7104,
       "theme": "light",
       "fontFamily": "Anton_400Regular",
       "fontSize": 0.0552,
       "noBg": true,
-      "color": "#897257",
+      "color": "#ffffff",
       "layers": [
         {
           "text": "Patience",
-          "x": 0.6439,
-          "y": 0.8154,
+          "x": 0.5274,
+          "y": 0.8123,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.0553,
           "noBg": true,
-          "color": "#897257"
+          "color": "#ffffff"
         },
         {
           "text": "L",
-          "x": 0.7759,
-          "y": 0.9953,
+          "x": 0.673,
+          "y": 1,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.139,
-          "noBg": true
+          "noBg": true,
+          "color": "#897257"
         },
         {
           "text": "H",
-          "x": 0.6206,
-          "y": 0.6796,
+          "x": 0.5429,
+          "y": 0.6827,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.139,
-          "noBg": true
+          "noBg": true,
+          "color": "#897257"
         },
         {
           "text": "IGH",
-          "x": 0.6924,
+          "x": 0.6225,
           "y": 0.6509,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.0553,
-          "noBg": true
+          "noBg": true,
+          "color": "#ffffff"
         },
         {
           "text": "OW",
-          "x": 0.8478,
-          "y": 0.877,
+          "x": 0.7429,
+          "y": 0.8786,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.0553,
-          "noBg": true
+          "noBg": true,
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "text": "I Create My",
+      "x": 0.507,
+      "y": 0.7384,
+      "theme": "light",
+      "fontFamily": "PlayfairDisplay_700Bold",
+      "fontSize": 0.1083,
+      "noBg": true,
+      "width": 0.8883,
+      "color": "#ffffff",
+      "layers": [
+        {
+          "text": "Own Weather",
+          "x": 0.4992,
+          "y": 0.8449,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.1083,
+          "noBg": true,
+          "width": 0.8883,
+          "color": "#774819"
         }
       ]
     }
@@ -289,8 +318,8 @@
   "quotes_attitude_3.webp": [
     {
       "text": "They Watched Me",
-      "x": 0.401,
-      "y": 0.2972,
+      "x": 0.5117,
+      "y": 0.1403,
       "theme": "light",
       "fontFamily": "Lobster_400Regular",
       "fontSize": 0.0707,
@@ -299,30 +328,33 @@
       "layers": [
         {
           "text": "RISE",
-          "x": 0.7621,
-          "y": 0.2731,
+          "x": 0.6514,
+          "y": 0.2156,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.131,
-          "noBg": true
+          "noBg": true,
+          "width": 0.6462
         },
         {
           "text": "Where They Left Me",
-          "x": 0.7136,
-          "y": 0.462,
+          "x": 0.5282,
+          "y": 0.4604,
           "theme": "light",
           "fontFamily": "Lobster_400Regular",
           "fontSize": 0.0704,
-          "noBg": true
+          "noBg": true,
+          "width": 0.6598
         },
         {
           "text": "FROM",
-          "x": 0.135,
-          "y": 0.4426,
+          "x": 0.4049,
+          "y": 0.3851,
           "theme": "light",
           "fontFamily": "Anton_400Regular",
           "fontSize": 0.1248,
-          "noBg": true
+          "noBg": true,
+          "width": 0.6462
         }
       ]
     },
