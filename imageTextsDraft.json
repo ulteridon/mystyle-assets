@@ -1585,13 +1585,26 @@
   ],
   "quotes_attitude_1.webp": [
     {
-      "text": "I do not follow the crowd, I lead myself.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "I do not follow the Crowd",
+      "x": 0.5483,
+      "y": 0.2241,
       "theme": "light",
-      "fontSize": 0.058,
+      "fontFamily": "PlayfairDisplay_700Bold",
+      "fontSize": 0.0607,
       "noBg": false,
-      "verified": false
+      "width": 1,
+      "layers": [
+        {
+          "text": "I lead Myself",
+          "x": 0.4825,
+          "y": 0.3384,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.1023,
+          "noBg": false
+        }
+      ],
+      "verified": true
     },
     {
       "text": "My vibe speaks before I do.",
