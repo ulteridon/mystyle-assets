@@ -2732,24 +2732,68 @@
   ],
   "quotes_sigma_1.webp": [
     {
-      "text": "Silence is the loudest flex.",
-      "verified": false
+      "text": "Silence is the Loudest Flex.",
+      "x": 0.3997,
+      "y": 0.3593,
+      "theme": "dark",
+      "fontSize": 0.1545,
+      "noBg": true,
+      "width": 1,
+      "color": "#141414",
+      "verified": true
     },
     {
-      "text": "Lone wolves do not run in packs.",
-      "verified": false
+      "text": "Lone Wolves do not run in Packs",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "dark",
+      "fontFamily": "Rajdhani_700Bold",
+      "fontSize": 0.1624,
+      "noBg": true,
+      "verified": true
     },
     {
-      "text": "Master your emotions, master your life.",
-      "verified": false
+      "text": "Master Your Emotions",
+      "x": 0.578,
+      "y": 0.3189,
+      "theme": "dark",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0941,
+      "noBg": true,
+      "width": 1,
+      "layers": [
+        {
+          "text": "Master Your Life",
+          "x": 0.5697,
+          "y": 0.4269,
+          "theme": "dark",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.1075,
+          "noBg": true,
+          "width": 1
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "Discipline is the ultimate freedom.",
-      "verified": false
+      "text": "Discipline is the Ultimate Freedom",
+      "x": 0.5028,
+      "y": 0.3578,
+      "theme": "dark",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.1346,
+      "noBg": true,
+      "verified": true
     },
     {
-      "text": "A calm man is a dangerous man.",
-      "verified": false
+      "text": "A \nCalm Man \nis a Dangerous Man",
+      "x": 0.5084,
+      "y": 0.3671,
+      "theme": "dark",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.1501,
+      "noBg": true,
+      "verified": true
     }
   ],
   "quotes_sigma_2.webp": [
