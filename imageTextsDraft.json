@@ -1601,67 +1601,217 @@
           "theme": "light",
           "fontFamily": "PlayfairDisplay_700Bold",
           "fontSize": 0.1023,
-          "noBg": false
+          "noBg": false,
+          "width": 1
         }
       ],
       "verified": true
     },
     {
-      "text": "My vibe speaks before I do.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "My vibe",
+      "x": 0.3218,
+      "y": 0.2257,
       "theme": "light",
+      "fontFamily": "PlayfairDisplay_700Bold",
       "fontSize": 0.058,
-      "noBg": false,
-      "verified": false
+      "noBg": true,
+      "width": 0.3825,
+      "layers": [
+        {
+          "text": "SPEAKS",
+          "x": 0.6359,
+          "y": 0.2125,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.1014,
+          "noBg": true,
+          "width": 0.3825
+        },
+        {
+          "text": "Before",
+          "x": 0.333,
+          "y": 0.3454,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.0579,
+          "noBg": true,
+          "width": 0.3825
+        },
+        {
+          "text": "I DO",
+          "x": 0.5602,
+          "y": 0.3385,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.1014,
+          "noBg": true,
+          "width": 0.3825
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "Built different, and proud of it.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "Built Different",
+      "x": 0.4981,
+      "y": 0.1946,
       "theme": "light",
-      "fontSize": 0.058,
-      "noBg": false,
-      "verified": false
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.1074,
+      "noBg": true,
+      "layers": [
+        {
+          "text": "&",
+          "x": 0.4806,
+          "y": 0.3042,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.107,
+          "noBg": true
+        },
+        {
+          "text": "Proud of It",
+          "x": 0.4903,
+          "y": 0.4091,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.107,
+          "noBg": true,
+          "color": "#ffffff"
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "I am not lucky, I am relentless.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "Not lucky",
+      "x": 0.6592,
+      "y": 0.2552,
       "theme": "light",
-      "fontSize": 0.058,
-      "noBg": false,
-      "verified": false
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0713,
+      "noBg": true,
+      "layers": [
+        {
+          "text": "Relentless",
+          "x": 0.6728,
+          "y": 0.3275,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.0713,
+          "noBg": true
+        },
+        {
+          "text": "I AM",
+          "x": 0.1874,
+          "y": 0.2895,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.1789,
+          "noBg": true,
+          "width": 0.6548
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "Doubt me. It fuels me.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "Doubt me",
+      "x": 0.4922,
+      "y": 0.3205,
       "theme": "light",
-      "fontSize": 0.058,
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1231,
       "noBg": false,
-      "verified": false
+      "layers": [
+        {
+          "text": "It fuels me",
+          "x": 0.5,
+          "y": 0.3959,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.1197,
+          "noBg": false
+        }
+      ],
+      "verified": true
     }
   ],
   "quotes_attitude_2.webp": [
     {
-      "text": "Class is Permanent, Hype is Temporary.",
-      "verified": false
+      "text": "Class is",
+      "x": 0.3371,
+      "y": 0.6871,
+      "theme": "light",
+      "fontFamily": "DancingScript_700Bold",
+      "fontSize": 0.0969,
+      "noBg": true,
+      "layers": [
+        {
+          "text": "PERMANENT",
+          "x": 0.6536,
+          "y": 0.6895,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.078,
+          "noBg": true
+        },
+        {
+          "text": "Hype is",
+          "x": 0.3274,
+          "y": 0.7713,
+          "theme": "light",
+          "fontFamily": "DancingScript_700Bold",
+          "fontSize": 0.0971,
+          "noBg": true
+        },
+        {
+          "text": "TEMPORARY",
+          "x": 0.6575,
+          "y": 0.7775,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.078,
+          "noBg": true
+        }
+      ],
+      "verified": true
     },
     {
       "text": "I move in silence and let results talk.",
+      "x": 0.5138,
+      "y": 0.7959,
+      "theme": "light",
+      "fontFamily": "PlayfairDisplay_700Bold",
+      "fontSize": 0.078,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Not arrogant, just certain.",
+      "x": 0.5138,
+      "y": 0.7959,
+      "theme": "light",
+      "fontFamily": "PlayfairDisplay_700Bold",
+      "fontSize": 0.078,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Standards high, patience low.",
+      "x": 0.5138,
+      "y": 0.7959,
+      "theme": "light",
+      "fontFamily": "PlayfairDisplay_700Bold",
+      "fontSize": 0.078,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "I create my own weather.",
+      "x": 0.5138,
+      "y": 0.7959,
+      "theme": "light",
+      "fontFamily": "PlayfairDisplay_700Bold",
+      "fontSize": 0.078,
+      "noBg": false,
       "verified": false
     }
   ],
