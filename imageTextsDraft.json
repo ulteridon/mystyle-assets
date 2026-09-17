@@ -1954,13 +1954,78 @@
       "verified": true
     },
     {
-      "text": "My confidence is not for sale.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "My Confidence is Mine",
+      "x": 0.5252,
+      "y": 0.207,
       "theme": "light",
+      "fontFamily": "Anton_400Regular",
       "fontSize": 0.058,
       "noBg": false,
-      "verified": false
+      "color": "#c61908",
+      "layers": [
+        {
+          "text": "It Cannot be",
+          "x": 0.5117,
+          "y": 0.27,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.058,
+          "noBg": true,
+          "color": "#ffffff"
+        },
+        {
+          "text": "ought",
+          "x": 0.568,
+          "y": 0.3967,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.058,
+          "noBg": false,
+          "color": "#ffffff"
+        },
+        {
+          "text": "roken",
+          "x": 0.5699,
+          "y": 0.5047,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.058,
+          "noBg": false,
+          "color": "#ffffff"
+        },
+        {
+          "text": "OR",
+          "x": 0.766,
+          "y": 0.445,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.058,
+          "noBg": true,
+          "color": "#c61908"
+        },
+        {
+          "text": "orrowed",
+          "x": 0.5893,
+          "y": 0.4504,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.058,
+          "noBg": true,
+          "color": "#ffffff"
+        },
+        {
+          "text": "B",
+          "x": 0,
+          "y": 0.4698,
+          "theme": "light",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.2427,
+          "noBg": true,
+          "width": 0.3316,
+          "color": "#c61908"
+        }
+      ],
+      "verified": true
     },
     {
       "text": "I Bend Rules",
