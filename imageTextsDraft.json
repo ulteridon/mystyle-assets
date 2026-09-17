@@ -1775,34 +1775,108 @@
       "verified": true
     },
     {
-      "text": "I move in silence and let results talk.",
-      "x": 0.5138,
-      "y": 0.7959,
+      "text": "I don't announce the moves",
+      "x": 0.508,
+      "y": 0.6964,
       "theme": "light",
-      "fontFamily": "PlayfairDisplay_700Bold",
-      "fontSize": 0.078,
-      "noBg": false,
-      "verified": false
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1016,
+      "noBg": true,
+      "width": 1,
+      "layers": [
+        {
+          "text": "I let the outcome introduce me",
+          "x": 0.4774,
+          "y": 0.806,
+          "theme": "light",
+          "fontFamily": "PlayfairDisplay_700Bold",
+          "fontSize": 0.063,
+          "noBg": false,
+          "width": 1
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "Not arrogant, just certain.",
-      "x": 0.5138,
-      "y": 0.7959,
+      "text": "Not Arrogant",
+      "x": 0.442,
+      "y": 0.7431,
       "theme": "light",
-      "fontFamily": "PlayfairDisplay_700Bold",
-      "fontSize": 0.078,
-      "noBg": false,
-      "verified": false
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0796,
+      "noBg": true,
+      "width": 0.5451,
+      "layers": [
+        {
+          "text": "Just Certain",
+          "x": 0.4924,
+          "y": 0.82,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.1231,
+          "noBg": true
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "Standards high, patience low.",
-      "x": 0.5138,
-      "y": 0.7959,
+      "text": "Standards",
+      "x": 0.4653,
+      "y": 0.7104,
       "theme": "light",
-      "fontFamily": "PlayfairDisplay_700Bold",
-      "fontSize": 0.078,
-      "noBg": false,
-      "verified": false
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0552,
+      "noBg": true,
+      "color": "#897257",
+      "layers": [
+        {
+          "text": "Patience",
+          "x": 0.6439,
+          "y": 0.8154,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.0553,
+          "noBg": true,
+          "color": "#897257"
+        },
+        {
+          "text": "L",
+          "x": 0.7759,
+          "y": 0.9953,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.139,
+          "noBg": true
+        },
+        {
+          "text": "H",
+          "x": 0.6206,
+          "y": 0.6796,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.139,
+          "noBg": true
+        },
+        {
+          "text": "IGH",
+          "x": 0.6924,
+          "y": 0.6509,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.0553,
+          "noBg": true
+        },
+        {
+          "text": "OW",
+          "x": 0.8478,
+          "y": 0.877,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.0553,
+          "noBg": true
+        }
+      ],
+      "verified": true
     },
     {
       "text": "I create my own weather.",
@@ -1817,45 +1891,169 @@
   ],
   "quotes_attitude_3.webp": [
     {
-      "text": "They watched me rise from where they left me.",
-      "verified": false
+      "text": "They Watched Me",
+      "x": 0.401,
+      "y": 0.2972,
+      "theme": "light",
+      "fontFamily": "Lobster_400Regular",
+      "fontSize": 0.0707,
+      "noBg": true,
+      "width": 0.6462,
+      "layers": [
+        {
+          "text": "RISE",
+          "x": 0.7621,
+          "y": 0.2731,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.131,
+          "noBg": true
+        },
+        {
+          "text": "Where They Left Me",
+          "x": 0.7136,
+          "y": 0.462,
+          "theme": "light",
+          "fontFamily": "Lobster_400Regular",
+          "fontSize": 0.0704,
+          "noBg": true
+        },
+        {
+          "text": "FROM",
+          "x": 0.135,
+          "y": 0.4426,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.1248,
+          "noBg": true
+        }
+      ],
+      "verified": true
     },
     {
       "text": "My confidence is not for sale.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
-      "text": "I bend rules, never my spine.",
-      "verified": false
+      "text": "I Bend Rules",
+      "x": 0.5039,
+      "y": 0.2785,
+      "theme": "light",
+      "fontFamily": "Lobster_400Regular",
+      "fontSize": 0.0822,
+      "noBg": false,
+      "layers": [
+        {
+          "text": "Never My Spine",
+          "x": 0.5058,
+          "y": 0.413,
+          "theme": "light",
+          "fontFamily": "Anton_400Regular",
+          "fontSize": 0.105,
+          "noBg": false
+        }
+      ],
+      "verified": true
     },
     {
       "text": "Underestimate me. That is fun.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
-      "text": "I am the plot, not the side character.",
-      "verified": false
+      "text": "I Am the Plot",
+      "x": 0.4922,
+      "y": 0.3407,
+      "theme": "light",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0836,
+      "noBg": false,
+      "layers": [
+        {
+          "text": "Not the Side Character",
+          "x": 0.5279,
+          "y": 0.4736,
+          "theme": "light",
+          "fontFamily": "Lobster_400Regular",
+          "fontSize": 0.0939,
+          "noBg": false,
+          "width": 1
+        }
+      ],
+      "verified": true
     }
   ],
   "quotes_good_morning_night_1.webp": [
     {
-      "text": "Good morning — a fresh page, write it well.",
-      "verified": false
+      "text": "Good morning",
+      "x": 0.5,
+      "y": 0.5,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
+      "layers": [
+        {
+          "text": "A Fresh Page",
+          "x": 0.5,
+          "y": 0.65,
+          "theme": "light",
+          "fontSize": 0.058,
+          "noBg": false
+        },
+        {
+          "text": "Write It Well",
+          "x": 0.5084,
+          "y": 0.7533,
+          "theme": "light",
+          "fontSize": 0.058,
+          "noBg": false
+        }
+      ],
+      "verified": true
     },
     {
       "text": "Rise with purpose, shine with grace.",
+      "x": 0.5,
+      "y": 0.5,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Every sunrise is a second chance.",
+      "x": 0.5,
+      "y": 0.5,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Good night — let the stars carry your worries.",
+      "x": 0.5,
+      "y": 0.5,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Sleep well, tomorrow needs the best of you.",
+      "x": 0.5,
+      "y": 0.5,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     }
   ],
