@@ -646,6 +646,66 @@
       ]
     }
   ],
+  "quotes_sad_1.webp": [
+    {
+      "text": "Some wounds never show, yet always ache.",
+      "x": 0.507,
+      "y": 0.3517,
+      "theme": "light",
+      "fontSize": 0.1085,
+      "noBg": true
+    },
+    {
+      "text": "I smile so the world does not ask.",
+      "x": 0.5047,
+      "y": 0.3501,
+      "theme": "light",
+      "fontSize": 0.1284,
+      "noBg": true
+    },
+    {
+      "text": "The loudest silence is a heart that gave up.",
+      "x": 0.5,
+      "y": 0.333,
+      "theme": "light",
+      "fontSize": 0.0906,
+      "noBg": true,
+      "bold": true,
+      "italic": true,
+      "scrimColor": "#ff8c42"
+    },
+    {
+      "text": "Missing someone \nwho is still here hurts most.",
+      "x": 0.5093,
+      "y": 0.333,
+      "theme": "light",
+      "fontFamily": "Rajdhani_600SemiBold",
+      "fontSize": 0.0732,
+      "noBg": true,
+      "italic": true
+    },
+    {
+      "text": "I am tired in a way sleep cannot fix.",
+      "x": 0.5047,
+      "y": 0.3424,
+      "theme": "light",
+      "fontFamily": "DancingScript_700Bold",
+      "fontSize": 0.1303,
+      "noBg": true
+    }
+  ],
+  "quotes_self_love_2.webp": [
+    {
+      "text": "You are allowed \nto be both \na Masterpiece \nand \na Work in Progress",
+      "x": 0.4805,
+      "y": 0.2974,
+      "theme": "dark",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.058,
+      "noBg": true,
+      "italic": true
+    }
+  ],
   "quotes_self_love_3.webp": [
     {
       "text": "Rest is not a Reward",
