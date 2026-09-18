@@ -2061,13 +2061,26 @@
       "verified": true
     },
     {
-      "text": "Underestimate me. That is fun.",
-      "x": 0.5,
-      "y": 0.12,
+      "text": "Underestimate Me",
+      "x": 0.4981,
+      "y": 0.2583,
       "theme": "light",
-      "fontSize": 0.058,
+      "fontFamily": "Rajdhani_700Bold",
+      "fontSize": 0.0965,
       "noBg": false,
-      "verified": false
+      "width": 0.9097,
+      "layers": [
+        {
+          "text": "That  is Fun",
+          "x": 0.4903,
+          "y": 0.4036,
+          "theme": "light",
+          "fontFamily": "Rajdhani_700Bold",
+          "fontSize": 0.0887,
+          "noBg": false
+        }
+      ],
+      "verified": true
     },
     {
       "text": "I Am the Plot",
@@ -3150,23 +3163,49 @@
   ],
   "shayari_16.webp": [
     {
-      "text": "Aankhon mein sapne rakho, haath mein mehnat.",
-      "verified": false
-    },
-    {
       "text": "Jo apne hote hain, wo fasle nahi maante.",
-      "verified": false
+      "x": 0.0624,
+      "y": 0.0764,
+      "theme": "light",
+      "fontSize": 0.1064,
+      "noBg": false,
+      "verified": true
     },
     {
       "text": "Khamoshi bhi bahut kuch keh jaati hai.",
-      "verified": false
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
+      "layers": [
+        {
+          "text": "ankho me sapne rakho hath me mehnat",
+          "x": 0.5,
+          "y": 0.27,
+          "theme": "light",
+          "fontSize": 0.058,
+          "noBg": false
+        }
+      ],
+      "verified": true
     },
     {
       "text": "Manzil unhi ko milti hai jo raaston se darte nahi.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     },
     {
       "text": "Dil se socho to har mushkil aasan lagti hai.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
       "verified": false
     }
   ],
