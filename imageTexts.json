@@ -464,6 +464,27 @@
       ]
     },
     {
+      "text": "Underestimate Me",
+      "x": 0.4981,
+      "y": 0.2583,
+      "theme": "light",
+      "fontFamily": "Rajdhani_700Bold",
+      "fontSize": 0.0965,
+      "noBg": false,
+      "width": 0.9097,
+      "layers": [
+        {
+          "text": "That  is Fun",
+          "x": 0.4903,
+          "y": 0.4036,
+          "theme": "light",
+          "fontFamily": "Rajdhani_700Bold",
+          "fontSize": 0.0887,
+          "noBg": false
+        }
+      ]
+    },
+    {
       "text": "I Am the Plot",
       "x": 0.4922,
       "y": 0.3407,
@@ -684,6 +705,34 @@
       "fontFamily": "Anton_400Regular",
       "fontSize": 0.1501,
       "noBg": true
+    }
+  ],
+  "shayari_16.webp": [
+    {
+      "text": "Jo apne hote hain, wo fasle nahi maante.",
+      "x": 0.0624,
+      "y": 0.0764,
+      "theme": "light",
+      "fontSize": 0.1064,
+      "noBg": false
+    },
+    {
+      "text": "Khamoshi bhi bahut kuch keh jaati hai.",
+      "x": 0.5,
+      "y": 0.12,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": false,
+      "layers": [
+        {
+          "text": "ankho me sapne rakho hath me mehnat",
+          "x": 0.5,
+          "y": 0.27,
+          "theme": "light",
+          "fontSize": 0.058,
+          "noBg": false
+        }
+      ]
     }
   ]
 }
