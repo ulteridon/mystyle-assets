@@ -646,6 +646,81 @@
       ]
     }
   ],
+  "quotes_self_love_3.webp": [
+    {
+      "text": "Rest is not a Reward",
+      "x": 0.4878,
+      "y": 0.2644,
+      "theme": "dark",
+      "fontFamily": "DancingScript_700Bold",
+      "fontSize": 0.1053,
+      "noBg": true,
+      "width": 1,
+      "italic": true,
+      "layers": [
+        {
+          "text": "It is a Right",
+          "x": 0.4875,
+          "y": 0.3615,
+          "theme": "dark",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.1545,
+          "noBg": true,
+          "width": 1,
+          "italic": true
+        }
+      ]
+    },
+    {
+      "text": "Be your own reason to smile",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.189,
+      "noBg": true
+    },
+    {
+      "text": "You \ncannot pour from an empty cup fill Yours",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "dark",
+      "fontFamily": "PlayfairDisplay_600SemiBold",
+      "fontSize": 0.1239,
+      "noBg": true,
+      "italic": true
+    },
+    {
+      "text": "Fall in Love \nwith taking care of Yourself",
+      "x": 0.4972,
+      "y": 0.2644,
+      "theme": "dark",
+      "fontFamily": "Lobster_400Regular",
+      "fontSize": 0.1422,
+      "noBg": true,
+      "italic": true
+    },
+    {
+      "text": "You are your \nlongest commitment",
+      "x": 0.5,
+      "y": 0.1975,
+      "theme": "dark",
+      "fontFamily": "Rajdhani_700Bold",
+      "fontSize": 0.0821,
+      "noBg": true,
+      "layers": [
+        {
+          "text": "Honor It!",
+          "x": 0.5,
+          "y": 0.43,
+          "theme": "dark",
+          "fontFamily": "Rajdhani_700Bold",
+          "fontSize": 0.1402,
+          "noBg": true
+        }
+      ]
+    }
+  ],
   "quotes_sigma_1.webp": [
     {
       "text": "Silence is the Loudest Flex.",
