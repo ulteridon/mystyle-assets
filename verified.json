@@ -11,5 +11,16 @@
     "quotes_sigma_1.webp",
     "shayari_16.webp"
   ],
-  "templates": []
+  "templates": [
+    "anniversary_bottomcenter_5",
+    "anniversary_bottomcenter_6",
+    "anniversary_bottomleft_10",
+    "anniversary_bottomleft_20",
+    "anniversary_bottomright_17",
+    "anniversary_bottomright_21",
+    "anniversary_bottomright_22",
+    "anniversary_bottomright_25",
+    "anniversary_middleleft_14",
+    "anniversary_middleright_18"
+  ]
 }
