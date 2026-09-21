@@ -9,19 +9,19 @@
     "templateHeight": 1600,
     "photoPosition": {
       "x": 198,
-      "y": 517,
+      "y": 548,
       "width": 498,
-      "height": 533,
+      "height": 499,
       "borderRadius": 249
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1070,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_5.webp",
@@ -49,16 +49,16 @@
       "y": 611,
       "width": 495,
       "height": 495,
-      "borderRadius": 247
+      "borderRadius": 248
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1126,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_6.webp",
@@ -89,13 +89,13 @@
       "borderRadius": 282
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
-      "y": 1102,
+      "y": 1090,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_10.webp",
@@ -123,16 +123,16 @@
       "y": 538,
       "width": 525,
       "height": 525,
-      "borderRadius": 262
+      "borderRadius": 263
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1083,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_20.webp",
@@ -160,16 +160,16 @@
       "y": 538,
       "width": 523,
       "height": 525,
-      "borderRadius": 261
+      "borderRadius": 262
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1083,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_17.webp",
@@ -193,20 +193,20 @@
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 205,
-      "y": 559,
+      "x": 207,
+      "y": 562,
       "width": 479,
       "height": 476,
       "borderRadius": 238
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
-      "y": 497,
+      "y": 1068,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_21.webp",
@@ -234,16 +234,16 @@
       "y": 537,
       "width": 529,
       "height": 527,
-      "borderRadius": 263
+      "borderRadius": 264
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1084,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_22.webp",
@@ -271,16 +271,16 @@
       "y": 560,
       "width": 481,
       "height": 482,
-      "borderRadius": 240
+      "borderRadius": 241
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1062,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_25.webp",
@@ -308,16 +308,16 @@
       "y": 538,
       "width": 525,
       "height": 525,
-      "borderRadius": 262
+      "borderRadius": 263
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
-      "y": 1083,
+      "y": 1064,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_14.webp",
@@ -341,20 +341,20 @@
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 127,
-      "y": 527,
-      "width": 635,
-      "height": 694,
-      "borderRadius": 317
+      "x": 164,
+      "y": 568,
+      "width": 560,
+      "height": 625,
+      "borderRadius": 280
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1241,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ea7867",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_18.webp",
