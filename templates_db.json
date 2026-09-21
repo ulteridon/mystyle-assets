@@ -385,13 +385,13 @@
       "borderRadius": 241
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1061,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_12.webp",
@@ -422,13 +422,13 @@
       "borderRadius": 206
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 914,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_27.webp",
@@ -459,13 +459,13 @@
       "borderRadius": 277
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1104,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_3.webp",
@@ -493,16 +493,16 @@
       "y": 551,
       "width": 497,
       "height": 498,
-      "borderRadius": 248
+      "borderRadius": 249
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1069,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_11.webp",
@@ -530,16 +530,16 @@
       "y": 610,
       "width": 495,
       "height": 497,
-      "borderRadius": 247
+      "borderRadius": 248
     },
     "textConfig": {
-      "defaultText": "Happy Birthday",
+      "defaultText": "Happy Anniversary",
       "x": 0,
       "y": 1127,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "anniversary_13.webp",
@@ -563,20 +563,20 @@
     "templateWidth": 1600,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 367,
-      "y": 567,
-      "width": 885,
-      "height": 849,
-      "borderRadius": 424
+      "x": 445,
+      "y": 592,
+      "width": 710,
+      "height": 730,
+      "borderRadius": 355
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
       "y": 1436,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_27.webp",
@@ -599,20 +599,20 @@
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 118,
-      "y": 473,
-      "width": 656,
-      "height": 665,
-      "borderRadius": 328
+      "x": 155,
+      "y": 504,
+      "width": 603,
+      "height": 587,
+      "borderRadius": 294
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
       "y": 1158,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_3.webp",
@@ -639,16 +639,16 @@
       "y": 465,
       "width": 655,
       "height": 675,
-      "borderRadius": 327
+      "borderRadius": 328
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
       "y": 1160,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_24.webp",
@@ -675,16 +675,16 @@
       "y": 595,
       "width": 607,
       "height": 608,
-      "borderRadius": 303
+      "borderRadius": 304
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
       "y": 1223,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_26.webp",
@@ -718,9 +718,9 @@
       "x": 0,
       "y": 1147,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_22.webp",
@@ -743,20 +743,20 @@
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 184,
-      "y": 557,
-      "width": 525,
-      "height": 531,
-      "borderRadius": 262
+      "x": 209,
+      "y": 579,
+      "width": 494,
+      "height": 484,
+      "borderRadius": 242
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
       "y": 1108,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_7.webp",
@@ -779,20 +779,20 @@
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 58,
-      "y": 424,
-      "width": 763,
-      "height": 756,
-      "borderRadius": 378
+      "x": 145,
+      "y": 493,
+      "width": 613,
+      "height": 609,
+      "borderRadius": 305
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
       "y": 1200,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_9.webp",
@@ -824,11 +824,11 @@
     "textConfig": {
       "defaultText": "Happy Birthday",
       "x": 0,
-      "y": 488,
+      "y": 1159,
       "width": "100%",
-      "fontSize": 24,
-      "color": "#FFFFFF",
-      "fontFamily": "Inter-Medium",
+      "fontSize": 56,
+      "color": "#8b1a1a",
+      "fontFamily": "PlayfairDisplay_600SemiBold",
       "textAlign": "center"
     },
     "remoteFile": "birthday_28.webp",
@@ -851,11 +851,21 @@
     "templateWidth": 874,
     "templateHeight": 1216,
     "photoPosition": {
-      "x": 235,
-      "y": 257,
-      "width": 415,
-      "height": 589,
-      "borderRadius": 207
+      "x": 226,
+      "y": 243,
+      "width": 439,
+      "height": 620,
+      "borderRadius": 219
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1026,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_4.webp",
     "tags": [
@@ -878,11 +888,22 @@
     "templateWidth": 880,
     "templateHeight": 1197,
     "photoPosition": {
-      "x": 13,
-      "y": 237,
-      "width": 704,
-      "height": 682,
-      "borderRadius": 341
+      "x": 275,
+      "y": 446,
+      "width": 359,
+      "height": 409,
+      "borderRadius": 0,
+      "rotation": 5.5
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 914,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_5.webp",
     "tags": [
