@@ -2571,46 +2571,147 @@
   ],
   "quotes_love_3.webp": [
     {
-      "text": "I choose you, today and every messy day after.",
-      "verified": false
+      "text": "I choose you, \ntoday and every messy day after.",
+      "x": 0.4907,
+      "y": 0.3282,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1211,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     },
     {
       "text": "Your hand in mine, that is my safe place.",
-      "verified": false
+      "x": 0.507,
+      "y": 0.3189,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1003,
+      "noBg": true,
+      "verified": true
     },
     {
       "text": "You are my calm in every storm.",
-      "verified": false
+      "x": 0.437,
+      "y": 0.4168,
+      "theme": "dark",
+      "fontFamily": "Rajdhani_600SemiBold",
+      "fontSize": 0.058,
+      "noBg": false,
+      "width": 1,
+      "color": "#ffffff",
+      "scrimColor": "#764937",
+      "scrimOpacity": 1,
+      "verified": true
     },
     {
-      "text": "Some souls just recognize each other. Ours did.",
-      "verified": false
+      "text": "Some souls just recognize each other",
+      "x": 0.5373,
+      "y": 0.28,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.0801,
+      "noBg": true,
+      "width": 1,
+      "layers": [
+        {
+          "text": "Ours did",
+          "x": 0.5187,
+          "y": 0.3756,
+          "theme": "dark",
+          "fontFamily": "GreatVibes_400Regular",
+          "fontSize": 0.1201,
+          "noBg": true,
+          "width": 1
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "I love you more than yesterday, less than tomorrow.",
-      "verified": false
+      "text": "I love you more than yesterday, \nless than tomorrow.",
+      "x": 0.519,
+      "y": 0.3344,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.0869,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     }
   ],
   "quotes_love_4.webp": [
     {
       "text": "You are my favorite hello and hardest goodbye.",
-      "verified": false
+      "x": 0.2603,
+      "y": 0.3067,
+      "theme": "light",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.058,
+      "noBg": false,
+      "width": 1,
+      "italic": true,
+      "scrimColor": "#874517",
+      "scrimOpacity": 1,
+      "verified": true
     },
     {
       "text": "In a room full of art, I would still stare at you.",
-      "verified": false
+      "x": 0.3467,
+      "y": 0.3005,
+      "theme": "dark",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.058,
+      "noBg": false,
+      "width": 0.9944,
+      "color": "#ffffff",
+      "italic": true,
+      "scrimColor": "#874517",
+      "scrimOpacity": 1,
+      "verified": true
     },
     {
       "text": "Home is not a place, it is you.",
-      "verified": false
+      "x": 0.2028,
+      "y": 0.2958,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.0907,
+      "noBg": false,
+      "width": 1,
+      "color": "#ffffff",
+      "scrimColor": "#874517",
+      "scrimOpacity": 1,
+      "verified": true
     },
     {
-      "text": "I found forever in the way you smile.",
-      "verified": false
+      "text": "I found forever in the way you smile",
+      "x": 0.4303,
+      "y": 0.3129,
+      "theme": "dark",
+      "fontFamily": "Lobster_400Regular",
+      "fontSize": 0.0638,
+      "noBg": false,
+      "width": 1,
+      "color": "#ffffff",
+      "italic": true,
+      "scrimColor": "#874517",
+      "scrimOpacity": 1,
+      "verified": true
     },
     {
       "text": "You are the poem I never knew how to write.",
-      "verified": false
+      "x": 0.4024,
+      "y": 0.2942,
+      "theme": "dark",
+      "fontFamily": "Rajdhani_700Bold",
+      "fontSize": 0.058,
+      "noBg": false,
+      "width": 1,
+      "color": "#ffffff",
+      "scrimColor": "#874517",
+      "scrimOpacity": 1,
+      "verified": true
     }
   ],
   "quotes_money_2.webp": [
