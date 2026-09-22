@@ -659,7 +659,8 @@
           "theme": "light",
           "fontFamily": "Lobster_400Regular",
           "fontSize": 0.29,
-          "noBg": true
+          "noBg": true,
+          "width": 1
         },
         {
           "text": "Hardest Good Bye!",
@@ -668,7 +669,8 @@
           "theme": "light",
           "fontFamily": "Lobster_400Regular",
           "fontSize": 0.0942,
-          "noBg": true
+          "noBg": true,
+          "width": 1
         }
       ]
     },
@@ -751,6 +753,27 @@
           "noBg": true
         }
       ]
+    },
+    {
+      "text": "I found forever in the way you smile.",
+      "x": 0.4743,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.0949,
+      "noBg": true,
+      "width": 1,
+      "color": "#ffffff",
+      "scrimColor": "#ffffff"
+    },
+    {
+      "text": "You are the poem \nI never knew \nhow to write.",
+      "x": 0.486,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.0908,
+      "noBg": true,
+      "width": 1,
+      "color": "#ffffff"
     }
   ],
   "quotes_sad_1.webp": [
