@@ -534,6 +534,104 @@
       ]
     }
   ],
+  "quotes_krishna_gita_1.webp": [
+    {
+      "text": "Do your duty, leave the results to me.",
+      "x": 0.4296,
+      "y": 0.28,
+      "theme": "dark",
+      "fontSize": 0.0535,
+      "noBg": false,
+      "width": 1,
+      "scrimColor": "#ffffff",
+      "layers": [
+        {
+          "text": "~Shrimadbhagwad Geeta",
+          "x": 0.4296,
+          "y": 0.43,
+          "theme": "dark",
+          "fontSize": 0.0535,
+          "noBg": true,
+          "width": 1,
+          "italic": true,
+          "scrimColor": "#ffffff"
+        }
+      ]
+    },
+    {
+      "text": "The soul is neither born \nnor does it die.",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": true,
+      "bold": true,
+      "italic": true
+    },
+    {
+      "text": "You have the right to work, not to its fruits.",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.058,
+      "noBg": true,
+      "italic": true
+    },
+    {
+      "text": "Set your heart on the work, \nnot the reward.",
+      "x": 0.5,
+      "y": 0.28,
+      "theme": "light",
+      "fontFamily": "Rajdhani_700Bold",
+      "fontSize": 0.058,
+      "noBg": true,
+      "color": "#ffffff",
+      "italic": true
+    }
+  ],
+  "quotes_krishna_gita_2.webp": [
+    {
+      "text": "The one who has conquered the mind is at peace.",
+      "x": 0.6393,
+      "y": 0.4603,
+      "theme": "light",
+      "fontSize": 0.0891,
+      "noBg": true,
+      "width": 0.6,
+      "italic": true
+    },
+    {
+      "text": "Perform your action free from attachment",
+      "x": 0.6505,
+      "y": 0.423,
+      "theme": "light",
+      "fontSize": 0.0704,
+      "noBg": true,
+      "width": 0.4922,
+      "italic": true
+    },
+    {
+      "text": "When meditation is mastered, the mind is still.",
+      "x": 0.6864,
+      "y": 0.4867,
+      "theme": "light",
+      "fontFamily": "Anton_400Regular",
+      "fontSize": 0.0775,
+      "noBg": true,
+      "width": 0.4825,
+      "italic": true
+    },
+    {
+      "text": "Whatever happened, happened for the good.",
+      "x": 0.5107,
+      "y": 0.2753,
+      "theme": "light",
+      "fontSize": 0.0775,
+      "noBg": true,
+      "width": 0.9932,
+      "italic": true
+    }
+  ],
   "quotes_love_1.webp": [
     {
       "text": "You're My Favorite Hello",
