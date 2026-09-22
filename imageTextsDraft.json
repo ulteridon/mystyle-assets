@@ -2504,23 +2504,69 @@
   "quotes_love_2.webp": [
     {
       "text": "Loving you is the easiest thing I do.",
-      "verified": false
+      "x": 0.486,
+      "y": 0.72,
+      "theme": "dark",
+      "fontSize": 0.0664,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     },
     {
-      "text": "Every love song makes sense now — it is you.",
-      "verified": false
+      "text": "Every love song makes sense now \n~ it is you.",
+      "x": 0.4907,
+      "y": 0.72,
+      "theme": "dark",
+      "fontSize": 0.0723,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     },
     {
-      "text": "With you, even ordinary feels magical.",
-      "verified": false
+      "text": "With you,",
+      "x": 0.5163,
+      "y": 0.6189,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1182,
+      "noBg": true,
+      "width": 0.6828,
+      "italic": true,
+      "layers": [
+        {
+          "text": "even ordinary feels magical",
+          "x": 0.6079,
+          "y": 0.6959,
+          "theme": "dark",
+          "fontSize": 0.0846,
+          "noBg": true,
+          "width": 1,
+          "italic": true
+        }
+      ],
+      "verified": true
     },
     {
-      "text": "My heart is yours, no returns accepted.",
-      "verified": false
+      "text": "My heart is yours, \nno returns accepted.",
+      "x": 0.486,
+      "y": 0.72,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1055,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     },
     {
-      "text": "You are the reason I believe in soft things.",
-      "verified": false
+      "text": "You are the reason \nI believe in soft things.",
+      "x": 0.507,
+      "y": 0.6423,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.0811,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     }
   ],
   "quotes_love_3.webp": [
