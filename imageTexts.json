@@ -569,6 +569,15 @@
       "italic": true
     },
     {
+      "text": "Change is the law of the universe.",
+      "x": 0.6204,
+      "y": 0.28,
+      "theme": "light",
+      "fontSize": 0.0959,
+      "noBg": true,
+      "width": 1
+    },
+    {
       "text": "You have the right to work, not to its fruits.",
       "x": 0.5,
       "y": 0.28,
