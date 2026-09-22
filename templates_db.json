@@ -1298,11 +1298,21 @@
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 112,
-      "y": 126,
-      "width": 516,
-      "height": 897,
-      "borderRadius": 85
+      "x": 139,
+      "y": 274,
+      "width": 483,
+      "height": 719,
+      "borderRadius": 58
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 79,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_2.webp",
     "tags": [
@@ -1326,11 +1336,21 @@
     "templateWidth": 1254,
     "templateHeight": 1254,
     "photoPosition": {
-      "x": 339,
-      "y": 238,
-      "width": 614,
-      "height": 652,
-      "borderRadius": 307
+      "x": 315,
+      "y": 245,
+      "width": 653,
+      "height": 654,
+      "borderRadius": 327
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 944,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#8b1a1a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_3.webp",
     "tags": [
@@ -1354,11 +1374,21 @@
     "templateWidth": 1149,
     "templateHeight": 1369,
     "photoPosition": {
-      "x": 540,
-      "y": 397,
-      "width": 517,
-      "height": 808,
-      "borderRadius": 85
+      "x": 588,
+      "y": 544,
+      "width": 520,
+      "height": 632,
+      "borderRadius": 62
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 1036,
+      "y": 1191,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#1e3a8a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "right"
     },
     "remoteFile": "independence_day_5.webp",
     "tags": [
@@ -1382,11 +1412,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 489,
-      "y": 217,
-      "width": 532,
-      "height": 912,
-      "borderRadius": 85
+      "x": 495,
+      "y": 378,
+      "width": 572,
+      "height": 678,
+      "borderRadius": 69
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 60,
+      "y": 1112,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#1e3a8a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "left"
     },
     "remoteFile": "independence_day_6.webp",
     "tags": [
@@ -1410,11 +1450,21 @@
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 320,
-      "y": 180,
-      "width": 650,
-      "height": 650,
-      "borderRadius": 325
+      "x": 366,
+      "y": 142,
+      "width": 718,
+      "height": 713,
+      "borderRadius": 356
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 900,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_7.webp",
     "tags": [
@@ -1438,11 +1488,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 478,
-      "y": 145,
-      "width": 521,
-      "height": 985,
-      "borderRadius": 85
+      "x": 506,
+      "y": 361,
+      "width": 546,
+      "height": 691,
+      "borderRadius": 66
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1244,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#150d02",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_8.webp",
     "tags": [
@@ -1466,11 +1526,22 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 445,
-      "y": 116,
-      "width": 565,
-      "height": 956,
-      "borderRadius": 80
+      "x": 462,
+      "y": 181,
+      "width": 559,
+      "height": 818,
+      "borderRadius": 67,
+      "rotation": 4.5
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1120,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#8b1a1a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_9.webp",
     "tags": [
@@ -1494,11 +1565,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 456,
-      "y": 116,
-      "width": 554,
-      "height": 927,
-      "borderRadius": 85
+      "x": 521,
+      "y": 156,
+      "width": 489,
+      "height": 885,
+      "borderRadius": 59
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1131,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#1e3a8a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_11.webp",
     "tags": [
@@ -1522,11 +1603,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 413,
-      "y": 130,
-      "width": 641,
-      "height": 811,
-      "borderRadius": 320
+      "x": 422,
+      "y": 164,
+      "width": 664,
+      "height": 760,
+      "borderRadius": 332
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 882,
+      "y": 951,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#1e3a8a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "right"
     },
     "remoteFile": "independence_day_14.webp",
     "tags": [
@@ -1550,11 +1641,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 424,
-      "y": 116,
-      "width": 630,
-      "height": 825,
-      "borderRadius": 315
+      "x": 438,
+      "y": 229,
+      "width": 641,
+      "height": 726,
+      "borderRadius": 321
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 996,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#1e3a8a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_15.webp",
     "tags": [
@@ -1578,11 +1679,21 @@
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 488,
-      "y": 218,
-      "width": 532,
-      "height": 572,
-      "borderRadius": 266
+      "x": 480,
+      "y": 191,
+      "width": 548,
+      "height": 621,
+      "borderRadius": 274
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 878,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#065f46",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_d_1.webp",
     "tags": [
@@ -1607,11 +1718,21 @@
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 504,
-      "y": 302,
-      "width": 482,
-      "height": 701,
-      "borderRadius": 241
+      "x": 523,
+      "y": 316,
+      "width": 463,
+      "height": 657,
+      "borderRadius": 0
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1083,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#065f46",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_d_3.webp",
     "tags": [
@@ -1636,11 +1757,21 @@
     "templateWidth": 1054,
     "templateHeight": 1492,
     "photoPosition": {
-      "x": 463,
-      "y": 263,
-      "width": 453,
-      "height": 822,
-      "borderRadius": 226
+      "x": 457,
+      "y": 406,
+      "width": 473,
+      "height": 679,
+      "borderRadius": 57
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1342,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_d_7.webp",
     "tags": [
@@ -1665,11 +1796,21 @@
     "templateWidth": 1054,
     "templateHeight": 1492,
     "photoPosition": {
-      "x": 505,
-      "y": 405,
-      "width": 447,
-      "height": 669,
-      "borderRadius": 223
+      "x": 540,
+      "y": 420,
+      "width": 415,
+      "height": 660,
+      "borderRadius": 208
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 1032,
+      "y": 1083,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#a78bfa",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "right"
     },
     "remoteFile": "rakhi_d_9.webp",
     "tags": [
@@ -1694,11 +1835,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 575,
-      "y": 304,
-      "width": 423,
-      "height": 787,
-      "borderRadius": 211
+      "x": 572,
+      "y": 360,
+      "width": 429,
+      "height": 708,
+      "borderRadius": 51
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1120,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#86421c",
+      "fontFamily": "Pacifico_400Regular",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_d_11.webp",
     "tags": [
@@ -1723,11 +1874,21 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 548,
-      "y": 293,
-      "width": 390,
-      "height": 836,
-      "borderRadius": 195
+      "x": 537,
+      "y": 375,
+      "width": 444,
+      "height": 774,
+      "borderRadius": 53
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1177,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#8e734e",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_d_12.webp",
     "tags": [
@@ -1752,11 +1913,21 @@
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 552,
-      "y": 291,
-      "width": 373,
-      "height": 870,
-      "borderRadius": 186
+      "x": 540,
+      "y": 372,
+      "width": 415,
+      "height": 807,
+      "borderRadius": 50
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1220,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#5b432a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_d_13.webp",
     "tags": [
@@ -1781,11 +1952,22 @@
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 399,
-      "y": 496,
-      "width": 563,
-      "height": 727,
-      "borderRadius": 281
+      "x": 426,
+      "y": 526,
+      "width": 482,
+      "height": 673,
+      "borderRadius": 0,
+      "rotation": 9
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 988,
+      "y": 1244,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#190a03",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "right"
     },
     "remoteFile": "rakhi_d_20.webp",
     "tags": [
@@ -1810,11 +1992,21 @@
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 512,
-      "y": 148,
-      "width": 399,
-      "height": 870,
-      "borderRadius": 199
+      "x": 497,
+      "y": 247,
+      "width": 435,
+      "height": 801,
+      "borderRadius": 52
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 1024,
+      "y": 1298,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#380604",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "right"
     },
     "remoteFile": "rakhi_hindi_1.webp",
     "tags": [
@@ -1839,11 +2031,21 @@
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 496,
-      "y": 271,
-      "width": 404,
-      "height": 757,
-      "borderRadius": 202
+      "x": 511,
+      "y": 415,
+      "width": 389,
+      "height": 619,
+      "borderRadius": 47
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1029,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#f0e0cf",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_hindi_2.webp",
     "tags": [
@@ -1868,11 +2070,22 @@
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 575,
-      "y": 309,
-      "width": 461,
-      "height": 629,
-      "borderRadius": 230
+      "x": 600,
+      "y": 334,
+      "width": 436,
+      "height": 595,
+      "borderRadius": 52,
+      "rotation": 7.5
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1171,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#28180a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_hindi_4.webp",
     "tags": [
@@ -1897,11 +2110,21 @@
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 558,
-      "y": 353,
-      "width": 337,
-      "height": 701,
-      "borderRadius": 168
+      "x": 534,
+      "y": 455,
+      "width": 382,
+      "height": 611,
+      "borderRadius": 46
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1065,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#291608",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_hindi_5.webp",
     "tags": [
@@ -1926,11 +2149,21 @@
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 522,
-      "y": 424,
-      "width": 455,
-      "height": 798,
-      "borderRadius": 227
+      "x": 498,
+      "y": 598,
+      "width": 503,
+      "height": 645,
+      "borderRadius": 60
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1334,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#661814",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "rakhi_hindi_6.webp",
     "tags": [
