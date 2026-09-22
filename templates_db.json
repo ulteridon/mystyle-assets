@@ -930,7 +930,17 @@
       "y": 257,
       "width": 419,
       "height": 589,
-      "borderRadius": 209
+      "borderRadius": 210
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 860,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_6.webp",
     "tags": [
@@ -953,11 +963,21 @@
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 238,
+      "x": 246,
       "y": 445,
-      "width": 291,
-      "height": 437,
-      "borderRadius": 145
+      "width": 283,
+      "height": 378,
+      "borderRadius": 34
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 900,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_8.webp",
     "tags": [
@@ -980,11 +1000,21 @@
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 230,
+      "x": 238,
       "y": 445,
-      "width": 311,
-      "height": 433,
-      "borderRadius": 155
+      "width": 303,
+      "height": 417,
+      "borderRadius": 36
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1088,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_9.webp",
     "tags": [
@@ -1007,11 +1037,21 @@
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 241,
-      "y": 445,
-      "width": 280,
-      "height": 487,
-      "borderRadius": 140
+      "x": 246,
+      "y": 458,
+      "width": 283,
+      "height": 439,
+      "borderRadius": 34
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 991,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_11.webp",
     "tags": [
@@ -1040,6 +1080,16 @@
       "height": 497,
       "borderRadius": 179
     },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1073,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
+    },
     "remoteFile": "christmas_13.webp",
     "tags": [
       "christmas",
@@ -1061,11 +1111,21 @@
     "templateWidth": 896,
     "templateHeight": 1172,
     "photoPosition": {
-      "x": 103,
-      "y": 183,
+      "x": 101,
+      "y": 181,
       "width": 694,
       "height": 775,
       "borderRadius": 347
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 982,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_14.webp",
     "tags": [
@@ -1094,6 +1154,16 @@
       "height": 558,
       "borderRadius": 252
     },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 847,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
+    },
     "remoteFile": "christmas_17.webp",
     "tags": [
       "christmas",
@@ -1115,11 +1185,21 @@
     "templateWidth": 900,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 103,
+      "x": 106,
       "y": 243,
-      "width": 436,
+      "width": 430,
       "height": 985,
-      "borderRadius": 218
+      "borderRadius": 0
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1352,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "christmas_19.webp",
     "tags": [
@@ -1148,6 +1228,16 @@
       "height": 430,
       "borderRadius": 215
     },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 922,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
+    },
     "remoteFile": "diwali_14.webp",
     "tags": [
       "diwali",
@@ -1170,11 +1260,21 @@
     "templateWidth": 1060,
     "templateHeight": 1484,
     "photoPosition": {
-      "x": 138,
-      "y": 208,
-      "width": 816,
-      "height": 772,
-      "borderRadius": 155
+      "x": 170,
+      "y": 272,
+      "width": 712,
+      "height": 708,
+      "borderRadius": 354
+    },
+    "textConfig": {
+      "defaultText": "Your Name",
+      "x": 0,
+      "y": 1279,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#8b1a1a",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
     },
     "remoteFile": "independence_day_1.webp",
     "tags": [
