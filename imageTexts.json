@@ -776,6 +776,69 @@
       "color": "#ffffff"
     }
   ],
+  "quotes_love_2.webp": [
+    {
+      "text": "Loving you is the easiest thing I do.",
+      "x": 0.486,
+      "y": 0.72,
+      "theme": "dark",
+      "fontSize": 0.0664,
+      "noBg": true,
+      "width": 1
+    },
+    {
+      "text": "Every love song makes sense now \n~ it is you.",
+      "x": 0.4907,
+      "y": 0.72,
+      "theme": "dark",
+      "fontSize": 0.0723,
+      "noBg": true,
+      "width": 1
+    },
+    {
+      "text": "With you,",
+      "x": 0.5163,
+      "y": 0.6189,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1182,
+      "noBg": true,
+      "width": 0.6828,
+      "italic": true,
+      "layers": [
+        {
+          "text": "even ordinary feels magical",
+          "x": 0.6079,
+          "y": 0.6959,
+          "theme": "dark",
+          "fontSize": 0.0846,
+          "noBg": true,
+          "width": 1,
+          "italic": true
+        }
+      ]
+    },
+    {
+      "text": "My heart is yours, \nno returns accepted.",
+      "x": 0.486,
+      "y": 0.72,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.1055,
+      "noBg": true,
+      "width": 1
+    },
+    {
+      "text": "You are the reason \nI believe in soft things.",
+      "x": 0.507,
+      "y": 0.6423,
+      "theme": "dark",
+      "fontFamily": "GreatVibes_400Regular",
+      "fontSize": 0.0811,
+      "noBg": true,
+      "width": 1
+    }
+  ],
   "quotes_sad_1.webp": [
     {
       "text": "Some wounds never show, yet always ache.",
