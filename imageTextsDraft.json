@@ -2252,12 +2252,13 @@
     },
     {
       "text": "Change is the law of the universe.",
-      "x": 0.5,
+      "x": 0.6204,
       "y": 0.28,
       "theme": "light",
-      "fontSize": 0.058,
-      "noBg": false,
-      "verified": false
+      "fontSize": 0.0959,
+      "noBg": true,
+      "width": 1,
+      "verified": true
     },
     {
       "text": "You have the right to work, not to its fruits.",
