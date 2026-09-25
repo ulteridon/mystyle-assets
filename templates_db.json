@@ -3,16 +3,16 @@
     "id": "anniversary_bottomcenter_5",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_5.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_5.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_5_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_5_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 198,
-      "y": 548,
-      "width": 498,
-      "height": 499,
-      "borderRadius": 249
+      "x": 188,
+      "y": 541,
+      "width": 516,
+      "height": 517,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -24,7 +24,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_5.webp",
+    "remoteFile": "anniversary_5_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -34,22 +34,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomcenter_6",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_6.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_6.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_6_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_6_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 199,
-      "y": 611,
-      "width": 495,
-      "height": 495,
-      "borderRadius": 248
+      "x": 190,
+      "y": 601,
+      "width": 513,
+      "height": 514,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -61,7 +62,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_6.webp",
+    "remoteFile": "anniversary_6_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -71,22 +72,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomleft_10",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_10.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_10.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_10_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_10_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 165,
-      "y": 518,
-      "width": 564,
-      "height": 564,
-      "borderRadius": 282
+      "x": 155,
+      "y": 508,
+      "width": 583,
+      "height": 584,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -98,7 +100,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_10.webp",
+    "remoteFile": "anniversary_10_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -108,22 +110,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomleft_20",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_20.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_20.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_20_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_20_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 184,
-      "y": 538,
-      "width": 525,
-      "height": 525,
-      "borderRadius": 263
+      "x": 175,
+      "y": 528,
+      "width": 544,
+      "height": 545,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -135,7 +138,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_20.webp",
+    "remoteFile": "anniversary_20_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -145,22 +148,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomright_17",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_17.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_17.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_17_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_17_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 185,
-      "y": 538,
-      "width": 523,
-      "height": 525,
-      "borderRadius": 262
+      "x": 175,
+      "y": 528,
+      "width": 543,
+      "height": 545,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -172,7 +176,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_17.webp",
+    "remoteFile": "anniversary_17_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -182,22 +186,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomright_21",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_21.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_21.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_21_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_21_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 207,
-      "y": 562,
-      "width": 479,
-      "height": 476,
-      "borderRadius": 238
+      "x": 198,
+      "y": 552,
+      "width": 498,
+      "height": 498,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -209,7 +214,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_21.webp",
+    "remoteFile": "anniversary_21_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -219,22 +224,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomright_22",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_22.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_22.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_22_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_22_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 181,
-      "y": 537,
-      "width": 529,
-      "height": 527,
-      "borderRadius": 264
+      "x": 175,
+      "y": 528,
+      "width": 543,
+      "height": 545,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -246,7 +252,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_22.webp",
+    "remoteFile": "anniversary_22_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -256,22 +262,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_bottomright_25",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_25.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_25.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_25_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_25_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 206,
-      "y": 560,
-      "width": 481,
-      "height": 482,
-      "borderRadius": 241
+      "x": 200,
+      "y": 554,
+      "width": 494,
+      "height": 495,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -283,7 +290,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_25.webp",
+    "remoteFile": "anniversary_25_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -293,22 +300,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_middleleft_14",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_14.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_14.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_14_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_14_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 184,
-      "y": 538,
-      "width": 525,
-      "height": 525,
-      "borderRadius": 263
+      "x": 175,
+      "y": 528,
+      "width": 543,
+      "height": 545,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -320,7 +328,7 @@
       "fontFamily": "Lobster_400Regular",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_14.webp",
+    "remoteFile": "anniversary_14_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -330,22 +338,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_middleright_18",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_18.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_18.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_18_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_18_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 164,
-      "y": 568,
-      "width": 560,
-      "height": 625,
-      "borderRadius": 280
+      "x": 152,
+      "y": 552,
+      "width": 587,
+      "height": 645,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -357,7 +366,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_18.webp",
+    "remoteFile": "anniversary_18_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -367,22 +376,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_topcenter_12",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_12.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_12.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_12_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_12_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 205,
-      "y": 559,
-      "width": 483,
-      "height": 482,
-      "borderRadius": 241
+      "x": 198,
+      "y": 551,
+      "width": 498,
+      "height": 499,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -394,7 +404,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_12.webp",
+    "remoteFile": "anniversary_12_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -404,22 +414,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_topleft_27",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_27.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_27.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_27_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_27_cut.webp",
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 178,
-      "y": 482,
-      "width": 412,
-      "height": 412,
-      "borderRadius": 206
+      "x": 170,
+      "y": 473,
+      "width": 427,
+      "height": 428,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -431,7 +442,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_27.webp",
+    "remoteFile": "anniversary_27_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -441,22 +452,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_topleft_3",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_3.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_3.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_3_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_3_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 176,
-      "y": 530,
-      "width": 554,
-      "height": 554,
-      "borderRadius": 277
+      "x": 154,
+      "y": 509,
+      "width": 584,
+      "height": 583,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -468,7 +480,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_3.webp",
+    "remoteFile": "anniversary_3_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -478,22 +490,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_topright_11",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_11.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_11.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_11_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_11_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 198,
-      "y": 551,
-      "width": 497,
-      "height": 498,
-      "borderRadius": 249
+      "x": 188,
+      "y": 541,
+      "width": 516,
+      "height": 517,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -505,7 +518,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_11.webp",
+    "remoteFile": "anniversary_11_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -515,22 +528,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "anniversary_topright_13",
     "title": "Anniversary",
     "category": "Anniversary",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_13.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_13.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_13_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_13_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 199,
-      "y": 610,
-      "width": 495,
-      "height": 497,
-      "borderRadius": 248
+      "x": 189,
+      "y": 601,
+      "width": 514,
+      "height": 514,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
@@ -542,7 +556,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "anniversary_13.webp",
+    "remoteFile": "anniversary_13_cut.webp",
     "tags": [
       "anniversary",
       "love",
@@ -552,22 +566,23 @@
       "together",
       "celebration",
       "wishes"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_bottomcenter_27",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_27.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_27.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_27_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_27_cut.webp",
     "templateWidth": 1600,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 445,
-      "y": 592,
-      "width": 710,
-      "height": 730,
-      "borderRadius": 355
+      "x": 430,
+      "y": 593,
+      "width": 739,
+      "height": 740,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -579,7 +594,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_27.webp",
+    "remoteFile": "birthday_27_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -588,22 +603,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_bottomcenter_3",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_3.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_3.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_3_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_3_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 155,
-      "y": 504,
-      "width": 603,
-      "height": 587,
-      "borderRadius": 294
+      "x": 91,
+      "y": 445,
+      "width": 709,
+      "height": 725,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -615,7 +631,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_3.webp",
+    "remoteFile": "birthday_3_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -624,22 +640,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_middlecenter_24",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_24.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_24.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_24_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_24_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 119,
-      "y": 465,
-      "width": 655,
-      "height": 675,
-      "borderRadius": 328
+      "x": 110,
+      "y": 456,
+      "width": 673,
+      "height": 694,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -651,7 +668,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_24.webp",
+    "remoteFile": "birthday_24_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -660,22 +677,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_middleleft_26",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_26.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_26.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_26_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_26_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 143,
-      "y": 595,
+      "x": 144,
+      "y": 596,
       "width": 607,
-      "height": 608,
-      "borderRadius": 304
+      "height": 607,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -687,7 +705,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_26.webp",
+    "remoteFile": "birthday_26_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -696,22 +714,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_topcenter_22",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_22.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_22.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_22_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_22_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 128,
-      "y": 482,
-      "width": 638,
-      "height": 645,
-      "borderRadius": 319
+      "x": 117,
+      "y": 472,
+      "width": 660,
+      "height": 666,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -723,7 +742,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_22.webp",
+    "remoteFile": "birthday_22_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -732,22 +751,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_topcenter_7",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_7.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_7.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_7_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_7_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 209,
-      "y": 579,
-      "width": 494,
-      "height": 484,
-      "borderRadius": 242
+      "x": 174,
+      "y": 547,
+      "width": 545,
+      "height": 552,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -759,7 +779,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_7.webp",
+    "remoteFile": "birthday_7_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -768,22 +788,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_topcenter_9",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_9.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_9.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_9_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_9_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 145,
-      "y": 493,
-      "width": 613,
-      "height": 609,
-      "borderRadius": 305
+      "x": 135,
+      "y": 488,
+      "width": 622,
+      "height": 623,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -795,7 +816,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_9.webp",
+    "remoteFile": "birthday_9_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -804,22 +825,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "birthday_topleft_28",
     "title": "Birthday",
     "category": "Birthday",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_28.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_28.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_28_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/birthday_28_cut.webp",
     "templateWidth": 893,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 142,
-      "y": 494,
-      "width": 604,
-      "height": 607,
-      "borderRadius": 302
+      "x": 132,
+      "y": 484,
+      "width": 629,
+      "height": 631,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
@@ -831,7 +853,7 @@
       "fontFamily": "PlayfairDisplay_600SemiBold",
       "textAlign": "center"
     },
-    "remoteFile": "birthday_28.webp",
+    "remoteFile": "birthday_28_cut.webp",
     "tags": [
       "birthday",
       "bday",
@@ -840,22 +862,23 @@
       "cake",
       "wishes",
       "greeting"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_4",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_4.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_4.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_4_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_4_cut.webp",
     "templateWidth": 874,
     "templateHeight": 1216,
     "photoPosition": {
-      "x": 226,
-      "y": 243,
-      "width": 439,
-      "height": 620,
-      "borderRadius": 219
+      "x": 220,
+      "y": 239,
+      "width": 451,
+      "height": 632,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -867,7 +890,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_4.webp",
+    "remoteFile": "christmas_4_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -877,21 +900,22 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_5",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_5.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_5.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_5_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_5_cut.webp",
     "templateWidth": 880,
     "templateHeight": 1197,
     "photoPosition": {
-      "x": 275,
-      "y": 446,
-      "width": 359,
-      "height": 409,
+      "x": 270,
+      "y": 440,
+      "width": 369,
+      "height": 420,
       "borderRadius": 0,
       "rotation": 5.5
     },
@@ -905,7 +929,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_5.webp",
+    "remoteFile": "christmas_5_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -915,22 +939,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_6",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_6.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_6.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_6_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_6_cut.webp",
     "templateWidth": 874,
     "templateHeight": 1216,
     "photoPosition": {
-      "x": 235,
-      "y": 257,
-      "width": 419,
-      "height": 589,
-      "borderRadius": 210
+      "x": 220,
+      "y": 239,
+      "width": 451,
+      "height": 632,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -942,7 +967,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_6.webp",
+    "remoteFile": "christmas_6_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -952,22 +977,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_8",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_8.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_8.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_8_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_8_cut.webp",
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 246,
-      "y": 445,
-      "width": 283,
-      "height": 378,
-      "borderRadius": 34
+      "x": 224,
+      "y": 429,
+      "width": 320,
+      "height": 474,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -979,7 +1005,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_8.webp",
+    "remoteFile": "christmas_8_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -989,22 +1015,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_9",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_9.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_9.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_9_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_9_cut.webp",
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 238,
-      "y": 445,
-      "width": 303,
-      "height": 417,
-      "borderRadius": 36
+      "x": 213,
+      "y": 428,
+      "width": 348,
+      "height": 473,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1016,7 +1043,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_9.webp",
+    "remoteFile": "christmas_9_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -1026,22 +1053,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_11",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_11.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_11.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_11_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_11_cut.webp",
     "templateWidth": 768,
     "templateHeight": 1376,
     "photoPosition": {
-      "x": 246,
-      "y": 458,
-      "width": 283,
-      "height": 439,
-      "borderRadius": 34
+      "x": 224,
+      "y": 423,
+      "width": 318,
+      "height": 529,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1053,7 +1081,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_11.webp",
+    "remoteFile": "christmas_11_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -1063,22 +1091,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_13",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_13.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_13.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_13_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_13_cut.webp",
     "templateWidth": 843,
     "templateHeight": 1264,
     "photoPosition": {
-      "x": 80,
-      "y": 122,
-      "width": 358,
-      "height": 497,
-      "borderRadius": 179
+      "x": 75,
+      "y": 116,
+      "width": 368,
+      "height": 510,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1090,7 +1119,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_13.webp",
+    "remoteFile": "christmas_13_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -1100,22 +1129,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_14",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_14.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_14.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_14_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_14_cut.webp",
     "templateWidth": 896,
     "templateHeight": 1172,
     "photoPosition": {
-      "x": 101,
-      "y": 181,
-      "width": 694,
-      "height": 775,
-      "borderRadius": 347
+      "x": 93,
+      "y": 172,
+      "width": 711,
+      "height": 794,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1127,7 +1157,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_14.webp",
+    "remoteFile": "christmas_14_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -1137,22 +1167,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_17",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_17.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_17.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_17_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_17_cut.webp",
     "templateWidth": 900,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 67,
-      "y": 238,
-      "width": 504,
-      "height": 558,
-      "borderRadius": 252
+      "x": 45,
+      "y": 216,
+      "width": 548,
+      "height": 605,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1164,7 +1195,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_17.webp",
+    "remoteFile": "christmas_17_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -1174,21 +1205,22 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "christmas_19",
     "title": "Christmas",
     "category": "Christmas",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_19.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_19.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_19_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/christmas_19_cut.webp",
     "templateWidth": 900,
     "templateHeight": 1600,
     "photoPosition": {
-      "x": 106,
-      "y": 243,
-      "width": 430,
-      "height": 985,
+      "x": 100,
+      "y": 232,
+      "width": 442,
+      "height": 1008,
       "borderRadius": 0
     },
     "textConfig": {
@@ -1201,7 +1233,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "christmas_19.webp",
+    "remoteFile": "christmas_19_cut.webp",
     "tags": [
       "christmas",
       "xmas",
@@ -1211,22 +1243,23 @@
       "holiday",
       "jesus",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "diwali_14",
     "title": "Diwali",
     "category": "Diwali",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/diwali_14.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/diwali_14.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/diwali_14_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/diwali_14_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1024,
     "photoPosition": {
-      "x": 250,
-      "y": 199,
-      "width": 527,
-      "height": 430,
-      "borderRadius": 215
+      "x": 228,
+      "y": 172,
+      "width": 575,
+      "height": 500,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1238,7 +1271,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "diwali_14.webp",
+    "remoteFile": "diwali_14_cut.webp",
     "tags": [
       "diwali",
       "deepavali",
@@ -1249,22 +1282,23 @@
       "lamps",
       "lights",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_1",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_1.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_1.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_1_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_1_cut.webp",
     "templateWidth": 1060,
     "templateHeight": 1484,
     "photoPosition": {
-      "x": 170,
-      "y": 272,
-      "width": 712,
-      "height": 708,
-      "borderRadius": 354
+      "x": 121,
+      "y": 199,
+      "width": 812,
+      "height": 822,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1276,7 +1310,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_1.webp",
+    "remoteFile": "independence_day_1_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1287,22 +1321,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_2",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_2.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_2.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_2_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_2_cut.webp",
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 139,
-      "y": 274,
-      "width": 483,
-      "height": 719,
-      "borderRadius": 58
+      "x": 72,
+      "y": 145,
+      "width": 616,
+      "height": 978,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1314,7 +1349,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_2.webp",
+    "remoteFile": "independence_day_2_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1325,22 +1360,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_3",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_3.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_3.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_3_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_3_cut.webp",
     "templateWidth": 1254,
     "templateHeight": 1254,
     "photoPosition": {
-      "x": 315,
-      "y": 245,
+      "x": 309,
+      "y": 241,
       "width": 653,
-      "height": 654,
-      "borderRadius": 327
+      "height": 660,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1352,7 +1388,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_3.webp",
+    "remoteFile": "independence_day_3_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1363,22 +1399,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_5",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_5.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_5.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_5_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_5_cut.webp",
     "templateWidth": 1149,
     "templateHeight": 1369,
     "photoPosition": {
-      "x": 588,
-      "y": 544,
-      "width": 520,
-      "height": 632,
-      "borderRadius": 62
+      "x": 555,
+      "y": 370,
+      "width": 571,
+      "height": 952,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1390,7 +1427,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "right"
     },
-    "remoteFile": "independence_day_5.webp",
+    "remoteFile": "independence_day_5_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1401,22 +1438,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_6",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_6.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_6.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_6_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_6_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 495,
-      "y": 378,
-      "width": 572,
-      "height": 678,
-      "borderRadius": 69
+      "x": 492,
+      "y": 169,
+      "width": 577,
+      "height": 899,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1428,7 +1466,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "left"
     },
-    "remoteFile": "independence_day_6.webp",
+    "remoteFile": "independence_day_6_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1439,22 +1477,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_7",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_7.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_7.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_7_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_7_cut.webp",
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 366,
-      "y": 142,
-      "width": 718,
-      "height": 713,
-      "borderRadius": 356
+      "x": 357,
+      "y": 133,
+      "width": 735,
+      "height": 730,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1466,7 +1505,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_7.webp",
+    "remoteFile": "independence_day_7_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1477,22 +1516,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_8",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_8.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_8.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_8_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_8_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 506,
-      "y": 361,
-      "width": 546,
-      "height": 691,
-      "borderRadius": 66
+      "x": 493,
+      "y": 157,
+      "width": 570,
+      "height": 906,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1504,7 +1544,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_8.webp",
+    "remoteFile": "independence_day_8_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1515,22 +1555,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_9",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_9.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_9.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_9_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_9_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 462,
-      "y": 181,
-      "width": 559,
-      "height": 818,
-      "borderRadius": 67,
+      "x": 445,
+      "y": 21,
+      "width": 597,
+      "height": 1079,
+      "borderRadius": 0,
       "rotation": 4.5
     },
     "textConfig": {
@@ -1543,7 +1584,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_9.webp",
+    "remoteFile": "independence_day_9_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1554,22 +1595,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_11",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_11.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_11.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_11_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_11_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 521,
-      "y": 156,
-      "width": 489,
-      "height": 885,
-      "borderRadius": 59
+      "x": 449,
+      "y": 85,
+      "width": 607,
+      "height": 1053,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1581,7 +1623,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_11.webp",
+    "remoteFile": "independence_day_11_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1592,22 +1634,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_14",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_14.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_14.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_14_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_14_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 422,
-      "y": 164,
-      "width": 664,
-      "height": 760,
-      "borderRadius": 332
+      "x": 414,
+      "y": 155,
+      "width": 679,
+      "height": 778,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1619,7 +1662,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "right"
     },
-    "remoteFile": "independence_day_14.webp",
+    "remoteFile": "independence_day_14_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1630,22 +1673,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "independence_day_15",
     "title": "Independence Day",
     "category": "Independence Day",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_15.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_15.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_15_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/independence_day_15_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 438,
-      "y": 229,
-      "width": 641,
-      "height": 726,
-      "borderRadius": 321
+      "x": 410,
+      "y": 216,
+      "width": 678,
+      "height": 731,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1657,7 +1701,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "independence_day_15.webp",
+    "remoteFile": "independence_day_15_cut.webp",
     "tags": [
       "independence day",
       "patriotic",
@@ -1668,22 +1712,23 @@
       "tricolor",
       "15 august",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_1",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_1.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_1.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_1_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_1_cut.webp",
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 480,
-      "y": 191,
-      "width": 548,
-      "height": 621,
-      "borderRadius": 274
+      "x": 463,
+      "y": 199,
+      "width": 586,
+      "height": 618,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1695,7 +1740,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_d_1.webp",
+    "remoteFile": "rakhi_d_1_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1707,21 +1752,22 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_3",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_3.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_3.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_3_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_3_cut.webp",
     "templateWidth": 1122,
     "templateHeight": 1402,
     "photoPosition": {
-      "x": 523,
-      "y": 316,
-      "width": 463,
-      "height": 657,
+      "x": 474,
+      "y": 275,
+      "width": 542,
+      "height": 763,
       "borderRadius": 0
     },
     "textConfig": {
@@ -1734,7 +1780,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_d_3.webp",
+    "remoteFile": "rakhi_d_3_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1746,22 +1792,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_7",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_7.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_7.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_7_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_7_cut.webp",
     "templateWidth": 1054,
     "templateHeight": 1492,
     "photoPosition": {
-      "x": 457,
-      "y": 406,
-      "width": 473,
-      "height": 679,
-      "borderRadius": 57
+      "x": 445,
+      "y": 233,
+      "width": 494,
+      "height": 878,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1773,7 +1820,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_d_7.webp",
+    "remoteFile": "rakhi_d_7_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1785,22 +1832,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_9",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_9.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_9.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_9_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_9_cut.webp",
     "templateWidth": 1054,
     "templateHeight": 1492,
     "photoPosition": {
-      "x": 540,
-      "y": 420,
-      "width": 415,
-      "height": 660,
-      "borderRadius": 208
+      "x": 479,
+      "y": 371,
+      "width": 503,
+      "height": 734,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1812,7 +1860,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "right"
     },
-    "remoteFile": "rakhi_d_9.webp",
+    "remoteFile": "rakhi_d_9_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1824,22 +1872,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_11",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_11.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_11.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_11_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_11_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 572,
-      "y": 360,
-      "width": 429,
-      "height": 708,
-      "borderRadius": 51
+      "x": 570,
+      "y": 277,
+      "width": 448,
+      "height": 805,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1851,7 +1900,7 @@
       "fontFamily": "Pacifico_400Regular",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_d_11.webp",
+    "remoteFile": "rakhi_d_11_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1863,22 +1912,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_12",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_12.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_12.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_12_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_12_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 537,
-      "y": 375,
-      "width": 444,
-      "height": 774,
-      "borderRadius": 53
+      "x": 518,
+      "y": 261,
+      "width": 453,
+      "height": 902,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1890,7 +1940,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_d_12.webp",
+    "remoteFile": "rakhi_d_12_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1902,22 +1952,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_13",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_13.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_13.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_13_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_13_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 540,
-      "y": 372,
-      "width": 415,
-      "height": 807,
-      "borderRadius": 50
+      "x": 525,
+      "y": 259,
+      "width": 431,
+      "height": 934,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -1929,7 +1980,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_d_13.webp",
+    "remoteFile": "rakhi_d_13_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1941,21 +1992,22 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_d_20",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_20.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_20.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_20_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_d_20_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 426,
-      "y": 526,
-      "width": 482,
-      "height": 673,
+      "x": 420,
+      "y": 518,
+      "width": 495,
+      "height": 690,
       "borderRadius": 0,
       "rotation": 9
     },
@@ -1969,7 +2021,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "right"
     },
-    "remoteFile": "rakhi_d_20.webp",
+    "remoteFile": "rakhi_d_20_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -1981,22 +2033,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_hindi_1",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_1.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_1.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_1_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_1_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 497,
-      "y": 247,
-      "width": 435,
-      "height": 801,
-      "borderRadius": 52
+      "x": 484,
+      "y": 118,
+      "width": 452,
+      "height": 930,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -2008,7 +2061,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "right"
     },
-    "remoteFile": "rakhi_hindi_1.webp",
+    "remoteFile": "rakhi_hindi_1_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -2020,22 +2073,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_hindi_2",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_2.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_2.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_2_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_2_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 511,
-      "y": 415,
-      "width": 389,
-      "height": 619,
-      "borderRadius": 47
+      "x": 497,
+      "y": 268,
+      "width": 405,
+      "height": 781,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -2047,7 +2101,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_hindi_2.webp",
+    "remoteFile": "rakhi_hindi_2_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -2059,22 +2113,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_hindi_4",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_4.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_4.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_4_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_4_cut.webp",
     "templateWidth": 1086,
     "templateHeight": 1448,
     "photoPosition": {
-      "x": 600,
-      "y": 334,
-      "width": 436,
-      "height": 595,
-      "borderRadius": 52,
+      "x": 594,
+      "y": 326,
+      "width": 448,
+      "height": 610,
+      "borderRadius": 0,
       "rotation": 7.5
     },
     "textConfig": {
@@ -2087,7 +2142,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_hindi_4.webp",
+    "remoteFile": "rakhi_hindi_4_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -2099,22 +2154,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_hindi_5",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_5.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_5.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_5_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_5_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 534,
-      "y": 455,
-      "width": 382,
-      "height": 611,
-      "borderRadius": 46
+      "x": 539,
+      "y": 325,
+      "width": 375,
+      "height": 751,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -2126,7 +2182,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_hindi_5.webp",
+    "remoteFile": "rakhi_hindi_5_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -2138,22 +2194,23 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   },
   {
     "id": "rakhi_hindi_6",
     "title": "Rakhi",
     "category": "Rakhi",
-    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_6.webp",
-    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_6.webp",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_6_cut.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/rakhi_hindi_6_cut.webp",
     "templateWidth": 1024,
     "templateHeight": 1536,
     "photoPosition": {
-      "x": 498,
-      "y": 598,
-      "width": 503,
-      "height": 645,
-      "borderRadius": 60
+      "x": 494,
+      "y": 390,
+      "width": 516,
+      "height": 864,
+      "borderRadius": 0
     },
     "textConfig": {
       "defaultText": "Your Name",
@@ -2165,7 +2222,7 @@
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center"
     },
-    "remoteFile": "rakhi_hindi_6.webp",
+    "remoteFile": "rakhi_hindi_6_cut.webp",
     "tags": [
       "rakhi",
       "raksha bandhan",
@@ -2177,6 +2234,7 @@
       "siblings",
       "bond",
       "celebration"
-    ]
+    ],
+    "photoBehind": true
   }
 ]

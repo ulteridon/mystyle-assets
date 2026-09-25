@@ -11,29 +11,29 @@
       "images": [
         "anniversary_1.webp",
         "anniversary_2.webp",
-        "anniversary_3.webp",
+        "anniversary_3_cut.webp",
         "anniversary_4.webp",
-        "anniversary_5.webp",
-        "anniversary_6.webp",
+        "anniversary_5_cut.webp",
+        "anniversary_6_cut.webp",
         "anniversary_7.webp",
         "anniversary_8.webp",
-        "anniversary_10.webp",
-        "anniversary_11.webp",
-        "anniversary_12.webp",
-        "anniversary_13.webp",
-        "anniversary_14.webp",
+        "anniversary_10_cut.webp",
+        "anniversary_11_cut.webp",
+        "anniversary_12_cut.webp",
+        "anniversary_13_cut.webp",
+        "anniversary_14_cut.webp",
         "anniversary_15.webp",
         "anniversary_16.webp",
-        "anniversary_17.webp",
-        "anniversary_18.webp",
-        "anniversary_20.webp",
-        "anniversary_21.webp",
-        "anniversary_22.webp",
+        "anniversary_17_cut.webp",
+        "anniversary_18_cut.webp",
+        "anniversary_20_cut.webp",
+        "anniversary_21_cut.webp",
+        "anniversary_22_cut.webp",
         "anniversary_23.webp",
         "anniversary_24.webp",
-        "anniversary_25.webp",
+        "anniversary_25_cut.webp",
         "anniversary_26.webp",
-        "anniversary_27.webp"
+        "anniversary_27_cut.webp"
       ]
     },
     "birthday": {
@@ -42,10 +42,10 @@
       "count": 17,
       "images": [
         "birthday_1.webp",
-        "birthday_3.webp",
+        "birthday_3_cut.webp",
         "birthday_5.webp",
-        "birthday_7.webp",
-        "birthday_9.webp",
+        "birthday_7_cut.webp",
+        "birthday_9_cut.webp",
         "birthday_10.webp",
         "birthday_12.webp",
         "birthday_13.webp",
@@ -53,11 +53,11 @@
         "birthday_18.webp",
         "birthday_19.webp",
         "birthday_21.webp",
-        "birthday_22.webp",
-        "birthday_24.webp",
-        "birthday_26.webp",
-        "birthday_27.webp",
-        "birthday_28.webp"
+        "birthday_22_cut.webp",
+        "birthday_24_cut.webp",
+        "birthday_26_cut.webp",
+        "birthday_27_cut.webp",
+        "birthday_28_cut.webp"
       ]
     },
     "christmas": {
@@ -67,17 +67,17 @@
       "images": [
         "christmas_2.webp",
         "christmas_3.webp",
-        "christmas_4.webp",
-        "christmas_5.webp",
-        "christmas_6.webp",
+        "christmas_4_cut.webp",
+        "christmas_5_cut.webp",
+        "christmas_6_cut.webp",
         "christmas_7.webp",
-        "christmas_8.webp",
-        "christmas_9.webp",
-        "christmas_11.webp",
-        "christmas_13.webp",
-        "christmas_14.webp",
-        "christmas_17.webp",
-        "christmas_19.webp"
+        "christmas_8_cut.webp",
+        "christmas_9_cut.webp",
+        "christmas_11_cut.webp",
+        "christmas_13_cut.webp",
+        "christmas_14_cut.webp",
+        "christmas_17_cut.webp",
+        "christmas_19_cut.webp"
       ]
     },
     "diwali": {
@@ -87,7 +87,7 @@
       "images": [
         "diwali_1.webp",
         "diwali_7.webp",
-        "diwali_14.webp",
+        "diwali_14_cut.webp",
         "diwali_21.webp"
       ]
     },
@@ -118,20 +118,20 @@
       "group": 2,
       "count": 15,
       "images": [
-        "independence_day_1.webp",
-        "independence_day_2.webp",
-        "independence_day_3.webp",
+        "independence_day_1_cut.webp",
+        "independence_day_2_cut.webp",
+        "independence_day_3_cut.webp",
         "independence_day_4.webp",
-        "independence_day_5.webp",
-        "independence_day_6.webp",
-        "independence_day_7.webp",
-        "independence_day_8.webp",
-        "independence_day_9.webp",
+        "independence_day_5_cut.webp",
+        "independence_day_6_cut.webp",
+        "independence_day_7_cut.webp",
+        "independence_day_8_cut.webp",
+        "independence_day_9_cut.webp",
         "independence_day_10.webp",
-        "independence_day_11.webp",
+        "independence_day_11_cut.webp",
         "independence_day_12.webp",
-        "independence_day_14.webp",
-        "independence_day_15.webp",
+        "independence_day_14_cut.webp",
+        "independence_day_15_cut.webp",
         "independence_day_16.webp"
       ]
     },
@@ -326,18 +326,18 @@
       "group": 2,
       "count": 13,
       "images": [
-        "rakhi_d_1.webp",
-        "rakhi_d_3.webp",
-        "rakhi_d_7.webp",
-        "rakhi_d_9.webp",
+        "rakhi_d_1_cut.webp",
+        "rakhi_d_3_cut.webp",
+        "rakhi_d_7_cut.webp",
+        "rakhi_d_9_cut.webp",
         "rakhi_d_10.webp",
-        "rakhi_d_11.webp",
-        "rakhi_d_12.webp",
-        "rakhi_d_13.webp",
+        "rakhi_d_11_cut.webp",
+        "rakhi_d_12_cut.webp",
+        "rakhi_d_13_cut.webp",
         "rakhi_d_15.webp",
         "rakhi_d_16.webp",
         "rakhi_d_17.webp",
-        "rakhi_d_20.webp",
+        "rakhi_d_20_cut.webp",
         "rakhi_d_22.webp"
       ]
     },
@@ -346,11 +346,11 @@
       "group": 2,
       "count": 5,
       "images": [
-        "rakhi_hindi_1.webp",
-        "rakhi_hindi_2.webp",
-        "rakhi_hindi_4.webp",
-        "rakhi_hindi_5.webp",
-        "rakhi_hindi_6.webp"
+        "rakhi_hindi_1_cut.webp",
+        "rakhi_hindi_2_cut.webp",
+        "rakhi_hindi_4_cut.webp",
+        "rakhi_hindi_5_cut.webp",
+        "rakhi_hindi_6_cut.webp"
       ]
     },
     "shayari": {

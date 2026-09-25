@@ -188,6 +188,14 @@
   .xywh label { margin: 0; }
   #tplStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 14px; flex: 0 0 auto; box-shadow: 0 20px 60px rgba(36,30,46,.22); }
   #tplStage img.bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* Photo behind art: the test photo sits UNDER the art (earlier in the DOM), the
+     art's transparent hole shapes it, and the dashed box stays on top for dragging. */
+  #tplStage #phUnder { position: absolute; object-fit: cover; display: none; }
+  #tplStage.behind { background: repeating-conic-gradient(#d9d3e6 0 25%, #f4f1f8 0 50%) 0 0 / 22px 22px; }
+  #tplStage.behind #photoBox { background: transparent; }
+  #tplStage.behind #photoBox .phimg, #tplStage.behind #photoBox .ph { display: none !important; }
+  .chk { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-weight: 600; cursor: pointer; }
+  .chk input { width: auto; margin: 0; }
   .guide { position: absolute; background: var(--accent2); display: none; z-index: 6; pointer-events: none; }
   .guide.v { width: 1px; top: 0; bottom: 0; }
   .guide.h { height: 1px; left: 0; right: 0; }
@@ -435,6 +443,7 @@
       </div>
       <div class="ed-canvas" id="edCanvas">
         <div id="tplStage">
+          <img id="phUnder" alt="">
           <img class="bg" id="tplBg" alt="">
           <div class="guide v" id="guideV"></div>
           <div class="guide h" id="guideH"></div>
@@ -466,6 +475,9 @@
             <button data-shape="rounded">▢ Rounded</button>
             <button data-shape="square">■ Square</button>
           </div>
+          <label class="chk" title="Use when the background image has a transparent hole where the photo goes. The phone draws the photo behind the art, so the art decides the shape: arch, torn paper, heart, anything.">
+            <input type="checkbox" id="phBehind"> Photo behind art <span class="muted" style="font-weight:400">(art has a transparent hole)</span>
+          </label>
           <label style="margin-top:8px">Position &amp; size (template px)</label>
           <div class="xywh">
             <label>X <input id="phX" type="number"></label>
@@ -1558,6 +1570,7 @@ function applyTestPhoto() {
   const pb = $('photoBox');
   if (testPhotoUrl) { $('phImg').src = testPhotoUrl; pb.classList.add('hasphoto'); }
   else pb.classList.remove('hasphoto');
+  if (ed && $('tplModalBack').classList.contains('open')) positionOverlays();
 }
 
 function setTestPhoto(url) {
@@ -1603,13 +1616,15 @@ function renderTemplateCell(grid, t, idx, status) {
     let overlay = '';
     if (testPhotoUrl && t.photoPosition) {
       const p = t.photoPosition;
-      const radius = !p.borderRadius ? '0'
+      const radius = t.photoBehind || !p.borderRadius ? '0'
         : p.borderRadius >= Math.min(p.width, p.height) / 2 - 1 ? '50%' : '12%';
       overlay = `<img class="ph-ov" src="${testPhotoUrl}" style="left:${(p.x / W * 100).toFixed(2)}%;top:${(p.y / H * 100).toFixed(2)}%;width:${(p.width / W * 100).toFixed(2)}%;height:${(p.height / H * 100).toFixed(2)}%;border-radius:${radius};transform:rotate(${p.rotation || 0}deg)">`;
     }
+    // Photo behind art: overlay first, art on top of it (both positioned, so
+    // DOM order decides), wrapped so the badges below still sit above both.
+    const art = `<img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}${t.photoBehind ? ';position:relative' : ''}">`;
     cell.innerHTML = `
-      <img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}">
-      ${overlay}
+      ${t.photoBehind ? `<div style="position:relative">${overlay}${art}</div>` : `${art}${overlay}`}
       <span class="st ${status}">${STATUS_LABEL[status]}</span>
       <span class="tpl-badge">${t.category || ''}</span>
       <div class="bar"><span title="${t.id}">${t.id}</span>
@@ -1668,6 +1683,7 @@ function openTplEditor(index) {
     text: { x: typeof t?.textConfig?.x === 'number' ? t.textConfig.x : 0, y: t?.textConfig?.y ?? 900 },
     shape: !t ? 'circle' : br >= Math.min(pw, phh) / 2 ? 'circle' : br > 0 ? 'rounded' : 'square',
     rotation: t?.photoPosition?.rotation || 0,
+    photoBehind: !!t?.photoBehind,
     align: t?.textConfig?.textAlign || 'center',
     file: t?.remoteFile || null, uploadB64: null, uploadName: null,
     zoom: 1, fit: 1, scale: 1, sel: null,
@@ -1690,6 +1706,7 @@ function openTplEditor(index) {
   tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
+  $('phBehind').checked = ed.photoBehind;
   $('tplModalBack').classList.add('open');
   applyTestPhoto();
   selectEl(null);
@@ -1756,6 +1773,16 @@ function positionOverlays() {
   if (ed.align !== 'right') tb.style.right = '';
 
   pb.style.transform = ed.rotation ? `rotate(${ed.rotation}deg)` : '';
+  const under = $('phUnder');
+  $('tplStage').classList.toggle('behind', !!ed.photoBehind);
+  under.style.display = ed.photoBehind && testPhotoUrl ? 'block' : 'none';
+  if (ed.photoBehind && testPhotoUrl) {
+    under.src = testPhotoUrl;
+    Object.assign(under.style, {
+      left: p.x * s + 'px', top: p.y * s + 'px', width: p.w * s + 'px', height: p.h * s + 'px',
+      transform: ed.rotation ? `rotate(${ed.rotation}deg)` : '',
+    });
+  }
   $('rotBadge').textContent = `${Math.round(ed.rotation * 10) / 10}°`;
 
   // sync numeric inputs
@@ -1810,6 +1837,7 @@ function syncSegs() {
   document.querySelectorAll('#shapeSeg button').forEach((b) => b.classList.toggle('on', b.dataset.shape === ed.shape));
   document.querySelectorAll('#alignSeg button').forEach((b) => b.classList.toggle('on', b.dataset.align === ed.align));
 }
+$('phBehind').addEventListener('change', (e) => { ed.photoBehind = e.target.checked; positionOverlays(); });
 document.querySelectorAll('#shapeSeg button').forEach((b) =>
   b.addEventListener('click', () => { ed.shape = b.dataset.shape; syncSegs(); positionOverlays(); }));
 document.querySelectorAll('#alignSeg button').forEach((b) =>
@@ -2004,6 +2032,7 @@ $('tplSaveBtn').addEventListener('click', () => {
       textAlign: align,
     },
     remoteFile,
+    ...(ed.photoBehind ? { photoBehind: true } : {}),
     tags: $('tplTags').value.split(',').map((s) => s.trim()).filter(Boolean),
   };
   if (ed.index >= 0) state.templates[ed.index] = tpl;
@@ -2035,7 +2064,7 @@ const capText = (e) => (typeof e === 'string' ? e : (e && e.text) || '');
 const CATEGORY_FONT = {
   birthday: 'Lobster_400Regular', christmas: 'Lobster_400Regular', anniversary: 'DancingScript_700Bold',
   rakhi: 'Pacifico_400Regular', rakhi_d: 'Pacifico_400Regular', rakhi_hindi: 'NotoSansDevanagari_700Bold',
-  diwali: 'PlayfairDisplay_700Bold', independence_day: 'Anton_400Regular', good_wishes: 'Pacifico_400Regular',
+  diwali: 'PlayfairDisplay_700Bold', navratri: 'PlayfairDisplay_700Bold', dussehra: 'PlayfairDisplay_700Bold', independence_day: 'Anton_400Regular', good_wishes: 'Pacifico_400Regular',
   jokes: 'Lobster_400Regular', mantras: 'PlayfairDisplay_700Bold', poems: 'PlayfairDisplay_700Bold',
   quotes_krishna_gita: 'PlayfairDisplay_700Bold', quotes_good_morning_night: 'PlayfairDisplay_600SemiBold',
   quotes_love: 'DancingScript_700Bold', quotes_self_love: 'DancingScript_700Bold',
