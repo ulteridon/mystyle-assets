@@ -96,6 +96,9 @@
   .grid { align-items: start; }
   .thumb .cap-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; overflow: visible; }
   /* overflow-wrap: anywhere — the phone (React Native) breaks a word that does not fit its box, so show that here too */
+  .bake-host { position: fixed; left: 0; top: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+  .bake-host img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+  .bake-host .cap-ov { position: absolute; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; overflow-wrap: anywhere; }
   .thumb .cap-ov { position: absolute; text-align: center; line-height: 1.32; box-sizing: border-box; white-space: pre-wrap; overflow-wrap: anywhere; }
   .thumb.off .cap-ov { opacity: 1; }
   .thumb .ver { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; padding: 3px 8px 3px 6px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
@@ -620,6 +623,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.js"></script>
 <script>
 'use strict';
 // ─────────────────────────────────────────────────────────────────────────────
@@ -631,7 +635,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-17.7 · exact render';
+const ADMIN_VERSION = '2026-09-28.1 · baked designs';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -668,10 +672,99 @@ const stripVerified = (c) => { if (!c || typeof c !== 'object') return c; const 
 function publishedTexts() {
   const out = {};
   for (const [f, caps] of Object.entries(state.drafts || {})) {
-    const v = (caps || []).filter(capVerified).map(stripVerified);
+    const v = (caps || []).filter(capVerified).map(stripVerified)
+      .map((c, i) => ({ ...(typeof c === 'string' ? { text: c } : c), rendered: renderName(f, c, i) }));
     if (v.length) out[f] = v;
   }
   return out;
+}
+
+// ── Baked designs ────────────────────────────────────────────────────────────
+// Each published caption is also saved as its own finished image (background +
+// text, drawn by THE caption renderer below), so phones show exactly what this
+// page shows: one image per design instead of re-typesetting text on-device.
+// The name hashes everything that affects the pixels, so an edited design gets
+// a new file (phones cache by URL) and an unchanged one is never re-uploaded.
+function cyrb53(str, seed = 0) {
+  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+const RENDER_VERSION = 1;   // bump to re-bake everything after a renderer change
+function renderName(img, cap, i) {
+  const { rendered, verified, ...c } = typeof cap === 'string' ? { text: cap } : cap;
+  const key = JSON.stringify([RENDER_VERSION, img, c, state.positions?.[img] || null]);
+  return `${img.replace(/\.[^.]+$/, '')}__d${i + 1}_${cyrb53(key).slice(0, 8)}.webp`;
+}
+// Files already baked and uploaded: seeded in loadAll from the imageTexts.json
+// actually on the server (not from computed names), then grown as we upload.
+function knownRenders() { return (state.renderedKnown ||= new Set()); }
+function seedKnownRenders(texts) {
+  state.renderedKnown = new Set();
+  for (const caps of Object.values(texts || {}))
+    for (const c of caps || []) if (c && typeof c === 'object' && c.rendered) state.renderedKnown.add(c.rendered);
+}
+async function toDataUrl(url) {
+  const blob = await (await fetch(url, { cache: 'force-cache' })).blob();
+  return await new Promise((res) => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(blob); });
+}
+// Embedded @font-face CSS, cached per set of fonts a design uses. html-to-image
+// only embeds the fonts the captured node uses, so one cache for everything
+// would leave later designs with missing fonts.
+const bakeFontCss = new Map();
+/** Bakes one caption on its background → webp base64 (no data: prefix). */
+async function bakeDesign(img, cap) {
+  const base = baseStyle(state.positions[img], img);
+  const main = hasOwnStyle(cap) ? resolveStyle(cap, base) : base;
+  const layers = [{ text: capText(cap), st: main }, ...((cap && cap.layers) || []).map((l) => ({ text: capText(l), st: resolveStyle(l, main) }))];
+  const src = await toDataUrl(`${IMG}/all_images/${img}`);
+  const bg = new Image();
+  await new Promise((res, rej) => { bg.onload = res; bg.onerror = () => rej(new Error('image failed: ' + img)); bg.src = src; });
+  const W0 = bg.naturalWidth, H0 = bg.naturalHeight;
+  const host = document.createElement('div');
+  host.className = 'bake-host';
+  host.style.width = W0 + 'px'; host.style.height = H0 + 'px';
+  host.innerHTML = `<img src="${src}">` + layers.map(({ text }) => `<span class="cap-ov">${escapeHtml(text)}</span>`).join('');
+  document.body.appendChild(host);
+  try {
+    if (document.fonts?.ready) await document.fonts.ready;
+    const els = host.querySelectorAll('.cap-ov');
+    layers.forEach(({ st }, k) => styleCaptionEl(els[k], st, W0, H0));
+    // Two passes, like the thumbnails: the second sees the final fonts. A timer,
+    // not requestAnimationFrame, so publishing keeps going in a background tab.
+    await new Promise((r) => setTimeout(r, 60));
+    layers.forEach(({ st }, k) => styleCaptionEl(els[k], st, W0, H0));
+    const fontKey = [...new Set([...els].map((e) => `${e.style.fontFamily}|${e.style.fontWeight}|${e.style.fontStyle}`))].sort().join(';');
+    if (!bakeFontCss.has(fontKey)) bakeFontCss.set(fontKey, await htmlToImage.getFontEmbedCSS(host));
+    const canvas = await htmlToImage.toCanvas(host, {
+      width: W0, height: H0, pixelRatio: 1, cacheBust: false, fontEmbedCSS: bakeFontCss.get(fontKey),
+      style: { position: 'static', left: '0', top: '0', zIndex: 'auto' },
+    });
+    const url = canvas.toDataURL('image/webp', 0.9);
+    if (!url.startsWith('data:image/webp')) throw new Error('this browser cannot write WebP — use Chrome or Edge');
+    return url.slice(url.indexOf(',') + 1);
+  } finally {
+    host.remove();
+  }
+}
+/** Bakes + uploads every published design whose image isn't on the server yet. */
+async function bakeMissingDesigns(onEach) {
+  const known = knownRenders();
+  const texts = publishedTexts();
+  const todo = [];
+  for (const [img, caps] of Object.entries(texts)) caps.forEach((c) => { if (!known.has(c.rendered)) todo.push([img, c]); });
+  for (let k = 0; k < todo.length; k++) {
+    const [img, c] = todo[k];
+    const b64 = await bakeDesign(img, c);
+    await onEach(c.rendered, b64, k + 1, todo.length);
+    known.add(c.rendered);
+  }
+  return todo.length;
 }
 function imageCounts(f) {
   const caps = state.drafts?.[f] || [];
@@ -1139,6 +1232,7 @@ async function loadAll() {
     state.shas['app_config.json'] = cfg.sha;
     state.templates = tpl.data;  state.shas['templates_db.json'] = tpl.sha;
     state.texts = txt.data;      state.shas['imageTexts.json'] = txt.sha;
+    seedKnownRenders(txt.data);
     state.positions = pos.data;  state.shas['imagePositions.json'] = pos.sha;
     state.shas['verified.json'] = ver.sha;
     state.shas['imageTextsDraft.json'] = dft.sha;
@@ -2782,6 +2876,15 @@ async function publishAll() {
       state.pendingUploads.splice(state.pendingUploads.indexOf(up), 1);
       refreshDirtyUI();
     }
+    // Designs: one finished image per published caption, uploaded before
+    // imageTexts.json names them, so phones never see a missing file.
+    syncHiddenFromVerified();
+    const baked = await bakeMissingDesigns(async (name, b64, n, total) => {
+      if (n === 1) log(`Baking ${total} design image(s). Keep this tab in front until it finishes.`);
+      log(`Baking design ${n}/${total}: ${name} …`);
+      await ghPut(`all_images/${name}`, b64, `admin: design image ${name}`);
+    });
+    if (baked) state.dirty.add('imageTexts.json');
     const files = {
       'manifest.json': () => state.manifest,
       'app_config.json': () => state.config,

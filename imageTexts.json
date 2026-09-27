@@ -20,7 +20,8 @@
           "noBg": false,
           "width": 1
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_1__d1_s3x7fp1c.webp"
     },
     {
       "text": "My vibe",
@@ -62,7 +63,8 @@
           "noBg": true,
           "width": 0.5165
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_1__d2_1c2pvbjt.webp"
     },
     {
       "text": "Built Different",
@@ -92,7 +94,8 @@
           "noBg": true,
           "color": "#ffffff"
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_1__d3_1gvlnfj3.webp"
     },
     {
       "text": "Not lucky",
@@ -122,7 +125,8 @@
           "noBg": true,
           "width": 0.6548
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_1__d4_ui0qqhg3.webp"
     },
     {
       "text": "Doubt me",
@@ -142,7 +146,8 @@
           "fontSize": 0.1197,
           "noBg": false
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_1__d5_xzgrj0zg.webp"
     }
   ],
   "quotes_attitude_2.webp": [
@@ -182,7 +187,8 @@
           "fontSize": 0.078,
           "noBg": true
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_2__d1_vohxado9.webp"
     },
     {
       "text": "I don't announce the moves",
@@ -204,7 +210,8 @@
           "noBg": false,
           "width": 1
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_2__d2_coel6fh2.webp"
     },
     {
       "text": "Not Arrogant",
@@ -226,7 +233,8 @@
           "noBg": true,
           "width": 0.8868
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_2__d3_y7ca9ty9.webp"
     },
     {
       "text": "Standards",
@@ -288,7 +296,8 @@
           "noBg": true,
           "color": "#ffffff"
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_2__d4_1xkfqus1.webp"
     },
     {
       "text": "I Create My",
@@ -312,7 +321,8 @@
           "width": 0.8883,
           "color": "#774819"
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_2__d5_1yb5ce28.webp"
     }
   ],
   "quotes_attitude_3.webp": [
@@ -358,7 +368,8 @@
           "width": 0.6462,
           "color": "#c61908"
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_3__d1_e5fvf9no.webp"
     },
     {
       "text": "My Confidence is Mine",
@@ -431,7 +442,8 @@
           "width": 0.3316,
           "color": "#c61908"
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_3__d2_1pbkn0ar.webp"
     },
     {
       "text": "I Bend Rules",
@@ -461,7 +473,8 @@
           "noBg": true,
           "color": "#c61908"
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_3__d3_2bmmkukl.webp"
     },
     {
       "text": "Underestimate Me",
@@ -482,7 +495,8 @@
           "fontSize": 0.0887,
           "noBg": false
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_3__d4_27bg1edg.webp"
     },
     {
       "text": "I Am the Plot",
@@ -503,7 +517,8 @@
           "noBg": false,
           "width": 1
         }
-      ]
+      ],
+      "rendered": "quotes_attitude_3__d5_1wu9kqxi.webp"
     }
   ],
   "quotes_good_morning_night_1.webp": [
@@ -531,7 +546,8 @@
           "fontSize": 0.058,
           "noBg": false
         }
-      ]
+      ],
+      "rendered": "quotes_good_morning_night_1__d1_1dkf6d1m.webp"
     }
   ],
   "quotes_krishna_gita_1.webp": [
@@ -556,7 +572,8 @@
           "italic": true,
           "scrimColor": "#ffffff"
         }
-      ]
+      ],
+      "rendered": "quotes_krishna_gita_1__d1_iit3dzht.webp"
     },
     {
       "text": "The soul is neither born \nnor does it die.",
@@ -566,7 +583,8 @@
       "fontSize": 0.058,
       "noBg": true,
       "bold": true,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_1__d2_7l0naezb.webp"
     },
     {
       "text": "Change is the law of the universe.",
@@ -575,7 +593,8 @@
       "theme": "light",
       "fontSize": 0.0959,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_krishna_gita_1__d3_1t9ayqx2.webp"
     },
     {
       "text": "You have the right to work, not to its fruits.",
@@ -584,7 +603,8 @@
       "theme": "light",
       "fontSize": 0.058,
       "noBg": true,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_1__d4_1z5luxwm.webp"
     },
     {
       "text": "Set your heart on the work, \nnot the reward.",
@@ -595,7 +615,8 @@
       "fontSize": 0.058,
       "noBg": true,
       "color": "#ffffff",
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_1__d5_1ht1bcir.webp"
     }
   ],
   "quotes_krishna_gita_2.webp": [
@@ -607,7 +628,8 @@
       "fontSize": 0.0891,
       "noBg": true,
       "width": 0.6,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_2__d1_13asop0j.webp"
     },
     {
       "text": "Perform your action free from attachment",
@@ -617,7 +639,8 @@
       "fontSize": 0.0704,
       "noBg": true,
       "width": 0.4922,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_2__d2_sa0yc9b1.webp"
     },
     {
       "text": "When meditation is mastered, the mind is still.",
@@ -628,7 +651,8 @@
       "fontSize": 0.0775,
       "noBg": true,
       "width": 0.4825,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_2__d3_4uv35ael.webp"
     },
     {
       "text": "Whatever happened, happened for the good.",
@@ -638,7 +662,8 @@
       "fontSize": 0.0775,
       "noBg": true,
       "width": 0.9932,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_krishna_gita_2__d4_hlda0h6g.webp"
     }
   ],
   "quotes_love_1.webp": [
@@ -672,7 +697,8 @@
           "noBg": true,
           "width": 1
         }
-      ]
+      ],
+      "rendered": "quotes_love_1__d1_1y0n8tz1.webp"
     },
     {
       "text": "n a room\n full of art",
@@ -714,7 +740,8 @@
           "noBg": true,
           "width": 0.15
         }
-      ]
+      ],
+      "rendered": "quotes_love_1__d2_x5y0kpq8.webp"
     },
     {
       "text": "is not a place",
@@ -752,7 +779,8 @@
           "fontSize": 0.1299,
           "noBg": true
         }
-      ]
+      ],
+      "rendered": "quotes_love_1__d3_1cg4dh39.webp"
     },
     {
       "text": "I found forever in the way you smile.",
@@ -763,7 +791,8 @@
       "noBg": true,
       "width": 1,
       "color": "#ffffff",
-      "scrimColor": "#ffffff"
+      "scrimColor": "#ffffff",
+      "rendered": "quotes_love_1__d4_pq2ql2n3.webp"
     },
     {
       "text": "You are the poem \nI never knew \nhow to write.",
@@ -773,7 +802,8 @@
       "fontSize": 0.0908,
       "noBg": true,
       "width": 1,
-      "color": "#ffffff"
+      "color": "#ffffff",
+      "rendered": "quotes_love_1__d5_208mn60i.webp"
     }
   ],
   "quotes_love_2.webp": [
@@ -784,7 +814,8 @@
       "theme": "dark",
       "fontSize": 0.0664,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_love_2__d1_1bmw9j6b.webp"
     },
     {
       "text": "Every love song makes sense now \n~ it is you.",
@@ -793,7 +824,8 @@
       "theme": "dark",
       "fontSize": 0.0723,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_love_2__d2_tfzsbg2j.webp"
     },
     {
       "text": "With you,",
@@ -816,7 +848,8 @@
           "width": 1,
           "italic": true
         }
-      ]
+      ],
+      "rendered": "quotes_love_2__d3_206esseg.webp"
     },
     {
       "text": "My heart is yours, \nno returns accepted.",
@@ -826,7 +859,8 @@
       "fontFamily": "GreatVibes_400Regular",
       "fontSize": 0.1055,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_love_2__d4_jjlfeq8a.webp"
     },
     {
       "text": "You are the reason \nI believe in soft things.",
@@ -836,7 +870,8 @@
       "fontFamily": "GreatVibes_400Regular",
       "fontSize": 0.0811,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_love_2__d5_1b9wadq5.webp"
     }
   ],
   "quotes_love_3.webp": [
@@ -848,7 +883,8 @@
       "fontFamily": "GreatVibes_400Regular",
       "fontSize": 0.1211,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_love_3__d1_p9dlxkp0.webp"
     },
     {
       "text": "Your hand in mine, that is my safe place.",
@@ -857,7 +893,8 @@
       "theme": "dark",
       "fontFamily": "GreatVibes_400Regular",
       "fontSize": 0.1003,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_love_3__d2_5mgna8r8.webp"
     },
     {
       "text": "You are my calm in every storm.",
@@ -870,7 +907,8 @@
       "width": 1,
       "color": "#ffffff",
       "scrimColor": "#764937",
-      "scrimOpacity": 1
+      "scrimOpacity": 1,
+      "rendered": "quotes_love_3__d3_1oylz4je.webp"
     },
     {
       "text": "Some souls just recognize each other",
@@ -892,7 +930,8 @@
           "noBg": true,
           "width": 1
         }
-      ]
+      ],
+      "rendered": "quotes_love_3__d4_g8nmfb9d.webp"
     },
     {
       "text": "I love you more than yesterday, \nless than tomorrow.",
@@ -902,7 +941,8 @@
       "fontFamily": "GreatVibes_400Regular",
       "fontSize": 0.0869,
       "noBg": true,
-      "width": 1
+      "width": 1,
+      "rendered": "quotes_love_3__d5_ffvzsbxy.webp"
     }
   ],
   "quotes_love_4.webp": [
@@ -917,7 +957,8 @@
       "width": 1,
       "italic": true,
       "scrimColor": "#874517",
-      "scrimOpacity": 1
+      "scrimOpacity": 1,
+      "rendered": "quotes_love_4__d1_1j5phwnh.webp"
     },
     {
       "text": "In a room full of art, I would still stare at you.",
@@ -931,7 +972,8 @@
       "color": "#ffffff",
       "italic": true,
       "scrimColor": "#874517",
-      "scrimOpacity": 1
+      "scrimOpacity": 1,
+      "rendered": "quotes_love_4__d2_xn2emox5.webp"
     },
     {
       "text": "Home is not a place, it is you.",
@@ -944,7 +986,8 @@
       "width": 1,
       "color": "#ffffff",
       "scrimColor": "#874517",
-      "scrimOpacity": 1
+      "scrimOpacity": 1,
+      "rendered": "quotes_love_4__d3_1g03811e.webp"
     },
     {
       "text": "I found forever in the way you smile",
@@ -958,7 +1001,8 @@
       "color": "#ffffff",
       "italic": true,
       "scrimColor": "#874517",
-      "scrimOpacity": 1
+      "scrimOpacity": 1,
+      "rendered": "quotes_love_4__d4_usu58m41.webp"
     },
     {
       "text": "You are the poem I never knew how to write.",
@@ -971,7 +1015,8 @@
       "width": 1,
       "color": "#ffffff",
       "scrimColor": "#874517",
-      "scrimOpacity": 1
+      "scrimOpacity": 1,
+      "rendered": "quotes_love_4__d5_tvzu60t2.webp"
     }
   ],
   "quotes_sad_1.webp": [
@@ -981,7 +1026,8 @@
       "y": 0.3517,
       "theme": "light",
       "fontSize": 0.1085,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_sad_1__d1_27ucvc1s.webp"
     },
     {
       "text": "I smile so the world does not ask.",
@@ -989,7 +1035,8 @@
       "y": 0.3501,
       "theme": "light",
       "fontSize": 0.1284,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_sad_1__d2_16097cc0.webp"
     },
     {
       "text": "The loudest silence is a heart that gave up.",
@@ -1000,7 +1047,8 @@
       "noBg": true,
       "bold": true,
       "italic": true,
-      "scrimColor": "#ff8c42"
+      "scrimColor": "#ff8c42",
+      "rendered": "quotes_sad_1__d3_10glgesx.webp"
     },
     {
       "text": "Missing someone \nwho is still here hurts most.",
@@ -1010,7 +1058,8 @@
       "fontFamily": "Rajdhani_600SemiBold",
       "fontSize": 0.0732,
       "noBg": true,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_sad_1__d4_28py0f7i.webp"
     },
     {
       "text": "I am tired in a way sleep cannot fix.",
@@ -1019,7 +1068,8 @@
       "theme": "light",
       "fontFamily": "DancingScript_700Bold",
       "fontSize": 0.1303,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_sad_1__d5_1vrq0cwq.webp"
     }
   ],
   "quotes_self_love_2.webp": [
@@ -1031,7 +1081,8 @@
       "fontFamily": "Anton_400Regular",
       "fontSize": 0.058,
       "noBg": true,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_self_love_2__d1_1tzqabvc.webp"
     }
   ],
   "quotes_self_love_3.webp": [
@@ -1057,7 +1108,8 @@
           "width": 1,
           "italic": true
         }
-      ]
+      ],
+      "rendered": "quotes_self_love_3__d1_1c5h3ifk.webp"
     },
     {
       "text": "Be your own reason to smile",
@@ -1066,7 +1118,8 @@
       "theme": "dark",
       "fontFamily": "GreatVibes_400Regular",
       "fontSize": 0.189,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_self_love_3__d2_1pzg6ea3.webp"
     },
     {
       "text": "You \ncannot pour from an empty cup fill Yours",
@@ -1076,7 +1129,8 @@
       "fontFamily": "PlayfairDisplay_600SemiBold",
       "fontSize": 0.1239,
       "noBg": true,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_self_love_3__d3_1psw1dx3.webp"
     },
     {
       "text": "Fall in Love \nwith taking care of Yourself",
@@ -1086,7 +1140,8 @@
       "fontFamily": "Lobster_400Regular",
       "fontSize": 0.1422,
       "noBg": true,
-      "italic": true
+      "italic": true,
+      "rendered": "quotes_self_love_3__d4_1hdhcdon.webp"
     },
     {
       "text": "You are your \nlongest commitment",
@@ -1106,7 +1161,8 @@
           "fontSize": 0.1402,
           "noBg": true
         }
-      ]
+      ],
+      "rendered": "quotes_self_love_3__d5_23mimm78.webp"
     }
   ],
   "quotes_sigma_1.webp": [
@@ -1118,7 +1174,8 @@
       "fontSize": 0.1545,
       "noBg": true,
       "width": 1,
-      "color": "#141414"
+      "color": "#141414",
+      "rendered": "quotes_sigma_1__d1_2003vh91.webp"
     },
     {
       "text": "Lone Wolves do not run in Packs",
@@ -1127,7 +1184,8 @@
       "theme": "dark",
       "fontFamily": "Rajdhani_700Bold",
       "fontSize": 0.1624,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_sigma_1__d2_zjm0aot5.webp"
     },
     {
       "text": "Master Your Emotions",
@@ -1149,7 +1207,8 @@
           "noBg": true,
           "width": 1
         }
-      ]
+      ],
+      "rendered": "quotes_sigma_1__d3_1bntwo7u.webp"
     },
     {
       "text": "Discipline is the Ultimate Freedom",
@@ -1158,7 +1217,8 @@
       "theme": "dark",
       "fontFamily": "Anton_400Regular",
       "fontSize": 0.1346,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_sigma_1__d4_ftyn7u6x.webp"
     },
     {
       "text": "A \nCalm Man \nis a Dangerous Man",
@@ -1167,7 +1227,8 @@
       "theme": "dark",
       "fontFamily": "Anton_400Regular",
       "fontSize": 0.14,
-      "noBg": true
+      "noBg": true,
+      "rendered": "quotes_sigma_1__d5_2axucuyh.webp"
     }
   ],
   "shayari_16.webp": [
@@ -1177,7 +1238,8 @@
       "y": 0.0764,
       "theme": "light",
       "fontSize": 0.1064,
-      "noBg": false
+      "noBg": false,
+      "rendered": "shayari_16__d1_14xmlq66.webp"
     },
     {
       "text": "Khamoshi bhi bahut kuch keh jaati hai.",
@@ -1195,7 +1257,8 @@
           "fontSize": 0.058,
           "noBg": false
         }
-      ]
+      ],
+      "rendered": "shayari_16__d2_10nxyohx.webp"
     }
   ]
 }
