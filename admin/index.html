@@ -91,6 +91,9 @@
   .grid-sec.published { color: var(--green); }  .grid-sec.published .n { background: #E6F8EE; color: var(--green); }
   .grid-sec.saved { color: #B9791A; }          .grid-sec.saved .n { background: #FFF4DE; color: #B9791A; }
   .grid-sec.unverified .n { background: #F0EAF6; color: var(--muted); }
+  .grid-sec.notemplate { color: var(--red); scroll-margin-top: 90px; }  .grid-sec.notemplate .n { background: #FDE8E1; color: var(--red); }
+  .ready-stats a.jump { color: var(--red); text-underline-offset: 3px; }
+  .thumb .bar .make { white-space: nowrap; }
   .thumb.design-cell { container-type: inline-size; }
   .thumb.design-cell img { aspect-ratio: auto; height: auto; object-fit: contain; }   /* real resolution, no crop */
   .grid { align-items: start; }
@@ -635,7 +638,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-28.1 · baked designs';
+const ADMIN_VERSION = '2026-09-28.2 · no-template list';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -834,11 +837,12 @@ function templateStatus(t) {
   if (!was || JSON.stringify(was) !== JSON.stringify(t)) return 'saved';
   return 'published';
 }
-const STATUS_LABEL = { published: 'Published', saved: 'Saved', unverified: 'Not edited' };
+const STATUS_LABEL = { published: 'Published', saved: 'Saved', unverified: 'Not edited', notemplate: 'No template yet' };
 const STATUS_HINT = {
   published: 'live on phones',
   saved: 'edited — goes live on next Publish',
   unverified: 'never edited by an editor — hidden on phones',
+  notemplate: 'uploaded backgrounds phones never show — ＋ Template sets where the photo and name go',
 };
 function sectionHeader(status, n) {
   const h = document.createElement('div');
@@ -1398,7 +1402,7 @@ function renderReadiness() {
     <span><i class="dot" style="background:#D9CCF2"></i><b>${work.hiddenTemplates}</b> not edited (hidden on phones)</span>
     ${tRetiring ? `<span style="color:var(--red)"><b>${tRetiring}</b> still on phones, removed on publish</span>` : ''}
     <span><b>${work.tplFiles}</b> template backgrounds · <b>${work.templates}</b> layouts</span>
-    ${work.tplNoLayout ? `<span style="color:var(--red)"><b>${work.tplNoLayout}</b> background${work.tplNoLayout > 1 ? 's' : ''} with no template yet</span>` : ''}`;
+    ${work.tplNoLayout ? `<a href="#" class="jump" data-jump="notemplate" title="Show them on the Templates tab"><b>${work.tplNoLayout}</b> background${work.tplNoLayout > 1 ? 's' : ''} with no template yet →</a>` : ''}`;
 
   const det = $('readyDetail');
   if (det.style.display === 'none') return;
@@ -1425,6 +1429,12 @@ $('readyToggle').addEventListener('click', () => {
   det.style.display = open ? '' : 'none';
   $('readyToggle').textContent = open ? 'Hide details' : 'Show all designs';
   renderReadiness();
+});
+$('readyStatsTpl').addEventListener('click', (e) => {
+  if (!e.target.closest('[data-jump="notemplate"]')) return;
+  e.preventDefault();
+  showTab('templates');
+  $('tplGrid').querySelector('.grid-sec.notemplate')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 // ── Images & categories tab ──────────────────────────────────────────────────
@@ -1690,12 +1700,51 @@ function renderTemplates() {
   const list = state.templates || [];
   const groups = { published: [], saved: [], unverified: [] };
   list.forEach((t, idx) => groups[templateStatus(t)].push(idx));
-  $('tplCount').textContent = `${list.length} templates · ${groups.published.length} published · ${groups.saved.length} saved · ${groups.unverified.length} unverified`;
+  const bare = backgroundsWithoutTemplate();
+  $('tplCount').textContent = `${list.length} templates · ${groups.published.length} published · ${groups.saved.length} saved · ${groups.unverified.length} unverified`
+    + (bare.length ? ` · ${bare.length} backgrounds with no template` : '');
+  if (bare.length) {
+    grid.appendChild(sectionHeader('notemplate', bare.length));
+    for (const { file, cat } of bare) renderBareCell(grid, file, cat);
+  }
   for (const status of ['published', 'saved', 'unverified']) {
     if (!groups[status].length) continue;
     grid.appendChild(sectionHeader(status, groups[status].length));
     for (const idx of groups[status]) renderTemplateCell(grid, list[idx], idx, status);
   }
+}
+const templateFile = (t) => decodeURIComponent((t.templateUri || '').split('/').pop() || '');
+// Template-kind backgrounds no template uses (what the readiness panel counts
+// as "no template yet"): uploaded, but phones never show them.
+function backgroundsWithoutTemplate() {
+  const used = new Set((state.templates || []).map(templateFile));
+  const out = [];
+  for (const [cat, c] of Object.entries(state.manifest?.categories || {}).sort(([a], [b]) => a.localeCompare(b)))
+    if (c.kind === 'template') for (const file of c.images || []) if (!used.has(file)) out.push({ file, cat });
+  return out;
+}
+function renderBareCell(grid, file, cat) {
+  const cell = document.createElement('div');
+  cell.className = 'thumb';
+  cell.innerHTML = `
+    <img loading="lazy" src="${IMG}/all_images/${file}">
+    <span class="tpl-badge">${cat}</span>
+    <div class="bar"><span title="${file}">${file}</span>
+      <button class="make" title="New template on this background">＋ Template</button></div>`;
+  // 3:4 placeholder until it loads (sizes vary), then the image's own shape — no crop.
+  const im = cell.querySelector('img');
+  im.addEventListener('load', () => { im.style.aspectRatio = `${im.naturalWidth}/${im.naturalHeight}`; });
+  cell.querySelector('.make').addEventListener('click', () => openTplEditor(-1, file));
+  grid.appendChild(cell);
+}
+// A new template on an existing background starts with the category, tags and
+// name text of a template already made for the same kind of background.
+function templateDefaultsFor(file) {
+  const cat = categoryOf(file);
+  const title = cat.replace(/_/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase());
+  const list = state.templates || [];
+  const sib = list.find((t) => categoryOf(templateFile(t)) === cat) || list.find((t) => t.category === title);
+  return { category: sib?.category || title, tags: sib?.tags, defaultText: sib?.textConfig?.defaultText };
 }
 function renderTemplateCell(grid, t, idx, status) {
   {
@@ -1763,9 +1812,10 @@ const fontCss = (fam) => FONTS.find((f) => f[0] === fam) || FONTS[0];
 const SNAP = 10; // snap distance in template px (scaled by zoom below)
 let ed = null;   // { index (-1 = new), tplW, tplH, fit, zoom, scale, photo, text, shape, align, sel }
 
-function openTplEditor(index) {
+function openTplEditor(index, file = null) {   // file: background for a new template
   const isNew = index < 0;
   const t = isNew ? null : state.templates[index];
+  const pre = isNew && file ? templateDefaultsFor(file) : {};
   const br = t?.photoPosition?.borderRadius || 0;
   const pw = t?.photoPosition?.width || 500, phh = t?.photoPosition?.height || 500;
   ed = {
@@ -1779,7 +1829,7 @@ function openTplEditor(index) {
     rotation: t?.photoPosition?.rotation || 0,
     photoBehind: !!t?.photoBehind,
     align: t?.textConfig?.textAlign || 'center',
-    file: t?.remoteFile || null, uploadB64: null, uploadName: null,
+    file: t?.remoteFile || file, uploadB64: null, uploadName: null,
     zoom: 1, fit: 1, scale: 1, sel: null,
   };
 
@@ -1790,9 +1840,9 @@ function openTplEditor(index) {
       sel.insertAdjacentHTML('beforeend', `<option value="${img}" ${img === ed.file ? 'selected' : ''}>${cn} / ${img}</option>`);
 
   $('tplModalTitle').textContent = isNew ? 'New template' : `Edit ${t.id}`;
-  $('tplCategory').value = t?.category || '';
-  $('tplTags').value = (t?.tags || []).join(', ');
-  $('tplDefaultText').value = t?.textConfig?.defaultText || 'Your Name';
+  $('tplCategory').value = t?.category || pre.category || '';
+  $('tplTags').value = (t?.tags || pre.tags || []).join(', ');
+  $('tplDefaultText').value = t?.textConfig?.defaultText || pre.defaultText || 'Your Name';
   // 24 is the seeded templates' placeholder size (the app scales it to the poster);
   // anything else is an editor-chosen size and is kept as is, however small.
   $('tplFontSize').value = t?.textConfig?.fontSize > 0 && t.textConfig.fontSize !== 24 ? t.textConfig.fontSize : 56;
