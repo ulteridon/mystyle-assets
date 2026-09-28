@@ -484,12 +484,22 @@
           <label class="chk" title="Use when the background image has a transparent hole where the photo goes. The phone draws the photo behind the art, so the art decides the shape: arch, torn paper, heart, anything.">
             <input type="checkbox" id="phBehind"> Photo behind art <span class="muted" style="font-weight:400">(art has a transparent hole)</span>
           </label>
-          <label style="margin-top:8px">Position &amp; size (template px)</label>
+          <label style="margin-top:8px">Position (template px)</label>
           <div class="xywh">
             <label>X <input id="phX" type="number"></label>
             <label>Y <input id="phY" type="number"></label>
-            <label>W <input id="phW" type="number"></label>
-            <label>H <input id="phH" type="number"></label>
+            <button id="phCenter" title="Centre the frame on the template">⊕ Centre</button>
+          </div>
+          <label style="margin-top:8px">Size (template px)</label>
+          <div class="xywh">
+            <label><span id="phWText">W</span> <input id="phW" type="number"></label>
+            <label id="phHLabel">H <input id="phH" type="number"></label>
+          </div>
+          <label style="margin-top:8px">Scale — % of template, keeps the centre</label>
+          <div class="row" style="margin:0; gap:8px">
+            <input id="phScaleRange" type="range" min="5" max="100" step="0.5" value="50" style="flex:1">
+            <input id="phScale" type="number" min="5" max="100" step="0.5" value="50" style="width:66px">
+            <span class="muted" style="font-size:12px">%</span>
           </div>
           <label style="margin-top:8px">Rotation — for tilted frames</label>
           <div class="row" style="margin:0; gap:8px">
@@ -1832,6 +1842,7 @@ function openTplEditor(index, file = null) {   // file: background for a new tem
     file: t?.remoteFile || file, uploadB64: null, uploadName: null,
     zoom: 1, fit: 1, scale: 1, sel: null,
   };
+  if (ed.shape === 'circle' && ed.photo.w !== ed.photo.h) squarePhoto();   // circles are always square
 
   const sel = $('tplBgSelect');
   sel.innerHTML = '<option value="">— choose —</option>';
@@ -1932,9 +1943,52 @@ function positionOverlays() {
   // sync numeric inputs
   $('phX').value = Math.round(p.x); $('phY').value = Math.round(p.y);
   $('phW').value = Math.round(p.w); $('phH').value = Math.round(p.h);
+  const circle = ed.shape === 'circle';
+  $('phHLabel').style.display = circle ? 'none' : '';
+  $('phWText').textContent = circle ? '⌀ Diameter' : 'W';
+  const pct = Math.round(photoScalePct() * 10) / 10;
+  $('phScale').value = pct; $('phScaleRange').value = pct;
   $('phRot').value = Math.round(ed.rotation * 10) / 10;
   $('phRotRange').value = ed.rotation;
 }
+
+// Scale = the frame's larger side as a % of the template's matching side.
+function photoScalePct() {
+  const p = ed.photo;
+  return Math.max(p.w / ed.tplW, p.h / ed.tplH) * 100;
+}
+// Resize the frame about its centre to `pct` %, keeping the aspect ratio, then clamp into the template.
+function setPhotoScale(pct) {
+  pct = Math.max(5, Math.min(100, pct));
+  const p = ed.photo, cur = photoScalePct();
+  if (!(cur > 0)) return;
+  const k = pct / cur, cx = p.x + p.w / 2, cy = p.y + p.h / 2;
+  p.w = Math.max(60, p.w * k); p.h = Math.max(60, p.h * k);
+  p.x = cx - p.w / 2; p.y = cy - p.h / 2;
+  clampPhoto();
+  positionOverlays();
+}
+// Keep the frame inside the template (shrinks it if it is larger than the template).
+function clampPhoto() {
+  const p = ed.photo;
+  p.w = Math.min(p.w, ed.tplW); p.h = Math.min(p.h, ed.tplH);
+  if (ed.shape === 'circle') { p.w = p.h = Math.min(p.w, p.h); }
+  p.x = Math.max(0, Math.min(ed.tplW - p.w, p.x));
+  p.y = Math.max(0, Math.min(ed.tplH - p.h, p.y));
+}
+// Circles are always square: collapse to the shorter side around the centre.
+function squarePhoto() {
+  const p = ed.photo, d = Math.min(p.w, p.h), cx = p.x + p.w / 2, cy = p.y + p.h / 2;
+  p.w = p.h = d; p.x = cx - d / 2; p.y = cy - d / 2;
+  clampPhoto();
+}
+$('phScale').addEventListener('change', (e) => { const v = parseFloat(e.target.value); if (Number.isFinite(v)) setPhotoScale(v); });
+$('phScaleRange').addEventListener('input', (e) => setPhotoScale(parseFloat(e.target.value)));
+$('phCenter').addEventListener('click', () => {
+  const p = ed.photo;
+  p.x = (ed.tplW - p.w) / 2; p.y = (ed.tplH - p.h) / 2;
+  clampPhoto(); positionOverlays();
+});
 
 function setRotation(deg) {
   deg = ((deg + 180) % 360 + 360) % 360 - 180;           // normalise to (-180, 180]
@@ -1972,7 +2026,15 @@ const tplPick = makeColorPicker($('tplColorPicker'), { onChange: () => { if (ed)
 [['phX', 'x'], ['phY', 'y'], ['phW', 'w'], ['phH', 'h']].forEach(([id, k]) =>
   $(id).addEventListener('change', (e) => {
     const v = parseFloat(e.target.value);
-    if (Number.isFinite(v)) ed.photo[k] = Math.max(k === 'w' || k === 'h' ? 60 : 0, v);
+    if (Number.isFinite(v)) {
+      const size = k === 'w' || k === 'h';
+      if (size && ed.shape === 'circle') {
+        // diameter edit: keep the centre and stay square
+        const p = ed.photo, d = Math.max(60, v), cx = p.x + p.w / 2, cy = p.y + p.h / 2;
+        p.w = p.h = d; p.x = cx - d / 2; p.y = cy - d / 2;
+      } else ed.photo[k] = Math.max(size ? 60 : 0, v);
+      clampPhoto();
+    }
     positionOverlays();
   }));
 
@@ -1983,7 +2045,7 @@ function syncSegs() {
 }
 $('phBehind').addEventListener('change', (e) => { ed.photoBehind = e.target.checked; positionOverlays(); });
 document.querySelectorAll('#shapeSeg button').forEach((b) =>
-  b.addEventListener('click', () => { ed.shape = b.dataset.shape; syncSegs(); positionOverlays(); }));
+  b.addEventListener('click', () => { ed.shape = b.dataset.shape; if (ed.shape === 'circle') squarePhoto(); syncSegs(); positionOverlays(); }));
 document.querySelectorAll('#alignSeg button').forEach((b) =>
   b.addEventListener('click', () => {
     ed.align = b.dataset.align;
@@ -2072,13 +2134,26 @@ document.querySelectorAll('#photoBox .handle[data-corner]').forEach((h) =>
     h.setPointerCapture(e.pointerId);
     let last = { x: e.clientX, y: e.clientY };
     const move = (ev) => {
-      const dx = (ev.clientX - last.x) / ed.scale, dy = (ev.clientY - last.y) / ed.scale;
+      let dx = (ev.clientX - last.x) / ed.scale, dy = (ev.clientY - last.y) / ed.scale;
       last = { x: ev.clientX, y: ev.clientY };
       const p = ed.photo, right = p.x + p.w, bottom = p.y + p.h;
+      if (ed.shape === 'circle') {
+        // uniform resize: grow/shrink by the same amount on both axes
+        const sx = corner.includes('w') ? -1 : 1, sy = corner.includes('n') ? -1 : 1;
+        const d = Math.abs(dx) >= Math.abs(dy) ? dx * sx : dy * sy;   // + = grow
+        dx = d * sx; dy = d * sy;
+      }
       if (corner.includes('w')) { p.x = Math.max(0, Math.min(right - 60, p.x + dx)); p.w = right - p.x; }
       else { p.w = Math.max(60, Math.min(ed.tplW - p.x, p.w + dx)); }
       if (corner.includes('n')) { p.y = Math.max(0, Math.min(bottom - 60, p.y + dy)); p.h = bottom - p.y; }
       else { p.h = Math.max(60, Math.min(ed.tplH - p.y, p.h + dy)); }
+      if (ed.shape === 'circle' && p.w !== p.h) {
+        // a clamp hit one axis: pin the other to match, anchored at the fixed corner
+        const d = Math.min(p.w, p.h);
+        if (corner.includes('w')) p.x = right - d;
+        if (corner.includes('n')) p.y = bottom - d;
+        p.w = p.h = d;
+      }
       positionOverlays();
     };
     const up = () => { h.removeEventListener('pointermove', move); h.removeEventListener('pointerup', up); };
