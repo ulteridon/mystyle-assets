@@ -2236,5 +2236,42 @@
       "celebration"
     ],
     "photoBehind": true
+  },
+  {
+    "id": "anniversary_anniversary_1_mulidyju",
+    "title": "Anniversary",
+    "category": "Anniversary",
+    "templateUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_1.webp",
+    "thumbnailUri": "https://raw.githubusercontent.com/ulteridon/mystyle-assets/main/all_images/anniversary_1.webp",
+    "templateWidth": 893,
+    "templateHeight": 1600,
+    "photoPosition": {
+      "x": 136,
+      "y": 490,
+      "width": 621,
+      "height": 621,
+      "borderRadius": 310
+    },
+    "textConfig": {
+      "defaultText": "Happy Anniversary",
+      "x": 0,
+      "y": 900,
+      "width": "100%",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "fontFamily": "Poppins_700Bold",
+      "textAlign": "center"
+    },
+    "remoteFile": "anniversary_1.webp",
+    "tags": [
+      "anniversary",
+      "love",
+      "couple",
+      "romance",
+      "marriage",
+      "together",
+      "celebration",
+      "wishes"
+    ]
   }
 ]
