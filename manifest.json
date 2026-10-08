@@ -1,8 +1,8 @@
 {
-  "generated": "2026-10-08T11:54:59.919Z",
+  "generated": "2026-10-08T12:40:20.814Z",
   "imageFolder": "all_images",
   "format": "webp",
-  "totalImages": 341,
+  "totalImages": 340,
   "categories": {
     "anniversary": {
       "kind": "template",
@@ -91,7 +91,7 @@
         "christmas_14_cut.webp",
         "christmas_17_cut.webp",
         "christmas_19_cut.webp",
-        "christmas_20_cut.webp",
+        "christmas_20_cut_v2.webp",
         "christmas_21_cut.webp",
         "christmas_22_cut.webp",
         "christmas_23_cut.webp",
@@ -107,15 +107,15 @@
         "diwali_7.webp",
         "diwali_14_cut.webp",
         "diwali_21.webp",
-        "diwali_22_cut.webp",
-        "diwali_23_cut.webp",
-        "diwali_24_cut.webp",
-        "diwali_25_cut.webp",
-        "diwali_26_cut.webp",
-        "diwali_27_cut.webp",
+        "diwali_22_cut_v2.webp",
+        "diwali_23_cut_v2.webp",
+        "diwali_24_cut_v2.webp",
+        "diwali_25_cut_v2.webp",
+        "diwali_26_cut_v2.webp",
+        "diwali_27_cut_v2.webp",
         "diwali_28_cut.webp",
-        "diwali_29_cut.webp",
-        "diwali_30_cut.webp",
+        "diwali_29_cut_v2.webp",
+        "diwali_30_cut_v2.webp",
         "diwali_31_cut.webp",
         "diwali_33_cut.webp",
         "diwali_34_cut.webp",
@@ -411,8 +411,8 @@
         "rakhi_d_22.webp",
         "rakhi_d_23_cut.webp",
         "rakhi_d_24_cut.webp",
-        "rakhi_d_26_cut.webp",
-        "rakhi_d_27_cut.webp",
+        "rakhi_d_26_cut_v2.webp",
+        "rakhi_d_27_cut_v2.webp",
         "rakhi_d_28_cut.webp",
         "rakhi_d_29_cut.webp",
         "rakhi_d_30_cut.webp",
@@ -487,12 +487,12 @@
     "navratri": {
       "kind": "template",
       "group": 3,
-      "count": 29,
+      "count": 28,
       "images": [
         "navratri_1_cut.webp",
         "navratri_2_cut.webp",
         "navratri_3_cut.webp",
-        "navratri_4_cut.webp",
+        "navratri_4_cut_v2.webp",
         "navratri_5_cut.webp",
         "navratri_6_cut.webp",
         "navratri_7_cut.webp",
@@ -503,7 +503,6 @@
         "navratri_12_cut.webp",
         "navratri_13_cut.webp",
         "navratri_14_cut.webp",
-        "navratri_15_cut.webp",
         "navratri_16_cut.webp",
         "navratri_17_cut.webp",
         "navratri_18_cut.webp",
@@ -522,7 +521,7 @@
     }
   },
   "counts": {
-    "templates": 188,
+    "templates": 187,
     "images": 153
   }
 }
