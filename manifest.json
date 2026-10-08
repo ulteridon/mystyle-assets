@@ -1,13 +1,13 @@
 {
-  "generated": "2026-08-15",
+  "generated": "2026-10-08T11:54:59.919Z",
   "imageFolder": "all_images",
   "format": "webp",
-  "totalImages": 217,
+  "totalImages": 341,
   "categories": {
     "anniversary": {
       "kind": "template",
       "group": 1,
-      "count": 25,
+      "count": 27,
       "images": [
         "anniversary_1.webp",
         "anniversary_2.webp",
@@ -33,13 +33,15 @@
         "anniversary_24.webp",
         "anniversary_25_cut.webp",
         "anniversary_26.webp",
-        "anniversary_27_cut.webp"
+        "anniversary_27_cut.webp",
+        "anniversary_28_cut.webp",
+        "anniversary_29_cut.webp"
       ]
     },
     "birthday": {
       "kind": "template",
       "group": 1,
-      "count": 17,
+      "count": 28,
       "images": [
         "birthday_1.webp",
         "birthday_3_cut.webp",
@@ -57,13 +59,24 @@
         "birthday_24_cut.webp",
         "birthday_26_cut.webp",
         "birthday_27_cut.webp",
-        "birthday_28_cut.webp"
+        "birthday_28_cut.webp",
+        "birthday_29_cut.webp",
+        "birthday_30_cut.webp",
+        "birthday_31_cut.webp",
+        "birthday_32_cut.webp",
+        "birthday_33_cut.webp",
+        "birthday_34_cut.webp",
+        "birthday_35_cut.webp",
+        "birthday_36_cut.webp",
+        "birthday_37_cut.webp",
+        "birthday_38_cut.webp",
+        "birthday_39_cut.webp"
       ]
     },
     "christmas": {
       "kind": "template",
       "group": 3,
-      "count": 13,
+      "count": 18,
       "images": [
         "christmas_2.webp",
         "christmas_3.webp",
@@ -77,24 +90,49 @@
         "christmas_13_cut.webp",
         "christmas_14_cut.webp",
         "christmas_17_cut.webp",
-        "christmas_19_cut.webp"
+        "christmas_19_cut.webp",
+        "christmas_20_cut.webp",
+        "christmas_21_cut.webp",
+        "christmas_22_cut.webp",
+        "christmas_23_cut.webp",
+        "christmas_24_cut.webp"
       ]
     },
     "diwali": {
       "kind": "template",
       "group": 3,
-      "count": 4,
+      "count": 24,
       "images": [
         "diwali_1.webp",
         "diwali_7.webp",
         "diwali_14_cut.webp",
-        "diwali_21.webp"
+        "diwali_21.webp",
+        "diwali_22_cut.webp",
+        "diwali_23_cut.webp",
+        "diwali_24_cut.webp",
+        "diwali_25_cut.webp",
+        "diwali_26_cut.webp",
+        "diwali_27_cut.webp",
+        "diwali_28_cut.webp",
+        "diwali_29_cut.webp",
+        "diwali_30_cut.webp",
+        "diwali_31_cut.webp",
+        "diwali_33_cut.webp",
+        "diwali_34_cut.webp",
+        "diwali_35_cut.webp",
+        "diwali_36_cut.webp",
+        "diwali_37_cut.webp",
+        "diwali_38_cut.webp",
+        "diwali_39_cut.webp",
+        "diwali_40_cut.webp",
+        "diwali_41_cut.webp",
+        "diwali_43_cut.webp"
       ]
     },
     "good_wishes": {
       "kind": "image",
       "group": 3,
-      "count": 15,
+      "count": 18,
       "images": [
         "good_wishes_1.webp",
         "good_wishes_2.webp",
@@ -110,7 +148,10 @@
         "good_wishes_14.webp",
         "good_wishes_15.webp",
         "good_wishes_17.webp",
-        "good_wishes_18.webp"
+        "good_wishes_18.webp",
+        "good_wishes_19.webp",
+        "good_wishes_20.webp",
+        "good_wishes_21.webp"
       ]
     },
     "independence_day": {
@@ -138,7 +179,7 @@
     "jokes": {
       "kind": "image",
       "group": 2,
-      "count": 18,
+      "count": 35,
       "images": [
         "jokes_2.webp",
         "jokes_3.webp",
@@ -157,13 +198,30 @@
         "jokes_16.webp",
         "jokes_17.webp",
         "jokes_18.webp",
-        "jokes_19.webp"
+        "jokes_19.webp",
+        "jokes_20.webp",
+        "jokes_21.webp",
+        "jokes_22.webp",
+        "jokes_23.webp",
+        "jokes_24.webp",
+        "jokes_25.webp",
+        "jokes_26.webp",
+        "jokes_27.webp",
+        "jokes_28.webp",
+        "jokes_29.webp",
+        "jokes_30.webp",
+        "jokes_31.webp",
+        "jokes_32.webp",
+        "jokes_33.webp",
+        "jokes_34.webp",
+        "jokes_35.webp",
+        "jokes_36.webp"
       ]
     },
     "mantras": {
       "kind": "image",
       "group": 3,
-      "count": 12,
+      "count": 16,
       "images": [
         "mantras_2.webp",
         "mantras_3.webp",
@@ -176,13 +234,17 @@
         "mantras_13.webp",
         "mantras_14.webp",
         "mantras_15.webp",
-        "mantras_16.webp"
+        "mantras_16.webp",
+        "mantras_17.webp",
+        "mantras_18.webp",
+        "mantras_19.webp",
+        "mantras_20.webp"
       ]
     },
     "poems": {
       "kind": "image",
       "group": 2,
-      "count": 27,
+      "count": 30,
       "images": [
         "poems_2.webp",
         "poems_3.webp",
@@ -210,7 +272,10 @@
         "poems_27.webp",
         "poems_28.webp",
         "poems_29.webp",
-        "poems_30.webp"
+        "poems_30.webp",
+        "poems_31.webp",
+        "poems_32.webp",
+        "poems_33.webp"
       ]
     },
     "quotes_attitude": {
@@ -257,10 +322,11 @@
     "quotes_money": {
       "kind": "image",
       "group": 1,
-      "count": 2,
+      "count": 3,
       "images": [
         "quotes_money_2.webp",
-        "quotes_money_3.webp"
+        "quotes_money_3.webp",
+        "quotes_money_4.webp"
       ]
     },
     "quotes_motivational": {
@@ -286,19 +352,21 @@
     "quotes_self_love": {
       "kind": "image",
       "group": 1,
-      "count": 2,
+      "count": 3,
       "images": [
         "quotes_self_love_2.webp",
-        "quotes_self_love_3.webp"
+        "quotes_self_love_3.webp",
+        "quotes_self_love_4.webp"
       ]
     },
     "quotes_shayari": {
       "kind": "image",
       "group": 1,
-      "count": 2,
+      "count": 3,
       "images": [
         "quotes_shayari_2.webp",
-        "quotes_shayari_3.webp"
+        "quotes_shayari_3.webp",
+        "quotes_shayari_4.webp"
       ]
     },
     "quotes_sigma": {
@@ -314,17 +382,19 @@
     "rakhi": {
       "kind": "template",
       "group": 2,
-      "count": 3,
+      "count": 5,
       "images": [
         "rakhi_3.webp",
         "rakhi_4.webp",
-        "rakhi_5.webp"
+        "rakhi_5.webp",
+        "rakhi_6_cut.webp",
+        "rakhi_7_cut.webp"
       ]
     },
     "rakhi_d": {
       "kind": "template",
       "group": 2,
-      "count": 13,
+      "count": 21,
       "images": [
         "rakhi_d_1_cut.webp",
         "rakhi_d_3_cut.webp",
@@ -338,7 +408,15 @@
         "rakhi_d_16.webp",
         "rakhi_d_17.webp",
         "rakhi_d_20_cut.webp",
-        "rakhi_d_22.webp"
+        "rakhi_d_22.webp",
+        "rakhi_d_23_cut.webp",
+        "rakhi_d_24_cut.webp",
+        "rakhi_d_26_cut.webp",
+        "rakhi_d_27_cut.webp",
+        "rakhi_d_28_cut.webp",
+        "rakhi_d_29_cut.webp",
+        "rakhi_d_30_cut.webp",
+        "rakhi_d_31_cut.webp"
       ]
     },
     "rakhi_hindi": {
@@ -356,7 +434,7 @@
     "shayari": {
       "kind": "image",
       "group": 1,
-      "count": 22,
+      "count": 23,
       "images": [
         "shayari_1.webp",
         "shayari_2.webp",
@@ -379,12 +457,72 @@
         "shayari_20.webp",
         "shayari_21.webp",
         "shayari_22.webp",
-        "shayari_23.webp"
+        "shayari_23.webp",
+        "shayari_24.webp"
+      ]
+    },
+    "chhath_puja": {
+      "kind": "template",
+      "group": 3,
+      "count": 16,
+      "images": [
+        "chhath_puja_1_cut.webp",
+        "chhath_puja_3_cut.webp",
+        "chhath_puja_4_cut.webp",
+        "chhath_puja_5_cut.webp",
+        "chhath_puja_6_cut.webp",
+        "chhath_puja_7_cut.webp",
+        "chhath_puja_8_cut.webp",
+        "chhath_puja_9_cut.webp",
+        "chhath_puja_10_cut.webp",
+        "chhath_puja_12_cut.webp",
+        "chhath_puja_14_cut.webp",
+        "chhath_puja_15_cut.webp",
+        "chhath_puja_16_cut.webp",
+        "chhath_puja_17_cut.webp",
+        "chhath_puja_19_cut.webp",
+        "chhath_puja_20_cut.webp"
+      ]
+    },
+    "navratri": {
+      "kind": "template",
+      "group": 3,
+      "count": 29,
+      "images": [
+        "navratri_1_cut.webp",
+        "navratri_2_cut.webp",
+        "navratri_3_cut.webp",
+        "navratri_4_cut.webp",
+        "navratri_5_cut.webp",
+        "navratri_6_cut.webp",
+        "navratri_7_cut.webp",
+        "navratri_8_cut.webp",
+        "navratri_9_cut.webp",
+        "navratri_10_cut.webp",
+        "navratri_11_cut.webp",
+        "navratri_12_cut.webp",
+        "navratri_13_cut.webp",
+        "navratri_14_cut.webp",
+        "navratri_15_cut.webp",
+        "navratri_16_cut.webp",
+        "navratri_17_cut.webp",
+        "navratri_18_cut.webp",
+        "navratri_19_cut.webp",
+        "navratri_20_cut.webp",
+        "navratri_21_cut.webp",
+        "navratri_22_cut.webp",
+        "navratri_23_cut.webp",
+        "navratri_25_cut.webp",
+        "navratri_26_cut.webp",
+        "navratri_27_cut.webp",
+        "navratri_28_cut.webp",
+        "navratri_29_cut.webp",
+        "navratri_30_cut.webp"
       ]
     }
   },
   "counts": {
-    "templates": 95,
-    "images": 122
+    "templates": 188,
+    "images": 153
   }
 }
