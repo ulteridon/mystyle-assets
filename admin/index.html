@@ -212,9 +212,12 @@
   #photoBox.sel .handle { display: block; }
   .handle.nw { left: -7px; top: -7px; cursor: nwse-resize; } .handle.se { right: -7px; bottom: -7px; cursor: nwse-resize; }
   .handle.ne { right: -7px; top: -7px; cursor: nesw-resize; } .handle.sw { left: -7px; bottom: -7px; cursor: nesw-resize; }
-  #textBox { position: absolute; cursor: move; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.6); border: 1.5px dashed transparent; padding: 2px 6px; z-index: 4; }
-  #textBox:hover { border-color: rgba(124,92,252,.5); }
+  /* The name box: the name is fitted inside it exactly like the app does (lib/nameFit.ts). */
+  #textBox { position: absolute; cursor: move; display: flex; flex-direction: column; justify-content: center; border: 1.5px dashed rgba(124,92,252,.35); z-index: 4; box-sizing: border-box; }
+  #textBox:hover { border-color: rgba(124,92,252,.7); }
   #textBox.sel { border-color: var(--accent); border-style: solid; }
+  #textBox .nm-plate { display: flex; flex-direction: column; }
+  #textBox .nm-line { white-space: nowrap; }
   /* card designer */
   #cdStage { position: relative; background: #000; user-select: none; touch-action: none; overflow: hidden; border-radius: 14px; box-shadow: 0 20px 60px rgba(36,30,46,.22); }
   #cdStage img.bg { display: block; width: 100%; height: 100%; }
@@ -445,6 +448,21 @@
             <button data-align="center">≡ Center</button>
             <button data-align="right">⟹ Right</button>
           </div>
+          <label>Readability</label>
+          <select id="tplNameStyle">
+            <option value="shadow">Light text, dark halo</option>
+            <option value="glow">Dark text, light halo</option>
+            <option value="plate">On a plate</option>
+            <option value="none">No effect</option>
+          </select>
+          <div id="tplPlateRow">
+            <label>Plate colour</label>
+            <input id="tplPlateColor" placeholder="rgba(20,12,8,0.72)">
+            <label>Plate border</label>
+            <input id="tplPlateBorder" placeholder="none">
+          </div>
+          <label>Name box — <input id="tplBoxW" type="number" min="40" style="width:64px"> × <input id="tplBoxH" type="number" min="20" style="width:56px"> px</label>
+          <p style="font-size:12px;margin:4px 0 0;color:var(--muted)">Long names shrink, then wrap onto two lines, inside this box, never past it. Drag the box to move it.</p>
         </div>
       </div>
       <div class="ed-canvas" id="edCanvas">
@@ -648,7 +666,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-09-28.2 · no-template list';
+const ADMIN_VERSION = '2026-10-09.1 · name box';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1822,6 +1840,45 @@ const fontCss = (fam) => FONTS.find((f) => f[0] === fam) || FONTS[0];
 const SNAP = 10; // snap distance in template px (scaled by zoom below)
 let ed = null;   // { index (-1 = new), tplW, tplH, fit, zoom, scale, photo, text, shape, align, sel }
 
+/** The name box of a template in template px. Older entries have width '100%' and no height. */
+function nameBoxOf(t) {
+  const tc = t?.textConfig || {};
+  const W = t?.templateWidth || 1024;
+  const fs = tc.fontSize > 0 && tc.fontSize !== 24 ? tc.fontSize : 56;
+  const x = typeof tc.x === 'number' ? tc.x : 0;
+  if (!t) return { x: Math.round(W * 0.05), y: 900, w: Math.round(W * 0.9), h: Math.round(56 * 1.75) };
+  return {
+    x, y: tc.y ?? 900,
+    w: typeof tc.width === 'number' ? tc.width : W - x,
+    h: typeof tc.height === 'number' ? tc.height : Math.round(fs * 1.7),
+  };
+}
+
+// Same rules as the app's lib/nameFit.ts: shrink a little, then two balanced lines.
+const NAME_LINE = 1.3, PLATE_PAD_X = 0.55, PLATE_PAD_Y = 0.2;
+let measureCtx = null;
+function fitNameLines(text, css, weight, boxW, boxH, maxSize, plate) {
+  measureCtx = measureCtx || document.createElement('canvas').getContext('2d');
+  measureCtx.font = `${weight} 100px ${css}`;
+  const tw = (v) => measureCtx.measureText(v).width / 100;
+  const name = text.trim().replace(/\s+/g, ' ');
+  const usable = boxW * 0.94, padX = plate ? PLATE_PAD_X * 2 : 0, padY = plate ? PLATE_PAD_Y * 2 : 0;
+  const sizeFor = (w, n) => Math.min(maxSize, usable / (w + padX), boxH / (n * NAME_LINE + padY));
+  const one = sizeFor(tw(name), 1);
+  let lines = [name], size = one;
+  const words = name.split(' ');
+  if (one < maxSize * 0.8 && words.length > 1) {
+    let best = { size: 0, lines };
+    for (let i = 1; i < words.length; i++) {
+      const a = words.slice(0, i).join(' '), b = words.slice(i).join(' ');
+      const s2 = sizeFor(Math.max(tw(a), tw(b)), 2);
+      if (s2 > best.size) best = { size: s2, lines: [a, b] };
+    }
+    if (best.size > one * 1.05) { lines = best.lines; size = best.size; }
+  }
+  return { lines, size: Math.max(1, size) };
+}
+
 function openTplEditor(index, file = null) {   // file: background for a new template
   const isNew = index < 0;
   const t = isNew ? null : state.templates[index];
@@ -1834,7 +1891,7 @@ function openTplEditor(index, file = null) {   // file: background for a new tem
     photo: t?.photoPosition
       ? { x: t.photoPosition.x, y: t.photoPosition.y, w: pw, h: phh }
       : { x: 262, y: 300, w: 500, h: 500 },
-    text: { x: typeof t?.textConfig?.x === 'number' ? t.textConfig.x : 0, y: t?.textConfig?.y ?? 900 },
+    text: nameBoxOf(t),
     shape: !t ? 'circle' : br >= Math.min(pw, phh) / 2 ? 'circle' : br > 0 ? 'rounded' : 'square',
     rotation: t?.photoPosition?.rotation || 0,
     photoBehind: !!t?.photoBehind,
@@ -1860,6 +1917,12 @@ function openTplEditor(index, file = null) {   // file: background for a new tem
   tplPick.set(t?.textConfig?.color || '#ffffff', { silent: true });
   tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
+  $('tplNameStyle').value = ['glow', 'plate', 'none'].includes(t?.textConfig?.style) ? t.textConfig.style : 'shadow';
+  $('tplPlateColor').value = t?.textConfig?.plateColor || '';
+  $('tplPlateBorder').value = t?.textConfig?.plateBorder || '';
+  ed.shadowColor = t?.textConfig?.shadowColor;
+  $('tplBoxW').value = Math.round(ed.text.w);
+  $('tplBoxH').value = Math.round(ed.text.h);
   $('tplDeleteBtn').style.display = isNew ? 'none' : '';
   $('phBehind').checked = ed.photoBehind;
   $('tplModalBack').classList.add('open');
@@ -1916,16 +1979,33 @@ function positionOverlays() {
 
   const tb = $('textBox');
   const [, , css, weight] = fontCss($('tplFont').value);
-  tb.textContent = $('tplDefaultText').value || 'Your Name';
+  const style = $('tplNameStyle').value;
+  const plate = style === 'plate';
+  $('tplPlateRow').style.display = plate ? '' : 'none';
+  const fit = fitNameLines($('tplDefaultText').value || 'Your Name', css, weight,
+    ed.text.w * s, ed.text.h * s, Math.max(1, parseFloat($('tplFontSize').value || '56') * s), plate);
+  const fsz = fit.size;
+  const items = ed.align === 'left' ? 'flex-start' : ed.align === 'right' ? 'flex-end' : 'center';
+  const halo = style === 'none' ? 'none'
+    : style === 'glow' ? `0 0 ${fsz * 0.2}px ${ed.shadowColor || 'rgba(255,255,255,0.9)'}`
+    : plate ? `0 ${fsz * 0.03}px ${fsz * 0.06}px ${ed.shadowColor || 'rgba(0,0,0,0.35)'}`
+    : `0 ${fsz * 0.04}px ${fsz * 0.16}px ${ed.shadowColor || 'rgba(0,0,0,0.75)'}`;
+  const esc = (v) => v.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const lines = fit.lines.map((l) => `<div class="nm-line" style="line-height:${fsz * NAME_LINE}px;text-align:${ed.align}">${esc(l)}</div>`).join('');
+  const border = $('tplPlateBorder').value.trim();
+  tb.innerHTML = plate
+    ? `<div class="nm-plate" style="align-items:${items};background:${esc($('tplPlateColor').value.trim() || 'rgba(20,12,8,0.72)')};border-radius:${fsz}px;padding:${fsz * PLATE_PAD_Y}px ${fsz * PLATE_PAD_X}px;${border ? `border:${Math.max(1, fsz * 0.05)}px solid ${esc(border)};` : ''}">${lines}</div>`
+    : lines;
+  tb.style.alignItems = items;
   tb.style.fontFamily = css;
   tb.style.fontWeight = weight;
-  tb.style.fontSize = Math.max(1, parseFloat($('tplFontSize').value || '56') * s) + 'px';
+  tb.style.fontSize = fsz + 'px';
   tb.style.color = tplPick.value || '#ffffff';
+  tb.style.textShadow = halo;
+  tb.style.left = ed.text.x * s + 'px';
   tb.style.top = ed.text.y * s + 'px';
-  if (ed.align === 'center') { tb.style.left = '50%'; tb.style.transform = 'translateX(-50%)'; }
-  else if (ed.align === 'right') { tb.style.transform = ''; tb.style.left = ''; tb.style.right = (ed.tplW - ed.text.x) * s + 'px'; }
-  else { tb.style.transform = ''; tb.style.right = ''; tb.style.left = ed.text.x * s + 'px'; }
-  if (ed.align !== 'right') tb.style.right = '';
+  tb.style.width = ed.text.w * s + 'px';
+  tb.style.height = ed.text.h * s + 'px';
 
   pb.style.transform = ed.rotation ? `rotate(${ed.rotation}deg)` : '';
   const under = $('phUnder');
@@ -2018,6 +2098,20 @@ $('rotHandle').addEventListener('pointerdown', (e) => {
   h.addEventListener('pointermove', move);
   h.addEventListener('pointerup', up);
 });
+['tplNameStyle', 'tplPlateColor', 'tplPlateBorder'].forEach((id) =>
+  $(id).addEventListener('input', () => { if (ed) positionOverlays(); }));
+['tplBoxW', 'tplBoxH'].forEach((id) =>
+  $(id).addEventListener('input', () => {
+    if (!ed) return;
+    const v = parseInt($(id).value, 10);
+    if (!(v > 0)) return;
+    if (id === 'tplBoxW') {
+      const c = ed.text.x + ed.text.w / 2;
+      ed.text.w = Math.min(v, ed.tplW);
+      ed.text.x = Math.max(0, Math.min(ed.tplW - ed.text.w, c - ed.text.w / 2));
+    } else ed.text.h = Math.min(v, ed.tplH);
+    positionOverlays();
+  }));
 ['tplFontSize', 'tplDefaultText', 'tplFont'].forEach((id) =>
   $(id).addEventListener('input', () => positionOverlays()));
 const tplPick = makeColorPicker($('tplColorPicker'), { onChange: () => { if (ed) positionOverlays(); } });
@@ -2049,8 +2143,6 @@ document.querySelectorAll('#shapeSeg button').forEach((b) =>
 document.querySelectorAll('#alignSeg button').forEach((b) =>
   b.addEventListener('click', () => {
     ed.align = b.dataset.align;
-    if (ed.align === 'left') ed.text.x = Math.max(0, Math.min(ed.text.x, ed.tplW - 100)) || 60;
-    if (ed.align === 'right') ed.text.x = ed.text.x > 100 ? ed.text.x : ed.tplW - 60;
     syncSegs(); positionOverlays();
   }));
 
@@ -2117,12 +2209,12 @@ dragify($('photoBox'), 'photo', (dx, dy) => {
   snapGuides(nearV, nearH);
 });
 dragify($('textBox'), 'text', (dx, dy) => {
-  ed.text.y = Math.max(0, Math.min(ed.tplH - 40, ed.text.y + dy));
-  if (ed.align !== 'center') ed.text.x = Math.max(0, Math.min(ed.tplW, ed.text.x + dx));
+  ed.text.y = Math.max(0, Math.min(ed.tplH - ed.text.h, ed.text.y + dy));
+  ed.text.x = Math.max(0, Math.min(ed.tplW - ed.text.w, ed.text.x + dx));
   const snap = SNAP / ed.zoom;
-  const nearH = Math.abs(ed.text.y - ed.tplH / 2) < snap;
-  if (nearH) ed.text.y = ed.tplH / 2;
-  snapGuides(false, nearH);
+  const nearV = Math.abs(ed.text.x + ed.text.w / 2 - ed.tplW / 2) < snap;
+  if (nearV) ed.text.x = ed.tplW / 2 - ed.text.w / 2;
+  snapGuides(nearV, false);
 });
 
 // corner resize handles
@@ -2179,8 +2271,8 @@ document.addEventListener('keydown', (e) => {
     ed.photo.x = Math.max(0, Math.min(ed.tplW - ed.photo.w, ed.photo.x + d[0]));
     ed.photo.y = Math.max(0, Math.min(ed.tplH - ed.photo.h, ed.photo.y + d[1]));
   } else {
-    if (ed.align !== 'center') ed.text.x = Math.max(0, ed.text.x + d[0]);
-    ed.text.y = Math.max(0, Math.min(ed.tplH - 40, ed.text.y + d[1]));
+    ed.text.x = Math.max(0, Math.min(ed.tplW - ed.text.w, ed.text.x + d[0]));
+    ed.text.y = Math.max(0, Math.min(ed.tplH - ed.text.h, ed.text.y + d[1]));
   }
   positionOverlays();
 });
@@ -2242,13 +2334,18 @@ $('tplSaveBtn').addEventListener('click', () => {
     },
     textConfig: {
       defaultText: $('tplDefaultText').value.trim() || 'Your Name',
-      x: align === 'center' ? 0 : Math.round(ed.text.x),
+      x: Math.round(ed.text.x),
       y: Math.round(ed.text.y),
-      width: '100%',
+      width: Math.round(ed.text.w),
+      height: Math.round(ed.text.h),
       fontSize: parseInt($('tplFontSize').value || '56', 10),
       color: tplPick.value || '#ffffff',
       fontFamily: $('tplFont').value,
       textAlign: align,
+      style: $('tplNameStyle').value,
+      ...($('tplNameStyle').value === 'plate' && $('tplPlateColor').value.trim() ? { plateColor: $('tplPlateColor').value.trim() } : {}),
+      ...($('tplNameStyle').value === 'plate' && $('tplPlateBorder').value.trim() ? { plateBorder: $('tplPlateBorder').value.trim() } : {}),
+      ...(ed.shadowColor ? { shadowColor: ed.shadowColor } : {}),
     },
     remoteFile,
     ...(ed.photoBehind ? { photoBehind: true } : {}),
