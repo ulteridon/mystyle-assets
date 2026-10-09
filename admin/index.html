@@ -450,11 +450,16 @@
           </div>
           <label>Readability</label>
           <select id="tplNameStyle">
+            <option value="outline">Outlined letters</option>
             <option value="shadow">Light text, dark halo</option>
             <option value="glow">Dark text, light halo</option>
-            <option value="plate">On a plate</option>
+            <option value="plate">On a plate (covers the art)</option>
             <option value="none">No effect</option>
           </select>
+          <div id="tplOutlineRow">
+            <label>Outline colour</label>
+            <input id="tplOutlineColor" placeholder="rgba(0,0,0,0.85)">
+          </div>
           <div id="tplPlateRow">
             <label>Plate colour</label>
             <input id="tplPlateColor" placeholder="rgba(20,12,8,0.72)">
@@ -666,7 +671,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-10-09.1 · name box';
+const ADMIN_VERSION = '2026-10-09.2 · outlined names';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1917,7 +1922,9 @@ function openTplEditor(index, file = null) {   // file: background for a new tem
   tplPick.set(t?.textConfig?.color || '#ffffff', { silent: true });
   tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
-  $('tplNameStyle').value = ['glow', 'plate', 'none'].includes(t?.textConfig?.style) ? t.textConfig.style : 'shadow';
+  $('tplNameStyle').value = ['outline', 'glow', 'plate', 'none'].includes(t?.textConfig?.style) ? t.textConfig.style
+    : t ? 'shadow' : 'outline';
+  $('tplOutlineColor').value = t?.textConfig?.outlineColor || '';
   $('tplPlateColor').value = t?.textConfig?.plateColor || '';
   $('tplPlateBorder').value = t?.textConfig?.plateBorder || '';
   ed.shadowColor = t?.textConfig?.shadowColor;
@@ -1981,12 +1988,21 @@ function positionOverlays() {
   const [, , css, weight] = fontCss($('tplFont').value);
   const style = $('tplNameStyle').value;
   const plate = style === 'plate';
+  const outline = style === 'outline';
   $('tplPlateRow').style.display = plate ? '' : 'none';
+  $('tplOutlineRow').style.display = outline ? '' : 'none';
+  const maxSize = Math.max(1, parseFloat($('tplFontSize').value || '56') * s);
+  // Same room for the outline at the line ends as the app keeps (components/TemplatePoster.tsx).
   const fit = fitNameLines($('tplDefaultText').value || 'Your Name', css, weight,
-    ed.text.w * s, ed.text.h * s, Math.max(1, parseFloat($('tplFontSize').value || '56') * s), plate);
+    ed.text.w * s - (outline ? maxSize * 0.12 : 0), ed.text.h * s, maxSize, plate);
   const fsz = fit.size;
   const items = ed.align === 'left' ? 'flex-start' : ed.align === 'right' ? 'flex-end' : 'center';
+  const oc = $('tplOutlineColor').value.trim() || 'rgba(0,0,0,0.85)';
+  const o = fsz * 0.06;
   const halo = style === 'none' ? 'none'
+    : outline ? [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
+      .map(([x, y]) => { const n = Math.hypot(x, y); return `${x / n * o}px ${y / n * o}px 0 ${oc}`; })
+      .concat(`0 ${fsz * 0.05}px ${fsz * 0.12}px ${ed.shadowColor || 'rgba(0,0,0,0.55)'}`).join(', ')
     : style === 'glow' ? `0 0 ${fsz * 0.2}px ${ed.shadowColor || 'rgba(255,255,255,0.9)'}`
     : plate ? `0 ${fsz * 0.03}px ${fsz * 0.06}px ${ed.shadowColor || 'rgba(0,0,0,0.35)'}`
     : `0 ${fsz * 0.04}px ${fsz * 0.16}px ${ed.shadowColor || 'rgba(0,0,0,0.75)'}`;
@@ -2098,7 +2114,7 @@ $('rotHandle').addEventListener('pointerdown', (e) => {
   h.addEventListener('pointermove', move);
   h.addEventListener('pointerup', up);
 });
-['tplNameStyle', 'tplPlateColor', 'tplPlateBorder'].forEach((id) =>
+['tplNameStyle', 'tplOutlineColor', 'tplPlateColor', 'tplPlateBorder'].forEach((id) =>
   $(id).addEventListener('input', () => { if (ed) positionOverlays(); }));
 ['tplBoxW', 'tplBoxH'].forEach((id) =>
   $(id).addEventListener('input', () => {
@@ -2343,6 +2359,7 @@ $('tplSaveBtn').addEventListener('click', () => {
       fontFamily: $('tplFont').value,
       textAlign: align,
       style: $('tplNameStyle').value,
+      ...($('tplNameStyle').value === 'outline' && $('tplOutlineColor').value.trim() ? { outlineColor: $('tplOutlineColor').value.trim() } : {}),
       ...($('tplNameStyle').value === 'plate' && $('tplPlateColor').value.trim() ? { plateColor: $('tplPlateColor').value.trim() } : {}),
       ...($('tplNameStyle').value === 'plate' && $('tplPlateBorder').value.trim() ? { plateBorder: $('tplPlateBorder').value.trim() } : {}),
       ...(ed.shadowColor ? { shadowColor: ed.shadowColor } : {}),
