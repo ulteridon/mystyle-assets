@@ -116,6 +116,7 @@
   .thumb .bar { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: center; gap: 4px; padding: 6px 8px; background: linear-gradient(180deg, rgba(20,16,28,0), rgba(20,16,28,.72)); font-size: 11px; }
   .thumb .bar span { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; opacity: .85; }
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
+  .thumb .bar button.del { background: rgba(214,69,55,.92); color: #fff; }
   .pub-summary { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 12px; }
   .pub-summary .tile { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 10px 16px; min-width: 120px; box-shadow: var(--shadow); }
   .pub-summary .tile b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
@@ -671,7 +672,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-10-09.2 · outlined names';
+const ADMIN_VERSION = '2026-10-13.1 · delete on cards';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1806,8 +1807,10 @@ function renderTemplateCell(grid, t, idx, status) {
       <div class="bar"><span title="${t.id}">${t.id}</span>
         <span style="display:flex;gap:4px">
           <button class="edit">Edit</button>
+          <button class="del" title="Remove this template from the app">Delete</button>
         </span></div>`;
     cell.querySelector('.edit').addEventListener('click', () => openTplEditor(idx));
+    cell.querySelector('.del').addEventListener('click', () => deleteTemplate(idx));
     grid.appendChild(cell);
   }
 }
@@ -2002,7 +2005,8 @@ function positionOverlays() {
   const halo = style === 'none' ? 'none'
     : outline ? [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
       .map(([x, y]) => { const n = Math.hypot(x, y); return `${x / n * o}px ${y / n * o}px 0 ${oc}`; })
-      .concat(`0 ${fsz * 0.05}px ${fsz * 0.12}px ${ed.shadowColor || 'rgba(0,0,0,0.55)'}`).join(', ')
+      // Three wide blurred copies, as the app draws them: a soft dark cloud behind the letters.
+      .concat(Array(3).fill(`0 0 ${fsz * 0.4}px ${ed.shadowColor || 'rgba(0,0,0,0.6)'}`)).join(', ')
     : style === 'glow' ? `0 0 ${fsz * 0.2}px ${ed.shadowColor || 'rgba(255,255,255,0.9)'}`
     : plate ? `0 ${fsz * 0.03}px ${fsz * 0.06}px ${ed.shadowColor || 'rgba(0,0,0,0.35)'}`
     : `0 ${fsz * 0.04}px ${fsz * 0.16}px ${ed.shadowColor || 'rgba(0,0,0,0.75)'}`;
@@ -2298,14 +2302,18 @@ $('newTplBtn').addEventListener('click', () => {
   openTplEditor(-1);
 });
 $('tplCancelBtn').addEventListener('click', () => $('tplModalBack').classList.remove('open'));
-$('tplDeleteBtn').addEventListener('click', () => {
-  if (ed.index < 0) return;
-  if (!confirm('Remove this template from templates_db.json?')) return;
-  state.templates.splice(ed.index, 1);
+// Remove a template from the list (its background stays in all_images; it
+// shows up under "no template yet" again). Goes to phones on the next Publish.
+function deleteTemplate(index) {
+  const t = state.templates[index];
+  if (!t || !confirm(`Delete template "${t.id}"? It leaves the app on the next Publish.`)) return;
+  state.templates.splice(index, 1);
+  setVerified('templates', t.id, false);
   markDirty('templates_db.json');
   $('tplModalBack').classList.remove('open');
   renderTemplates();
-});
+}
+$('tplDeleteBtn').addEventListener('click', () => { if (ed.index >= 0) deleteTemplate(ed.index); });
 
 $('tplSaveBtn').addEventListener('click', () => {
   const category = $('tplCategory').value.trim() || 'Other';
