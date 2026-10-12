@@ -447,6 +447,8 @@
           <h4>Name text</h4>
           <label>Default text</label>
           <input id="tplDefaultText" value="Your Name">
+          <label>Wording — {name} is the sender's name</label>
+          <input id="tplNameFormat" value="{name}" placeholder="{name} की ओर से शुभ दीपावली" spellcheck="false">
           <label>Font</label>
           <select id="tplFont"></select>
           <label>Font size — <input id="tplFontSize" type="number" min="1" max="400" value="56" style="width:64px"> px (template pixels)</label>
@@ -681,7 +683,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-10-13.2 · select and delete many';
+const ADMIN_VERSION = '2026-10-13.3 · greeting wording';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1893,10 +1895,16 @@ function fitNameLines(text, css, weight, boxW, boxH, maxSize, plate) {
   const words = name.split(' ');
   if (one < maxSize * 0.8 && words.length > 1) {
     let best = { size: 0, lines };
+    const widest = (ls) => Math.max(...ls.map(tw));
     for (let i = 1; i < words.length; i++) {
-      const a = words.slice(0, i).join(' '), b = words.slice(i).join(' ');
-      const s2 = sizeFor(Math.max(tw(a), tw(b)), 2);
-      if (s2 > best.size) best = { size: s2, lines: [a, b] };
+      const two = [words.slice(0, i).join(' '), words.slice(i).join(' ')];
+      const s2 = sizeFor(widest(two), 2);
+      if (s2 > best.size) best = { size: s2, lines: two };
+      for (let j = i + 1; j < words.length; j++) {
+        const three = [words.slice(0, i).join(' '), words.slice(i, j).join(' '), words.slice(j).join(' ')];
+        const s3 = sizeFor(widest(three), 3);
+        if (s3 > best.size) best = { size: s3, lines: three };
+      }
     }
     if (best.size > one * 1.05) { lines = best.lines; size = best.size; }
   }
@@ -1941,6 +1949,7 @@ function openTplEditor(index, file = null) {   // file: background for a new tem
   tplPick.set(t?.textConfig?.color || '#ffffff', { silent: true });
   tplPick.setPalette([]);
   $('tplFont').value = FONTS.some((f) => f[0] === t?.textConfig?.fontFamily) ? t.textConfig.fontFamily : 'Poppins_700Bold';
+  $('tplNameFormat').value = (t?.textConfig?.nameFormat || '').includes('{name}') ? t.textConfig.nameFormat : '{name}';
   $('tplNameStyle').value = ['outline', 'glow', 'plate', 'none'].includes(t?.textConfig?.style) ? t.textConfig.style
     : t ? 'shadow' : 'outline';
   $('tplOutlineColor').value = t?.textConfig?.outlineColor || '';
@@ -2004,7 +2013,8 @@ function positionOverlays() {
   pb.querySelector('.ph').style.fontSize = Math.min(p.w, p.h) * 0.4 * s + 'px';
 
   const tb = $('textBox');
-  const [, , css, weight] = fontCss($('tplFont').value);
+  const previewText = (($('tplNameFormat').value || '').includes('{name}') ? $('tplNameFormat').value : '{name}').replace('{name}', $('tplDefaultText').value || 'Your Name');
+  const [, , css, weight] = /[\u0900-\u097F]/.test(previewText) ? ['', '', '"Noto Sans Devanagari", sans-serif', 700] : fontCss($('tplFont').value);
   const style = $('tplNameStyle').value;
   const plate = style === 'plate';
   const outline = style === 'outline';
@@ -2012,7 +2022,7 @@ function positionOverlays() {
   $('tplOutlineRow').style.display = outline ? '' : 'none';
   const maxSize = Math.max(1, parseFloat($('tplFontSize').value || '56') * s);
   // Same room for the outline at the line ends as the app keeps (components/TemplatePoster.tsx).
-  const fit = fitNameLines($('tplDefaultText').value || 'Your Name', css, weight,
+  const fit = fitNameLines(previewText, css, weight,
     ed.text.w * s - (outline ? maxSize * 0.12 : 0), ed.text.h * s, maxSize, plate);
   const fsz = fit.size;
   const items = ed.align === 'left' ? 'flex-start' : ed.align === 'right' ? 'flex-end' : 'center';
@@ -2148,7 +2158,7 @@ $('rotHandle').addEventListener('pointerdown', (e) => {
     } else ed.text.h = Math.min(v, ed.tplH);
     positionOverlays();
   }));
-['tplFontSize', 'tplDefaultText', 'tplFont'].forEach((id) =>
+['tplFontSize', 'tplDefaultText', 'tplFont', 'tplNameFormat'].forEach((id) =>
   $(id).addEventListener('input', () => positionOverlays()));
 const tplPick = makeColorPicker($('tplColorPicker'), { onChange: () => { if (ed) positionOverlays(); } });
 
@@ -2408,6 +2418,7 @@ $('tplSaveBtn').addEventListener('click', () => {
       fontFamily: $('tplFont').value,
       textAlign: align,
       style: $('tplNameStyle').value,
+      ...($('tplNameFormat').value.includes('{name}') && $('tplNameFormat').value.trim() !== '{name}' ? { nameFormat: $('tplNameFormat').value.trim() } : {}),
       ...($('tplNameStyle').value === 'outline' && $('tplOutlineColor').value.trim() ? { outlineColor: $('tplOutlineColor').value.trim() } : {}),
       ...($('tplNameStyle').value === 'plate' && $('tplPlateColor').value.trim() ? { plateColor: $('tplPlateColor').value.trim() } : {}),
       ...($('tplNameStyle').value === 'plate' && $('tplPlateBorder').value.trim() ? { plateBorder: $('tplPlateBorder').value.trim() } : {}),
