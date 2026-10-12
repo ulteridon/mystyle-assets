@@ -17,15 +17,17 @@
     "textConfig": {
       "defaultText": "Happy Anniversary",
       "x": 27,
-      "y": 236,
+      "y": 256,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#deb391",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,24,14,0.9)"
+      "outlineColor": "rgba(46,29,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_5_cut.webp",
     "tags": [
@@ -61,12 +63,14 @@
       "y": 1112,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#ee8187",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,14,14,0.9)"
+      "outlineColor": "rgba(46,15,17,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_6_cut.webp",
     "tags": [
@@ -102,12 +106,14 @@
       "y": 1088,
       "width": 553,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#cd96d9",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(33,14,37,0.9)"
+      "outlineColor": "rgba(40,15,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_10_cut.webp",
     "tags": [
@@ -143,12 +149,14 @@
       "y": 1064,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#97b0d8",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(14,21,37,0.9)"
+      "outlineColor": "rgba(15,27,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_20_cut.webp",
     "tags": [
@@ -184,12 +192,14 @@
       "y": 1064,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#f47b8c",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,14,17,0.9)"
+      "outlineColor": "rgba(46,15,20,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_17_cut.webp",
     "tags": [
@@ -221,16 +231,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 27,
-      "y": 440,
-      "width": 839,
+      "x": 49,
+      "y": 157,
+      "width": 785,
       "fontSize": 63,
-      "color": "#522214",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#763d2d",
+      "fontFamily": "GreatVibes_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_21_cut.webp",
     "tags": [
@@ -266,12 +278,14 @@
       "y": 1064,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#e8b988",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,26,14,0.9)"
+      "outlineColor": "rgba(46,31,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_22_cut.webp",
     "tags": [
@@ -307,12 +321,14 @@
       "y": 1052,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#dccbeb",
+      "fontFamily": "GreatVibes_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(32,14,37,0.9)"
+      "outlineColor": "rgba(32,15,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_25_cut.webp",
     "tags": [
@@ -348,12 +364,14 @@
       "y": 1064,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#d8a997",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,19,14,0.9)"
+      "outlineColor": "rgba(46,24,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_14_cut.webp",
     "tags": [
@@ -385,16 +403,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 27,
-      "y": 1196,
-      "width": 839,
+      "x": 69,
+      "y": 193,
+      "width": 762,
       "fontSize": 63,
-      "color": "#522e14",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#8a2d1a",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_18_cut.webp",
     "tags": [
@@ -426,16 +446,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 27,
-      "y": 1052,
-      "width": 839,
+      "x": 111,
+      "y": 68,
+      "width": 687,
       "fontSize": 63,
-      "color": "#522614",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#7a3e29",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_12_cut.webp",
     "tags": [
@@ -471,12 +493,14 @@
       "y": 896,
       "width": 537,
       "fontSize": 54,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#d8b697",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(35,14,37,0.9)"
+      "outlineColor": "rgba(46,30,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_27_cut.webp",
     "tags": [
@@ -508,16 +532,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 27,
-      "y": 1088,
-      "width": 839,
+      "x": 141,
+      "y": 188,
+      "width": 607,
       "fontSize": 63,
-      "color": "#524214",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#765b2d",
+      "fontFamily": "GreatVibes_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_3_cut.webp",
     "tags": [
@@ -549,16 +575,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 133,
-      "y": 1172,
-      "width": 626,
+      "x": 27,
+      "y": 266,
+      "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#de919e",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,15,14,0.9)"
+      "outlineColor": "rgba(46,15,20,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_11_cut.webp",
     "tags": [
@@ -590,16 +618,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 272,
-      "y": 866,
-      "width": 347,
+      "x": 221,
+      "y": 95,
+      "width": 492,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#762d37",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_13_cut.webp",
     "tags": [
@@ -635,12 +665,14 @@
       "y": 1364,
       "width": 1504,
       "fontSize": 112,
-      "color": "#ffffff",
+      "color": "#e0ccad",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 196,
       "style": "outline",
-      "outlineColor": "rgba(37,28,14,0.9)"
+      "outlineColor": "rgba(46,34,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_27_cut.webp",
     "tags": [
@@ -675,12 +707,14 @@
       "y": 1184,
       "width": 839,
       "fontSize": 63,
-      "color": "#3c1452",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#532d76",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_3_cut.webp",
     "tags": [
@@ -715,12 +749,14 @@
       "y": 1148,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#7eeff1",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(14,37,19,0.9)"
+      "outlineColor": "rgba(15,45,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_24_cut.webp",
     "tags": [
@@ -755,12 +791,14 @@
       "y": 488,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#9993dc",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(20,14,37,0.9)"
+      "outlineColor": "rgba(18,15,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_26_cut.webp",
     "tags": [
@@ -791,16 +829,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 226,
-      "y": 864,
-      "width": 441,
+      "x": 27,
+      "y": 1148,
+      "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#86a7f5",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(15,24,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_22_cut.webp",
     "tags": [
@@ -831,16 +871,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 27,
-      "y": 1100,
-      "width": 839,
+      "x": 142,
+      "y": 102,
+      "width": 607,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#dda692",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,22,14,0.9)"
+      "outlineColor": "rgba(46,23,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_7_cut.webp",
     "tags": [
@@ -875,12 +917,14 @@
       "y": 1148,
       "width": 625,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#93d7dd",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(14,34,37,0.9)"
+      "outlineColor": "rgba(15,44,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_9_cut.webp",
     "tags": [
@@ -915,12 +959,14 @@
       "y": 1208,
       "width": 839,
       "fontSize": 63,
-      "color": "#522814",
+      "color": "#2b785c",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_28_cut.webp",
     "tags": [
@@ -951,16 +997,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 302,
-      "y": 734,
-      "width": 240,
-      "fontSize": 45,
-      "color": "#ffffff",
+      "x": 23,
+      "y": 71,
+      "width": 722,
+      "fontSize": 54,
+      "color": "#df9590",
       "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 112,
+      "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,17,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "christmas_9_cut.webp",
     "tags": [
@@ -996,12 +1044,14 @@
       "y": 44,
       "width": 702,
       "fontSize": 63,
-      "color": "#ffffff",
+      "color": "#ee9682",
       "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,23,14,0.9)"
+      "outlineColor": "rgba(46,21,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "christmas_17_cut.webp",
     "tags": [
@@ -1033,16 +1083,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 259,
-      "y": 707,
-      "width": 558,
+      "x": 63,
+      "y": 1312,
+      "width": 639,
       "fontSize": 74,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#25624e",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 185,
+      "height": 130,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_1_cut.webp",
     "tags": [
@@ -1075,16 +1127,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 168,
-      "y": 778,
-      "width": 425,
+      "x": 561,
+      "y": 1227,
+      "width": 516,
       "fontSize": 79,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#d5d897",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 198,
+      "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(44,46,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_2_cut.webp",
     "tags": [
@@ -1117,16 +1171,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 415,
-      "y": 573,
-      "width": 440,
-      "fontSize": 85,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 38,
+      "y": 65,
+      "width": 877,
+      "fontSize": 88,
+      "color": "#276637",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 212,
+      "height": 154,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_3_cut.webp",
     "tags": [
@@ -1159,16 +1215,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 649,
-      "y": 1063,
-      "width": 382,
-      "fontSize": 74,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 402,
+      "y": 237,
+      "width": 713,
+      "fontSize": 80,
+      "color": "#8e4816",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 185,
+      "height": 140,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_5_cut.webp",
     "tags": [
@@ -1201,16 +1259,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 522,
-      "y": 853,
-      "width": 517,
-      "fontSize": 75,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 293,
+      "y": 39,
+      "width": 760,
+      "fontSize": 76,
+      "color": "#835d20",
+      "fontFamily": "Anton_400Regular",
       "textAlign": "center",
-      "height": 188,
+      "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "independence_day_6_cut.webp",
     "tags": [
@@ -1243,16 +1303,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 478,
-      "y": 538,
-      "width": 493,
+      "x": 303,
+      "y": 853,
+      "width": 785,
       "fontSize": 79,
-      "color": "#ffffff",
+      "color": "#805a23",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
-      "height": 198,
+      "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_7_cut.webp",
     "tags": [
@@ -1285,16 +1347,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 523,
-      "y": 850,
-      "width": 509,
-      "fontSize": 74,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 293,
+      "y": 28,
+      "width": 760,
+      "fontSize": 76,
+      "color": "#7d4e26",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 185,
+      "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "independence_day_8_cut.webp",
     "tags": [
@@ -1328,16 +1392,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 464,
-      "y": 827,
-      "width": 425,
+      "x": 293,
+      "y": 1095,
+      "width": 760,
       "fontSize": 76,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#765c2d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 190,
+      "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_9_cut.webp",
     "tags": [
@@ -1374,12 +1440,14 @@
       "y": 1128,
       "width": 673,
       "fontSize": 76,
-      "color": "#523f14",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#845e20",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "independence_day_11_cut.webp",
     "tags": [
@@ -1416,12 +1484,14 @@
       "y": 941,
       "width": 760,
       "fontSize": 76,
-      "color": "#523c14",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#855c1e",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_14_cut.webp",
     "tags": [
@@ -1458,12 +1528,14 @@
       "y": 963,
       "width": 673,
       "fontSize": 76,
-      "color": "#523c14",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#7e6225",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_15_cut.webp",
     "tags": [
@@ -1496,16 +1568,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 554,
-      "y": 512,
-      "width": 399,
-      "fontSize": 76,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 34,
+      "y": 853,
+      "width": 1054,
+      "fontSize": 79,
+      "color": "#76472d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
-      "height": 190,
+      "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_1_cut.webp",
     "tags": [
@@ -1543,12 +1617,14 @@
       "y": 83,
       "width": 875,
       "fontSize": 79,
-      "color": "#521914",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#86341d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_3_cut.webp",
     "tags": [
@@ -1582,16 +1658,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 550,
-      "y": 908,
-      "width": 332,
-      "fontSize": 64,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 407,
+      "y": 51,
+      "width": 570,
+      "fontSize": 74,
+      "color": "#713d18",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 160,
+      "height": 130,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_7_cut.webp",
     "tags": [
@@ -1625,16 +1703,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 579,
-      "y": 801,
-      "width": 335,
-      "fontSize": 65,
-      "color": "#ffffff",
+      "x": 32,
+      "y": 253,
+      "width": 579,
+      "fontSize": 74,
+      "color": "#8e3815",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
-      "height": 162,
+      "height": 130,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_9_cut.webp",
     "tags": [
@@ -1672,12 +1752,14 @@
       "y": 1095,
       "width": 760,
       "fontSize": 76,
-      "color": "#523414",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#764d2d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_11_cut.webp",
     "tags": [
@@ -1715,12 +1797,14 @@
       "y": 127,
       "width": 1020,
       "fontSize": 76,
-      "color": "#523014",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#76532d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_12_cut.webp",
     "tags": [
@@ -1758,12 +1842,14 @@
       "y": 90,
       "width": 798,
       "fontSize": 72,
-      "color": "#523214",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#764c2d",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
       "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_13_cut.webp",
     "tags": [
@@ -1798,16 +1884,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 501,
-      "y": 1015,
-      "width": 345,
-      "fontSize": 64,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 31,
+      "y": 354,
+      "width": 798,
+      "fontSize": 72,
+      "color": "#76572d",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 160,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_20_cut.webp",
     "tags": [
@@ -1841,16 +1929,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 546,
-      "y": 872,
-      "width": 331,
-      "fontSize": 59,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 512,
+      "y": 1314,
+      "width": 471,
+      "fontSize": 72,
+      "color": "#724424",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 148,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "rakhi_hindi_1_cut.webp",
     "tags": [
@@ -1884,16 +1974,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 518,
-      "y": 885,
-      "width": 360,
-      "fontSize": 56,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 464,
+      "y": 1050,
+      "width": 471,
+      "fontSize": 72,
+      "color": "#713d22",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 140,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "rakhi_hindi_2_cut.webp",
     "tags": [
@@ -1928,16 +2020,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 672,
-      "y": 761,
-      "width": 314,
-      "fontSize": 60,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 467,
+      "y": 1040,
+      "width": 586,
+      "fontSize": 76,
+      "color": "#77512c",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 150,
+      "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "rakhi_hindi_4_cut.webp",
     "tags": [
@@ -1971,16 +2065,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 565,
-      "y": 913,
-      "width": 322,
-      "fontSize": 56,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 113,
+      "y": 102,
+      "width": 798,
+      "fontSize": 72,
+      "color": "#7a4216",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 140,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_hindi_5_cut.webp",
     "tags": [
@@ -2014,16 +2110,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 606,
-      "y": 1060,
-      "width": 375,
-      "fontSize": 67,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 31,
+      "y": 251,
+      "width": 563,
+      "fontSize": 72,
+      "color": "#6c2119",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 168,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "rakhi_hindi_6_cut.webp",
     "tags": [
@@ -2061,12 +2159,14 @@
       "y": 380,
       "width": 839,
       "fontSize": 63,
-      "color": "#522514",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#7a3f29",
+      "fontFamily": "GreatVibes_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_1.webp",
     "tags": [
@@ -2097,16 +2197,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 27,
-      "y": 1196,
-      "width": 839,
+      "x": 77,
+      "y": 49,
+      "width": 734,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#97cad8",
+      "fontFamily": "GreatVibes_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(14,37,33,0.9)"
+      "outlineColor": "rgba(15,40,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_4.webp",
     "tags": [
@@ -2141,12 +2243,14 @@
       "y": 392,
       "width": 839,
       "fontSize": 63,
-      "color": "#521e14",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#76332d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_7.webp",
     "tags": [
@@ -2181,12 +2285,14 @@
       "y": 1112,
       "width": 839,
       "fontSize": 63,
-      "color": "#523314",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#79522a",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_8.webp",
     "tags": [
@@ -2221,12 +2327,14 @@
       "y": 1124,
       "width": 839,
       "fontSize": 63,
-      "color": "#523714",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#76542d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_15.webp",
     "tags": [
@@ -2261,12 +2369,14 @@
       "y": 1064,
       "width": 839,
       "fontSize": 63,
-      "color": "#522314",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#763e2d",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_16.webp",
     "tags": [
@@ -2301,12 +2411,14 @@
       "y": 464,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#dca293",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,21,14,0.9)"
+      "outlineColor": "rgba(46,21,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_23.webp",
     "tags": [
@@ -2341,12 +2453,14 @@
       "y": 1100,
       "width": 839,
       "fontSize": 63,
-      "color": "#52141a",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#8e152a",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_24.webp",
     "tags": [
@@ -2377,16 +2491,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Anniversary",
-      "x": 238,
-      "y": 926,
-      "width": 413,
+      "x": 27,
+      "y": 1184,
+      "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#e3bb8c",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,32,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "anniversary_26.webp",
     "tags": [
@@ -2417,16 +2533,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 361,
-      "y": 927,
-      "width": 417,
-      "fontSize": 88,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 48,
+      "y": 1232,
+      "width": 1120,
+      "fontSize": 112,
+      "color": "#277c6b",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 220,
+      "height": 196,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_1.webp",
     "tags": [
@@ -2456,16 +2574,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 48,
-      "y": 1364,
-      "width": 1504,
+      "x": 550,
+      "y": 459,
+      "width": 880,
       "fontSize": 112,
-      "color": "#521814",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#7d2b26",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 196,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_5.webp",
     "tags": [
@@ -2495,16 +2615,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 27,
-      "y": 1448,
-      "width": 839,
+      "x": 97,
+      "y": 102,
+      "width": 710,
       "fontSize": 63,
-      "color": "#ffffff",
+      "color": "#76522d",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,27,14,0.9)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_10.webp",
     "tags": [
@@ -2538,12 +2660,14 @@
       "y": 1136,
       "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
+      "color": "#94b0db",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(22,14,37,0.9)"
+      "outlineColor": "rgba(15,27,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_12.webp",
     "tags": [
@@ -2577,12 +2701,14 @@
       "y": 1148,
       "width": 1504,
       "fontSize": 112,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#d8a597",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 196,
       "style": "outline",
-      "outlineColor": "rgba(37,14,15,0.9)"
+      "outlineColor": "rgba(46,22,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_13.webp",
     "tags": [
@@ -2612,16 +2738,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 194,
-      "y": 1202,
-      "width": 495,
+      "x": 27,
+      "y": 560,
+      "width": 482,
       "fontSize": 63,
-      "color": "#ffffff",
+      "color": "#99aae6",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(15,22,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_17.webp",
     "tags": [
@@ -2651,16 +2779,18 @@
     },
     "textConfig": {
       "defaultText": "Happy Birthday",
-      "x": 219,
-      "y": 897,
-      "width": 434,
+      "x": 27,
+      "y": 404,
+      "width": 768,
       "fontSize": 63,
-      "color": "#ffffff",
+      "color": "#972c0c",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_18.webp",
     "tags": [
@@ -2694,12 +2824,14 @@
       "y": 404,
       "width": 839,
       "fontSize": 63,
-      "color": "#522d14",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#76462d",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_19.webp",
     "tags": [
@@ -2733,12 +2865,14 @@
       "y": 732,
       "width": 516,
       "fontSize": 79,
-      "color": "#523f14",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#835920",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "independence_day_4.webp",
     "tags": [
@@ -2774,12 +2908,14 @@
       "y": 1106,
       "width": 500,
       "fontSize": 76,
-      "color": "#523d14",
+      "color": "#815722",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "independence_day_10.webp",
     "tags": [
@@ -2812,15 +2948,17 @@
     "textConfig": {
       "defaultText": "Your Name",
       "x": 33,
-      "y": 39,
-      "width": 1020,
+      "y": 121,
+      "width": 597,
       "fontSize": 76,
-      "color": "#523f14",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#775b24",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "independence_day_12.webp",
     "tags": [
@@ -2852,16 +2990,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 33,
-      "y": 842,
-      "width": 1020,
+      "x": 456,
+      "y": 465,
+      "width": 597,
       "fontSize": 76,
-      "color": "#524014",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#8a6619",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "independence_day_16.webp",
     "tags": [
@@ -2893,16 +3033,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 38,
+      "x": 527,
       "y": 145,
-      "width": 1178,
+      "width": 689,
       "fontSize": 88,
-      "color": "#523114",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#7f4424",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 154,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_3.webp",
     "tags": [
@@ -2935,16 +3077,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 190,
-      "y": 769,
-      "width": 395,
-      "fontSize": 69,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 527,
+      "y": 106,
+      "width": 689,
+      "fontSize": 88,
+      "color": "#7d3f26",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 172,
+      "height": 154,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_4.webp",
     "tags": [
@@ -2977,16 +3121,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 583,
-      "y": 548,
-      "width": 408,
+      "x": 34,
+      "y": 985,
+      "width": 1054,
       "fontSize": 79,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#76442d",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 198,
+      "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_5.webp",
     "tags": [
@@ -3023,12 +3169,14 @@
       "y": 248,
       "width": 1020,
       "fontSize": 76,
-      "color": "#522e14",
+      "color": "#7a4a29",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_10.webp",
     "tags": [
@@ -3061,16 +3209,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 596,
-      "y": 748,
-      "width": 334,
-      "fontSize": 65,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 76,
+      "y": 154,
+      "width": 563,
+      "fontSize": 72,
+      "color": "#265c72",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 162,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_15.webp",
     "tags": [
@@ -3103,16 +3253,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 72,
-      "y": 954,
-      "width": 880,
+      "x": 43,
+      "y": 473,
+      "width": 564,
       "fontSize": 72,
-      "color": "#523514",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#76572d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_16.webp",
     "tags": [
@@ -3145,16 +3297,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 683,
-      "y": 928,
-      "width": 330,
-      "fontSize": 60,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 198,
+      "y": 40,
+      "width": 597,
+      "fontSize": 76,
+      "color": "#784f2b",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
-      "height": 150,
+      "height": 133,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "rakhi_d_17.webp",
     "tags": [
@@ -3191,12 +3345,14 @@
       "y": 1172,
       "width": 839,
       "fontSize": 63,
-      "color": "#522814",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#96620e",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_34_cut.webp",
     "tags": [
@@ -3227,16 +3383,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 170,
-      "y": 1136,
-      "width": 553,
+      "x": 190,
+      "y": 105,
+      "width": 516,
       "fontSize": 63,
-      "color": "#ffffff",
+      "color": "#ea8586",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,20,14,0.9)"
+      "outlineColor": "rgba(46,15,16,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_35_cut.webp",
     "tags": [
@@ -3271,12 +3429,14 @@
       "y": 1172,
       "width": 696,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#d8ab97",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,14,15,0.9)"
+      "outlineColor": "rgba(46,25,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_36_cut.webp",
     "tags": [
@@ -3307,16 +3467,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 27,
-      "y": 260,
-      "width": 839,
+      "x": 70,
+      "y": 35,
+      "width": 766,
       "fontSize": 63,
-      "color": "#144b52",
+      "color": "#0c7397",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_37_cut.webp",
     "tags": [
@@ -3347,16 +3509,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 236,
-      "y": 882,
-      "width": 421,
+      "x": 27,
+      "y": 164,
+      "width": 839,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#87491c",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_38_cut.webp",
     "tags": [
@@ -3387,16 +3551,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 63,
-      "y": 1148,
-      "width": 767,
+      "x": 173,
+      "y": 77,
+      "width": 541,
       "fontSize": 63,
-      "color": "#524014",
+      "color": "#835c20",
       "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name}"
     },
     "remoteFile": "birthday_39_cut.webp",
     "tags": [
@@ -3427,16 +3593,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 273,
-      "y": 895,
-      "width": 356,
-      "fontSize": 52,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 203,
+      "y": 210,
+      "width": 495,
+      "fontSize": 63,
+      "color": "#d8af97",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 130,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,27,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_1_cut.webp",
     "tags": [
@@ -3478,12 +3646,14 @@
       "y": 668,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#d8b397",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,25,14,0.9)"
+      "outlineColor": "rgba(46,29,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_3_cut.webp",
     "tags": [
@@ -3521,16 +3691,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 260,
-      "y": 996,
-      "width": 380,
-      "fontSize": 56,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 122,
+      "y": 318,
+      "width": 663,
+      "fontSize": 63,
+      "color": "#644324",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 140,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_4_cut.webp",
     "tags": [
@@ -3568,16 +3740,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 205,
-      "y": 1242,
-      "width": 471,
+      "x": 243,
+      "y": 656,
+      "width": 414,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#d8b197",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 135,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,27,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_5_cut.webp",
     "tags": [
@@ -3619,12 +3793,14 @@
       "y": 992,
       "width": 846,
       "fontSize": 63,
-      "color": "#523214",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#6b3d1f",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_6_cut.webp",
     "tags": [
@@ -3666,12 +3842,14 @@
       "y": 152,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#71482b",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,26,14,0.9)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "chhath_puja_7_cut.webp",
     "tags": [
@@ -3710,15 +3888,17 @@
     "textConfig": {
       "defaultText": "Your Name",
       "x": 27,
-      "y": 656,
-      "width": 846,
+      "y": 169,
+      "width": 495,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#d9b697",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,27,14,0.9)"
+      "outlineColor": "rgba(46,30,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_8_cut.webp",
     "tags": [
@@ -3756,16 +3936,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 58,
-      "y": 212,
-      "width": 774,
+      "x": 53,
+      "y": 230,
+      "width": 820,
       "fontSize": 63,
-      "color": "#523614",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#724520",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_9_cut.webp",
     "tags": [
@@ -3807,12 +3989,14 @@
       "y": 800,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#dab195",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,25,14,0.9)"
+      "outlineColor": "rgba(46,28,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_10_cut.webp",
     "tags": [
@@ -3854,12 +4038,14 @@
       "y": 416,
       "width": 846,
       "fontSize": 63,
-      "color": "#523614",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#76552d",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "chhath_puja_12_cut.webp",
     "tags": [
@@ -3897,16 +4083,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 325,
-      "y": 1055,
-      "width": 236,
-      "fontSize": 50,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 147,
+      "y": 144,
+      "width": 608,
+      "fontSize": 63,
+      "color": "#dcac94",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 125,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,25,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_14_cut.webp",
     "tags": [
@@ -3948,12 +4136,14 @@
       "y": 128,
       "width": 846,
       "fontSize": 63,
-      "color": "#523214",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#6f3b1e",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "chhath_puja_15_cut.webp",
     "tags": [
@@ -3991,16 +4181,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 283,
-      "y": 916,
-      "width": 334,
-      "fontSize": 54,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 392,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#7b4a29",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 135,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "chhath_puja_16_cut.webp",
     "tags": [
@@ -4038,16 +4230,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 317,
-      "y": 964,
-      "width": 258,
-      "fontSize": 50,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 200,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#674021",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 125,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_17_cut.webp",
     "tags": [
@@ -4089,12 +4283,14 @@
       "y": 260,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#794724",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,26,14,0.9)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "chhath_puja_19_cut.webp",
     "tags": [
@@ -4136,12 +4332,14 @@
       "y": 464,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#dab196",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,25,14,0.9)"
+      "outlineColor": "rgba(46,28,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "chhath_puja_20_cut.webp",
     "tags": [
@@ -4179,16 +4377,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 305,
-      "y": 799,
-      "width": 186,
-      "fontSize": 42,
-      "color": "#ffffff",
-      "fontFamily": "Lobster_400Regular",
+      "x": 23,
+      "y": 929,
+      "width": 722,
+      "fontSize": 54,
+      "color": "#76412d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
-      "height": 105,
+      "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "christmas_21_cut.webp",
     "tags": [
@@ -4220,16 +4420,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 139,
-      "y": 764,
-      "width": 355,
-      "fontSize": 62,
-      "color": "#ffffff",
+      "x": 31,
+      "y": 1002,
+      "width": 717,
+      "fontSize": 72,
+      "color": "#7f3313",
       "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 155,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "christmas_24_cut.webp",
     "tags": [
@@ -4261,16 +4463,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 113,
-      "y": 686,
-      "width": 234,
-      "fontSize": 51,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 28,
+      "y": 50,
+      "width": 427,
+      "fontSize": 65,
+      "color": "#daa395",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 128,
+      "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,21,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "diwali_33_cut.webp",
     "tags": [
@@ -4303,16 +4507,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 389,
-      "y": 657,
-      "width": 228,
-      "fontSize": 51,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 28,
+      "y": 185,
+      "width": 872,
+      "fontSize": 65,
+      "color": "#824321",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 128,
+      "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_34_cut.webp",
     "tags": [
@@ -4349,12 +4555,14 @@
       "y": 230,
       "width": 501,
       "fontSize": 65,
-      "color": "#522d14",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#7e4125",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_35_cut.webp",
     "tags": [
@@ -4391,12 +4599,14 @@
       "y": 257,
       "width": 872,
       "fontSize": 65,
-      "color": "#522e14",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#764c2d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_36_cut.webp",
     "tags": [
@@ -4429,16 +4639,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 404,
-      "y": 755,
-      "width": 119,
-      "fontSize": 51,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 213,
+      "y": 317,
+      "width": 511,
+      "fontSize": 65,
+      "color": "#683422",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 117,
+      "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "diwali_37_cut.webp",
     "tags": [
@@ -4471,16 +4683,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 558,
-      "y": 759,
-      "width": 270,
-      "fontSize": 51,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 473,
+      "y": 239,
+      "width": 427,
+      "fontSize": 65,
+      "color": "#dea791",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 128,
+      "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,24,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_38_cut.webp",
     "tags": [
@@ -4513,16 +4727,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 291,
-      "y": 681,
-      "width": 346,
-      "fontSize": 51,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 66,
+      "y": 842,
+      "width": 799,
+      "fontSize": 65,
+      "color": "#85421f",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 128,
+      "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_39_cut.webp",
     "tags": [
@@ -4559,12 +4775,14 @@
       "y": 869,
       "width": 723,
       "fontSize": 65,
-      "color": "#522c14",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#77462c",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_40_cut.webp",
     "tags": [
@@ -4601,12 +4819,14 @@
       "y": 185,
       "width": 872,
       "fontSize": 65,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#e7a788",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(37,22,14,0.9)"
+      "outlineColor": "rgba(46,25,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "diwali_41_cut.webp",
     "tags": [
@@ -4643,12 +4863,14 @@
       "y": 158,
       "width": 872,
       "fontSize": 65,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#e9a786",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 114,
       "style": "outline",
-      "outlineColor": "rgba(37,24,14,0.9)"
+      "outlineColor": "rgba(46,26,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "diwali_43_cut.webp",
     "tags": [
@@ -4681,16 +4903,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 432,
-      "y": 788,
-      "width": 224,
-      "fontSize": 43,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 384,
+      "y": 203,
+      "width": 353,
+      "fontSize": 54,
+      "color": "#7a5429",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 108,
+      "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_1_cut.webp",
     "tags": [
@@ -4735,16 +4959,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 432,
-      "y": 788,
-      "width": 223,
-      "fontSize": 43,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 384,
+      "y": 38,
+      "width": 353,
+      "fontSize": 54,
+      "color": "#7c5527",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 108,
+      "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_2_cut.webp",
     "tags": [
@@ -4793,12 +5019,14 @@
       "y": 1094,
       "width": 415,
       "fontSize": 54,
-      "color": "#523814",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#7e5c26",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_3_cut.webp",
     "tags": [
@@ -4843,16 +5071,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 251,
-      "y": 746,
-      "width": 198,
-      "fontSize": 42,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 208,
+      "y": 49,
+      "width": 353,
+      "fontSize": 54,
+      "color": "#76522d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 105,
+      "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_4_cut_v2.webp",
     "tags": [
@@ -4901,12 +5131,14 @@
       "y": 236,
       "width": 661,
       "fontSize": 54,
-      "color": "#523914",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#76522d",
+      "fontFamily": "Poppins_700Bold",
       "textAlign": "center",
       "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_5_cut.webp",
     "tags": [
@@ -4951,16 +5183,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 262,
-      "y": 854,
-      "width": 243,
-      "fontSize": 48,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 23,
+      "y": 1138,
+      "width": 722,
+      "fontSize": 54,
+      "color": "#763f2d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 120,
+      "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_6_cut.webp",
     "tags": [
@@ -5005,16 +5239,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 23,
-      "y": 676,
-      "width": 722,
+      "x": 153,
+      "y": 250,
+      "width": 458,
       "fontSize": 54,
-      "color": "#523314",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#76502d",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 94,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_7_cut.webp",
     "tags": [
@@ -5059,16 +5295,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 458,
-      "y": 934,
-      "width": 256,
-      "fontSize": 50,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 135,
+      "y": 344,
+      "width": 630,
+      "fontSize": 63,
+      "color": "#eca383",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 125,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,25,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_8_cut.webp",
     "tags": [
@@ -5117,12 +5355,14 @@
       "y": 1208,
       "width": 774,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#97b2d8",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(14,21,37,0.9)"
+      "outlineColor": "rgba(15,28,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_9_cut.webp",
     "tags": [
@@ -5167,16 +5407,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 354,
-      "y": 1051,
-      "width": 313,
-      "fontSize": 51,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 188,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#ddb293",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 128,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,28,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_10_cut.webp",
     "tags": [
@@ -5221,16 +5463,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 281,
-      "y": 1174,
-      "width": 337,
-      "fontSize": 59,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 176,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#ddae92",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 148,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,27,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_11_cut.webp",
     "tags": [
@@ -5275,16 +5519,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 301,
-      "y": 1118,
-      "width": 299,
-      "fontSize": 58,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 1376,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#7c4d27",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 145,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_12_cut.webp",
     "tags": [
@@ -5333,12 +5579,14 @@
       "y": 368,
       "width": 774,
       "fontSize": 63,
-      "color": "#523314",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#764d2d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_13_cut.webp",
     "tags": [
@@ -5383,16 +5631,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 290,
-      "y": 1234,
-      "width": 319,
-      "fontSize": 62,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 872,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#76502d",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 155,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_14_cut.webp",
     "tags": [
@@ -5441,12 +5691,14 @@
       "y": 1352,
       "width": 846,
       "fontSize": 63,
-      "color": "#522e14",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#6e3521",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_16_cut.webp",
     "tags": [
@@ -5491,16 +5743,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 296,
-      "y": 1273,
-      "width": 308,
-      "fontSize": 57,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 136,
+      "y": 251,
+      "width": 627,
+      "fontSize": 63,
+      "color": "#7d4b26",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 142,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_17_cut.webp",
     "tags": [
@@ -5549,12 +5803,14 @@
       "y": 116,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#e5998b",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,22,14,0.9)"
+      "outlineColor": "rgba(46,20,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_18_cut.webp",
     "tags": [
@@ -5599,16 +5855,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 27,
-      "y": 1256,
-      "width": 846,
+      "x": 160,
+      "y": 249,
+      "width": 537,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#764d2d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,26,14,0.9)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_19_cut.webp",
     "tags": [
@@ -5653,16 +5911,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 205,
-      "y": 1152,
-      "width": 489,
+      "x": 36,
+      "y": 1436,
+      "width": 414,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#743d1d",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_20_cut.webp",
     "tags": [
@@ -5707,16 +5967,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 304,
-      "y": 1273,
-      "width": 291,
-      "fontSize": 54,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 201,
+      "y": 203,
+      "width": 495,
+      "fontSize": 63,
+      "color": "#d8b097",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 135,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,27,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_21_cut.webp",
     "tags": [
@@ -5761,16 +6023,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 355,
-      "y": 1052,
-      "width": 189,
-      "fontSize": 50,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 1328,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#d397d8",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 125,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(43,15,46,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_22_cut.webp",
     "tags": [
@@ -5815,16 +6079,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 258,
-      "y": 1344,
-      "width": 383,
-      "fontSize": 56,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 195,
+      "y": 169,
+      "width": 495,
+      "fontSize": 63,
+      "color": "#dfae91",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 140,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,27,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_23_cut.webp",
     "tags": [
@@ -5869,16 +6135,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 274,
-      "y": 1080,
-      "width": 345,
+      "x": 27,
+      "y": 1400,
+      "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#764d2d",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_25_cut.webp",
     "tags": [
@@ -5923,16 +6191,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 288,
-      "y": 477,
-      "width": 325,
+      "x": 244,
+      "y": 128,
+      "width": 414,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#d8b997",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,31,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_26_cut.webp",
     "tags": [
@@ -5977,16 +6247,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 366,
-      "y": 802,
-      "width": 169,
-      "fontSize": 50,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 27,
+      "y": 1292,
+      "width": 846,
+      "fontSize": 63,
+      "color": "#d8b497",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 125,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,29,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_27_cut.webp",
     "tags": [
@@ -6035,12 +6307,14 @@
       "y": 740,
       "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#7b3e28",
+      "fontFamily": "Rajdhani_700Bold",
       "textAlign": "center",
       "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(37,14,16,0.9)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_28_cut.webp",
     "tags": [
@@ -6085,16 +6359,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 219,
-      "y": 1156,
-      "width": 461,
+      "x": 27,
+      "y": 476,
+      "width": 846,
       "fontSize": 63,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "color": "#dcae93",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 158,
+      "height": 110,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,27,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "navratri_29_cut.webp",
     "tags": [
@@ -6139,16 +6415,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 547,
-      "y": 758,
-      "width": 348,
-      "fontSize": 67,
-      "color": "#ffffff",
-      "fontFamily": "PlayfairDisplay_700Bold",
+      "x": 276,
+      "y": 102,
+      "width": 472,
+      "fontSize": 72,
+      "color": "#835020",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 168,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "navratri_30_cut.webp",
     "tags": [
@@ -6193,16 +6471,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 38,
-      "y": 125,
-      "width": 1178,
+      "x": 527,
+      "y": 183,
+      "width": 689,
       "fontSize": 88,
-      "color": "#523714",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#774c2c",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
       "height": 154,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "{name} की ओर से"
     },
     "remoteFile": "rakhi_6_cut.webp",
     "tags": [
@@ -6236,16 +6516,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 38,
-      "y": 25,
-      "width": 1078,
+      "x": 527,
+      "y": 73,
+      "width": 689,
       "fontSize": 88,
-      "color": "#523314",
-      "fontFamily": "Poppins_700Bold",
+      "color": "#824222",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
       "height": 154,
       "style": "outline",
-      "outlineColor": "rgba(255,250,240,0.95)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_7_cut.webp",
     "tags": [
@@ -6279,16 +6561,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 619,
-      "y": 888,
-      "width": 283,
-      "fontSize": 56,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 31,
+      "y": 216,
+      "width": 563,
+      "fontSize": 72,
+      "color": "#765b2d",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
-      "height": 140,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_23_cut.webp",
     "tags": [
@@ -6322,16 +6606,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 368,
-      "y": 905,
-      "width": 387,
-      "fontSize": 66,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 338,
+      "y": 1242,
+      "width": 472,
+      "fontSize": 72,
+      "color": "#76552d",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 165,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_24_cut.webp",
     "tags": [
@@ -6366,15 +6652,17 @@
     "textConfig": {
       "defaultText": "Your Name",
       "x": 448,
-      "y": 835,
-      "width": 516,
-      "fontSize": 75,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "y": 1040,
+      "width": 517,
+      "fontSize": 79,
+      "color": "#764f2d",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 188,
+      "height": 138,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_26_cut_v2.webp",
     "tags": [
@@ -6408,16 +6696,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 525,
-      "y": 610,
-      "width": 310,
-      "fontSize": 61,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 276,
+      "y": 930,
+      "width": 717,
+      "fontSize": 72,
+      "color": "#ebddcb",
+      "fontFamily": "Pacifico_400Regular",
       "textAlign": "center",
-      "height": 152,
+      "height": 126,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,32,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_27_cut_v2.webp",
     "tags": [
@@ -6451,16 +6741,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 567,
-      "y": 909,
-      "width": 361,
-      "fontSize": 60,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 32,
+      "y": 73,
+      "width": 653,
+      "fontSize": 74,
+      "color": "#84551f",
+      "fontFamily": "Lobster_400Regular",
       "textAlign": "center",
-      "height": 150,
+      "height": 130,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(255,252,245,0.95)",
+      "shadowColor": "rgba(255,255,255,0.75)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_30_cut.webp",
     "tags": [
@@ -6494,16 +6786,18 @@
     },
     "textConfig": {
       "defaultText": "Your Name",
-      "x": 555,
-      "y": 768,
-      "width": 326,
-      "fontSize": 59,
-      "color": "#ffffff",
-      "fontFamily": "Poppins_700Bold",
+      "x": 453,
+      "y": 1063,
+      "width": 569,
+      "fontSize": 74,
+      "color": "#d8b697",
+      "fontFamily": "DancingScript_700Bold",
       "textAlign": "center",
-      "height": 148,
+      "height": 130,
       "style": "outline",
-      "outlineColor": "rgba(0,0,0,0.85)"
+      "outlineColor": "rgba(46,30,15,0.9)",
+      "shadowColor": "rgba(0,0,0,0.6)",
+      "nameFormat": "from {name}"
     },
     "remoteFile": "rakhi_d_31_cut.webp",
     "tags": [
