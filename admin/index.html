@@ -117,6 +117,8 @@
   .thumb .bar span { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; opacity: .85; }
   .thumb .bar button { padding: 4px 9px; font-size: 11px; background: rgba(255,255,255,.92); border: none; border-radius: 8px; font-weight: 700; color: var(--text); }
   .thumb .bar button.del { background: rgba(214,69,55,.92); color: #fff; }
+  .thumb .pick { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; margin: 0; accent-color: var(--red); cursor: pointer; z-index: 3; }
+  .thumb.picked { outline: 3px solid var(--red); outline-offset: -3px; }
   .pub-summary { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 12px; }
   .pub-summary .tile { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 10px 16px; min-width: 120px; box-shadow: var(--shadow); }
   .pub-summary .tile b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
@@ -392,6 +394,13 @@
       <button id="clearTestPhoto" style="display:none">✕ remove photo</button>
       <span style="flex:1"></span>
       <label class="muted">Seed from app project: <input type="file" id="seedTplFile" accept=".json"></label>
+    </div>
+    <div class="row" id="tplSelBar" style="display:none; align-items:center; gap:10px; background:#FFF3F1; border:1px solid #F3C9C3; border-radius:12px; padding:8px 12px">
+      <b id="tplSelCount">0 selected</b>
+      <button id="tplSelAll">Select all shown</button>
+      <button id="tplSelNone">Clear</button>
+      <span style="flex:1"></span>
+      <button id="tplSelDelete" class="danger">Delete selected</button>
     </div>
     <div class="grid" id="tplGrid" style="padding:0"></div>
   </section>
@@ -672,7 +681,7 @@
 // This page edits them in memory and commits via the GitHub contents API.
 // ─────────────────────────────────────────────────────────────────────────────
 const OWNER = 'ulteridon', REPO = 'mystyle-assets', BRANCH = 'main';
-const ADMIN_VERSION = '2026-10-13.1 · delete on cards';
+const ADMIN_VERSION = '2026-10-13.2 · select and delete many';
 document.getElementById('adminVersion').textContent = 'admin ' + ADMIN_VERSION;
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
@@ -1800,8 +1809,10 @@ function renderTemplateCell(grid, t, idx, status) {
     // Photo behind art: overlay first, art on top of it (both positioned, so
     // DOM order decides), wrapped so the badges below still sit above both.
     const art = `<img loading="lazy" src="${src}" style="aspect-ratio:${W}/${H}${t.photoBehind ? ';position:relative' : ''}">`;
+    if (tplSel.has(t.id)) cell.classList.add('picked');
     cell.innerHTML = `
       ${t.photoBehind ? `<div style="position:relative">${overlay}${art}</div>` : `${art}${overlay}`}
+      <input type="checkbox" class="pick" title="Select for delete" ${tplSel.has(t.id) ? 'checked' : ''}>
       <span class="st ${status}">${STATUS_LABEL[status]}</span>
       <span class="tpl-badge">${t.category || ''}</span>
       <div class="bar"><span title="${t.id}">${t.id}</span>
@@ -1811,6 +1822,11 @@ function renderTemplateCell(grid, t, idx, status) {
         </span></div>`;
     cell.querySelector('.edit').addEventListener('click', () => openTplEditor(idx));
     cell.querySelector('.del').addEventListener('click', () => deleteTemplate(idx));
+    cell.querySelector('.pick').addEventListener('change', (e) => {
+      if (e.target.checked) tplSel.add(t.id); else tplSel.delete(t.id);
+      cell.classList.toggle('picked', e.target.checked);
+      syncTplSelBar();
+    });
     grid.appendChild(cell);
   }
 }
@@ -2302,17 +2318,42 @@ $('newTplBtn').addEventListener('click', () => {
   openTplEditor(-1);
 });
 $('tplCancelBtn').addEventListener('click', () => $('tplModalBack').classList.remove('open'));
-// Remove a template from the list (its background stays in all_images; it
-// shows up under "no template yet" again). Goes to phones on the next Publish.
-function deleteTemplate(index) {
-  const t = state.templates[index];
-  if (!t || !confirm(`Delete template "${t.id}"? It leaves the app on the next Publish.`)) return;
-  state.templates.splice(index, 1);
-  setVerified('templates', t.id, false);
+// Remove templates from the list (their backgrounds stay in all_images and
+// show up under "no template yet" again). Goes to phones on the next Publish.
+function deleteTemplates(ids) {
+  const set = new Set(ids);
+  state.templates = state.templates.filter((t) => !set.has(t.id));
+  for (const id of ids) { state.verified.templates.delete(id); tplSel.delete(id); }
+  syncHiddenFromVerified();
+  markDirty('verified.json');
+  markDirty('app_config.json');
   markDirty('templates_db.json');
   $('tplModalBack').classList.remove('open');
   renderTemplates();
 }
+function deleteTemplate(index) {
+  const t = state.templates[index];
+  if (!t || !confirm(`Delete template "${t.id}"? It leaves the app on the next Publish.`)) return;
+  deleteTemplates([t.id]);
+}
+
+// Multi-select on the Templates page: tick cards, then "Delete selected".
+const tplSel = new Set();
+function syncTplSelBar() {
+  const n = tplSel.size;
+  $('tplSelBar').style.display = n ? 'flex' : 'none';
+  $('tplSelCount').textContent = `${n} selected`;
+}
+$('tplSelAll').addEventListener('click', () => {
+  document.querySelectorAll('#tplGrid .thumb .pick').forEach((cb) => { cb.checked = true; cb.dispatchEvent(new Event('change')); });
+});
+$('tplSelNone').addEventListener('click', () => { tplSel.clear(); renderTemplates(); syncTplSelBar(); });
+$('tplSelDelete').addEventListener('click', () => {
+  const ids = [...tplSel];
+  if (!ids.length || !confirm(`Delete ${ids.length} template${ids.length === 1 ? '' : 's'}? They leave the app on the next Publish.`)) return;
+  deleteTemplates(ids);
+  syncTplSelBar();
+});
 $('tplDeleteBtn').addEventListener('click', () => { if (ed.index >= 0) deleteTemplate(ed.index); });
 
 $('tplSaveBtn').addEventListener('click', () => {
