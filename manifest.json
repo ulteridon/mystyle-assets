@@ -1,8 +1,8 @@
 {
-  "generated": "2026-10-08T12:40:20.814Z",
+  "generated": "2026-10-17T15:45:46.000Z",
   "imageFolder": "all_images",
   "format": "webp",
-  "totalImages": 340,
+  "totalImages": 381,
   "categories": {
     "anniversary": {
       "kind": "template",
@@ -101,7 +101,7 @@
     "diwali": {
       "kind": "template",
       "group": 3,
-      "count": 24,
+      "count": 25,
       "images": [
         "diwali_1.webp",
         "diwali_7.webp",
@@ -126,7 +126,8 @@
         "diwali_39_cut.webp",
         "diwali_40_cut.webp",
         "diwali_41_cut.webp",
-        "diwali_43_cut.webp"
+        "diwali_43_cut.webp",
+        "diwali_44_cut.webp"
       ]
     },
     "good_wishes": {
@@ -518,10 +519,64 @@
         "navratri_29_cut.webp",
         "navratri_30_cut.webp"
       ]
+    },
+    "dhanteras": {
+      "kind": "template",
+      "group": 3,
+      "count": 20,
+      "images": [
+        "dhanteras_1_cut.webp",
+        "dhanteras_2_cut.webp",
+        "dhanteras_3_cut.webp",
+        "dhanteras_4_cut.webp",
+        "dhanteras_5_cut.webp",
+        "dhanteras_6_cut.webp",
+        "dhanteras_7_cut.webp",
+        "dhanteras_8_cut.webp",
+        "dhanteras_9_cut.webp",
+        "dhanteras_10_cut.webp",
+        "dhanteras_11_cut.webp",
+        "dhanteras_12_cut.webp",
+        "dhanteras_13_cut.webp",
+        "dhanteras_14_cut.webp",
+        "dhanteras_15_cut.webp",
+        "dhanteras_16_cut.webp",
+        "dhanteras_17_cut.webp",
+        "dhanteras_18_cut.webp",
+        "dhanteras_19_cut.webp",
+        "dhanteras_20_cut.webp"
+      ]
+    },
+    "new_year": {
+      "kind": "template",
+      "group": 3,
+      "count": 20,
+      "images": [
+        "new_year_1_cut.webp",
+        "new_year_2_cut.webp",
+        "new_year_3_cut.webp",
+        "new_year_4_cut.webp",
+        "new_year_5_cut.webp",
+        "new_year_6_cut.webp",
+        "new_year_7_cut.webp",
+        "new_year_8_cut.webp",
+        "new_year_9_cut.webp",
+        "new_year_10_cut.webp",
+        "new_year_11_cut.webp",
+        "new_year_12_cut.webp",
+        "new_year_13_cut.webp",
+        "new_year_14_cut.webp",
+        "new_year_15_cut.webp",
+        "new_year_16_cut.webp",
+        "new_year_17_cut.webp",
+        "new_year_18_cut.webp",
+        "new_year_19_cut.webp",
+        "new_year_20_cut.webp"
+      ]
     }
   },
   "counts": {
-    "templates": 187,
+    "templates": 228,
     "images": 153
   }
 }
