@@ -142,5 +142,8 @@
     "shayari_22.webp",
     "shayari_23.webp",
     "shayari_24.webp"
-  ]
+  ],
+  "pro": {
+    "enabled": false
+  }
 }
