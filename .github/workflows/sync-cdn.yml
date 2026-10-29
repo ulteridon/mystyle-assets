@@ -1,13 +1,13 @@
-# Copies Patra's content to Cloudflare R2 (served at the CDN domain) on every push to main.
+# Publishes Patra's content to Cloudflare Pages (https://patra-content.pages.dev) on every push to main.
 # The admin site keeps committing here as before; this runs after each commit.
 #
-# Order matters: images and thumbnails go up before the list files (JSON),
-# so a phone never reads a list that names an image the CDN doesn't have yet.
+# A Pages deploy switches over all at once, so phones never see a list that names
+# an image the CDN doesn't have yet. Only new or changed files are uploaded.
 #
-# Needs, in Settings -> Secrets and variables -> Actions:
-#   secrets: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY
-#   variables: R2_BUCKET (e.g. patra-content), CDN_URL (e.g. https://cdn.tattavam.in)
-# Until the secrets exist the job skips itself, so pushing this file is harmless.
+# Needs, in Settings -> Secrets and variables -> Actions -> Secrets:
+#   CLOUDFLARE_API_TOKEN  (permission: Account / Cloudflare Pages / Edit)
+#   CLOUDFLARE_ACCOUNT_ID
+# Until both exist the job skips itself, so pushing this file is harmless.
 
 name: Sync content to CDN
 
@@ -17,11 +17,11 @@ on:
     paths:
       - "all_images/**"
       - "*.json"
-      - "scripts/make_thumbs.py"
+      - "scripts/**"
       - ".github/workflows/sync-cdn.yml"
   workflow_dispatch: {}
 
-# Admin saves can land seconds apart. Each run copies everything, so only the newest queued run matters.
+# Admin saves can land seconds apart. Each run publishes everything, so runs queue instead of overlapping.
 concurrency:
   group: cdn-sync
   cancel-in-progress: false
@@ -29,25 +29,23 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  PAGES_PROJECT: patra-content
+  WRANGLER: wrangler@4.149.0
+
 jobs:
   sync:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
-      RCLONE_CONFIG_R2_TYPE: s3
-      RCLONE_CONFIG_R2_PROVIDER: Cloudflare
-      RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-      RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-      RCLONE_CONFIG_R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
-      RCLONE_CONFIG_R2_NO_CHECK_BUCKET: "true"
-      BUCKET: ${{ vars.R2_BUCKET }}
-      CDN_URL: ${{ vars.CDN_URL }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - name: Check setup
         id: setup
         run: |
-          if [ -z "${{ secrets.R2_ACCESS_KEY_ID }}" ] || [ -z "$BUCKET" ]; then
-            echo "R2 secrets or R2_BUCKET not set yet - skipping sync."
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "Cloudflare secrets not set yet - skipping."
             echo "ready=false" >> "$GITHUB_OUTPUT"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
@@ -61,54 +59,43 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install tools
+      - uses: actions/setup-node@v4
+        if: steps.setup.outputs.ready == 'true'
+        with:
+          node-version: "22"
+
+      - name: Build the site folder
         if: steps.setup.outputs.ready == 'true'
         run: |
           pip install "pillow==12.3.0"
-          sudo apt-get update -qq && sudo apt-get install -y -qq rclone
-          rclone version
+          python scripts/build_cdn_site.py --out site
 
-      - name: Make thumbnails
+      - name: Create the Pages project (first run only)
         if: steps.setup.outputs.ready == 'true'
-        run: python scripts/make_thumbs.py --src all_images --out thumbs
+        run: |
+          if ! npx --yes "$WRANGLER" pages project list | grep -q "$PAGES_PROJECT"; then
+            npx --yes "$WRANGLER" pages project create "$PAGES_PROJECT" --production-branch main
+          fi
 
-      # --checksum compares file hashes, so only new or changed files upload.
-      # Images keep a 1-day cache for now: plain admin uploads can reuse a deleted file's name.
-      # Once the admin adds a hash to every new file name, raise this to a year + immutable.
-      - name: Upload full images
-        if: steps.setup.outputs.ready == 'true'
-        run: >
-          rclone copy all_images "r2:$BUCKET/all_images" --checksum --transfers 16
-          --header-upload "Cache-Control: public, max-age=86400"
-          --stats-one-line --stats 30s
-
-      - name: Upload thumbnails
+      - name: Publish
         if: steps.setup.outputs.ready == 'true'
         run: >
-          rclone copy thumbs "r2:$BUCKET/thumbs" --checksum --transfers 16
-          --header-upload "Cache-Control: public, max-age=86400"
-          --stats-one-line --stats 30s
-
-      # The app's list files, last. Short cache so admin changes reach phones within ~5 minutes.
-      - name: Upload list files
-        if: steps.setup.outputs.ready == 'true'
-        run: >
-          rclone copy . "r2:$BUCKET" --checksum --max-depth 1
-          --include "/app_config.json" --include "/manifest.json" --include "/templates_db.json"
-          --include "/imageTexts.json" --include "/imagePositions.json"
-          --header-upload "Cache-Control: public, max-age=300"
+          npx --yes "$WRANGLER" pages deploy site
+          --project-name "$PAGES_PROJECT" --branch main
+          --commit-hash "$GITHUB_SHA" --commit-message "content ${GITHUB_SHA::7}"
 
       - name: Check the CDN serves the new files
-        if: steps.setup.outputs.ready == 'true' && vars.CDN_URL != ''
+        if: steps.setup.outputs.ready == 'true'
         run: |
+          base="https://$PAGES_PROJECT.pages.dev"
           fail=0
           for f in app_config.json manifest.json; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$CDN_URL/$f?check=$GITHUB_RUN_ID")
-            echo "$f -> $code"; [ "$code" = 200 ] || fail=1
+            if curl -sf "$base/$f?check=$GITHUB_RUN_ID" | cmp -s - "$f"; then echo "$f matches"; else echo "$f DIFFERS or missing"; fail=1; fi
           done
           img=$(ls all_images | tail -1)
           for p in "all_images/$img" "thumbs/$img"; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$CDN_URL/$p")
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$base/$p")
             echo "$p -> $code"; [ "$code" = 200 ] || fail=1
           done
+          curl -sI "$base/all_images/$img" | grep -i -E "^(cache-control|content-type):"
           exit $fail
